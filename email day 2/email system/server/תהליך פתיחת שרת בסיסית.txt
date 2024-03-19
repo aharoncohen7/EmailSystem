@@ -1,0 +1,20 @@
+הקמת סרבר – express
+-        יצירת תקייה חדשה – Email System >> server
+-        Open Folder with VS
+-        אתחול של NPM  >> npm init -y
+-        הוספת פקודות ב-PCK.json:
+o      "start": "node index.js"
+o      "dev": "nodemon index.js"
+-        ספריות:
+o      cors
+o      express
+o      nodemon
+o      dotenv
+o      mongoose
+npm i cors mongoose dotenv express nodemon
+-        הוספת .gitignore
+node_modules
+.env
+ 
+-        הוספת קובץ סטארט – index.js
+- הוספת .env
