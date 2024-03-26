@@ -3,7 +3,6 @@ const  mongoose = require("mongoose")
 async function connect (){
     try{
         mongoose.connect(process.env.MONGO_URI)
-       
     }
     catch(err){
         console.log(err)
