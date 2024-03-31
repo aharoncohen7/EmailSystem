@@ -131,11 +131,11 @@ userRouter.put("/:userId", async (req, res) => {
 // userRouter.put("/emails/:emailId", async (req, res) => {
 //     console.log("start update email ");
 //     try {
-//         const fild = req.body.filedToUpdate;
+//         const field = req.body.filedToUpdate;
 //         const userId = req.user._id;
 //         const emailId = req.params.emailId;  
-//         console.log(fild, userId, emailId)              
-//         const updatedEmail = await userServices.updateEmail({_id:userId, emails:{$elemMatch:{email:{_id: emailId}}}}, fild)
+//         console.log(field, userId, emailId)              
+//         const updatedEmail = await userServices.updateEmail({_id:userId, emails:{$elemMatch:{email:{_id: emailId}}}}, field)
 //         console.log(updatedEmail);
 //        res.send(updatedEmail)
 //     }

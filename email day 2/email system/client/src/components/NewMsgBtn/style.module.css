@@ -1,0 +1,17 @@
+.main {
+    background-color: var(--primary-color);
+    padding: 10px;
+    color: #fff;
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    Width: 249px;
+    Height: 51px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.main svg{
+    font-size: 26px;
+}

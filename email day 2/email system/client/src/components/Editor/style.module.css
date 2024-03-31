@@ -1,0 +1,91 @@
+.container {
+    width: 627px;
+    height: 181px;
+
+    gap: 0px;
+    opacity: 0px;
+    background-color: #fff;
+    padding: 20px;
+
+}
+
+.editor{
+    border: 1px solid #cdced9;
+    padding: 0px;
+    margin: 0px;
+    color: #cdd0d9 ;
+    border-radius: 8px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+   
+}
+
+.input {
+    padding: 15px;
+    border: none;
+    outline: none;
+    font-size: small;
+    border-radius: 10px;
+    width: 98%;
+    
+
+
+}
+
+::placeholder {
+    color: #cdd0d9 ;
+}
+
+
+
+.formatting{
+    /* border: 1px solid #cdced9; */
+    display: flex;
+    /* justify-content: space-between; */
+    /* padding: 10px; */
+    /* gap: 10px; */
+    color: #cdd0d9 ;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 25%;
+    border-top: 1px solid #cdced9; /* רק בורדר למעלה בצבע שחור עם רוחב של 2 פיקסלים */
+   
+}
+
+.fontFormats{
+    display: flex;
+    justify-content: space-evenly;
+    border-right: 1px solid #cdced9; 
+    padding: 10px;
+    gap: 10px;
+    color: #cdd0d9 ;
+    flex-grow: 1;
+    
+  
+}
+
+
+.textFormats{
+   
+    display: flex;
+    /* justify-content: space-between; */
+    padding: 10px;
+    gap: 20px;
+    color: #cdd0d9 ;
+    flex-grow: 3;
+    
+    
+}
+
+
+.active{
+    color: var(--primary-color);
+}
+
+
+
+.main svg{
+    /* font-size: 20px; */
+}

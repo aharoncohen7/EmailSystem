@@ -1,0 +1,30 @@
+.main{
+    Width: 365px;
+    Height:47px;
+    /* border: 2.5px solid rgba(179, 189, 204, 1); */
+    border-radius: 10px;
+    background-color: rgb(227, 233, 243);
+    color: rgb(166, 184, 212);
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    align-items: center;
+    
+
+}
+
+.input {
+    
+    background-color: rgb(227, 233, 243);
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    width: 90%;
+
+
+}
+
+::placeholder {
+    color: rgb(166, 184, 212) ;
+}
