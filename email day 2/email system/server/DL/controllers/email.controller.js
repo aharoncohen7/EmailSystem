@@ -5,8 +5,8 @@ const emailModel = require("../models/email.model")
 async function create(data){
     return await emailModel.create(data)
 }
-async function readOne(filter) {
-    return await emailModel.findOne(filter)
+async function readOne(filter,isPopulate) {
+    return await emailModel.findOne(filter).populate(isPopulate ? 'msg' :'')
 }
 async function read(filter,isPopulate) {
     return await emailModel.find(filter).populate(isPopulate ? 'msg' :'')

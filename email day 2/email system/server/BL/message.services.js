@@ -3,11 +3,17 @@ const { create, read, readOne, update, del } =
 
 
     async function getAllmessages() {
-        let messages = await read({})
-        return messages
+      return await read({})
+    }
+
+
+    async function createMessage(msg) {
+      return await create(msg)
+
     }
 
 
     module.exports = {
-      getAllmessages
+      getAllmessages,
+      createMessage
     }

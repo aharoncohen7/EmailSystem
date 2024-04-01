@@ -10,7 +10,8 @@ const emailSchema = new mongoose.Schema({
         ref: 'message'
     }],
     lastDate: {
-        type: Date
+        type: Date,
+        default: Date.now
     }
 })
 

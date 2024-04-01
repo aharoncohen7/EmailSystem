@@ -24,7 +24,7 @@ async function generate(user) {
     async function auth(req, res, next) {
         try{
             // let token = req.headers.autherization?.split('Bearer ')[1]
-            let user = { _id: "6602c03c550af7228220c032", email: "user1@example.com" }//jwt.verify(token,secret)
+            let user = { _id: "660a971c19b3b4f72409aef3", email: "aharoncohen7@gmail.com" }//jwt.verify(token,secret)
             req.user = user
             next()
         }

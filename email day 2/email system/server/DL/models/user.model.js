@@ -29,16 +29,29 @@ const userSchema = new mongoose.Schema({
     emails: [{
         email: {
             type: mongoose.SchemaTypes.ObjectId,
-            ref: 'email'
+            ref: 'email',
+            required: true,
         },
         isRead: {
             type: Boolean, 
             default: false
         },
-        isSent: Boolean,
-        isRecieved: Boolean,
-        isFavorite: Boolean,
-        isDeleted: Boolean
+        isSent: {
+            type: Boolean, 
+            default: false
+        },
+        isRecieved: {
+            type: Boolean, 
+            default: false
+        },
+        isFavorite: {
+            type: Boolean, 
+            default: false
+        },
+        isDeleted: {
+            type: Boolean, 
+            default: false
+        },
     }],
 
 })

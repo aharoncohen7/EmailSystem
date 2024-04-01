@@ -22,18 +22,33 @@ emailRouter.get("/:emailId", async (req, res) => {
 emailRouter.post("/", async (req, res) => {
     console.log("start new email ");
     try {
-        const from = req.user._id; 
-        const to = req.body.to;                
-        const newEmail = await emailServices.sendEmail(from, to, req.body.subject, req.body.content)
-        console.log(newEmail);
+        req.body.msg.from = req.user._id;  
+        // console.log(req.user._id);       
+        const newEmail = await emailServices.sendNewEmail(req.body.msg, req.body.subject)
+        // console.log(newEmail);
         res.send(newEmail)
-
+       
     }
     catch (err) {
         res.status(400).send(err.msg || err.message || "wrong")
     }
 })
 
+
+emailRouter.put("/", async (req, res) => {
+    console.log("start add new message to old email");
+    try {
+        req.body.msg.from = req.user._id;  
+        // console.log(req.user._id);       
+        const updatedEmail = await emailServices.addMessageToEmail(req.body.msg, req.body.emailId)
+        // console.log(newEmail);
+        res.send(updatedEmail)
+       
+    }
+    catch (err) {
+        res.status(400).send(err.msg || err.message || "wrong")
+    }
+})
 
 
 

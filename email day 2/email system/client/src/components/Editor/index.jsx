@@ -10,10 +10,12 @@ import { FaBold } from "react-icons/fa6";
 import { FaItalic } from "react-icons/fa";
 import { FaUnderline } from "react-icons/fa6";
 import { TbBucketDroplet } from "react-icons/tb"; 
+import Colors from '../Colors';
 
 
 const Editor = () => {
-
+    const [selectedColor, setSelectedColor] = React.useState("rgb(166, 184, 212)");
+    const [showColors, setShowColors] = React.useState(false);
     const [text, setText] = React.useState("");
     const [formatting, setFormatting] = React.useState({
         bold: false,
@@ -30,19 +32,18 @@ const Editor = () => {
 
     return (
         <div className={styles.container}>
-
             <div className={styles.editor}>
 
                 <input
                     type="text"
                     value={text}
+                    style={{color: selectedColor}}
                     onChange={(e) => setText(e.target.value)}
                     placeholder='Write your message...'
-                    className={styles.input}
+                    className={styles.input }
                 />
 
                 <div className={styles.formatting}>
-
                     <div className={styles.fontFormats}>
 
                         <FaBold
@@ -51,8 +52,8 @@ const Editor = () => {
                             onClick={() => {
                                 toggleFontFormatting('bold')
                             }}
-
                         />
+
                         <FaItalic
                             value='italic'
                             className={formatting.italic ? styles.active : ''}
@@ -69,7 +70,8 @@ const Editor = () => {
                             }}
                         />
 
-                        <TbBucketDroplet size={20} />
+                        <TbBucketDroplet style={{color: selectedColor}} size={20} onClick={()=>setShowColors(true)} />
+                        {showColors && <Colors setColor={setSelectedColor} setShowColors={setShowColors}/>}
                     </div>
 
                     <div className={styles.textFormats}>

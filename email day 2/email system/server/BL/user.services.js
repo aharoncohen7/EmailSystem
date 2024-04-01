@@ -8,7 +8,9 @@ async function getAll(filter) {
 }
 
 async function getById(filter) {
+  console.log("in getById");
   let user = await userControler.readOne(filter)
+  // console.log(user);
   return user
 }
 
