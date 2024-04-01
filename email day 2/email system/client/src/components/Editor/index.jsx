@@ -14,7 +14,7 @@ import Colors from '../Colors';
 
 
 const Editor = () => {
-    const [selectedColor, setSelectedColor] = React.useState("rgb(166, 184, 212)");
+    const [selectedColor, setSelectedColor] = React.useState("black");
     const [showColors, setShowColors] = React.useState(false);
     const [text, setText] = React.useState("");
     const [formatting, setFormatting] = React.useState({
@@ -34,7 +34,9 @@ const Editor = () => {
         <div className={styles.container}>
             <div className={styles.editor}>
 
-                <input
+                <div
+                    contentEditable={true}
+                    // onSelectCapture={}
                     type="text"
                     value={text}
                     style={{color: selectedColor}}

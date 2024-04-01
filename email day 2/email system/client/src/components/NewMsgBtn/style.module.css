@@ -10,6 +10,12 @@
     display: flex;
     gap: 20px;
     align-items: center;
+    transition: filter 0.1s;
+   
+}
+
+.main:hover{
+    filter: brightness(90%);
 }
 
 .main svg{

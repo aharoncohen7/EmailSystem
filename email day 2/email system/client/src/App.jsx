@@ -4,6 +4,8 @@ import EmailLi from "./components/EmailLi";
 import EmailType from "./components/EmailType";
 import InputSearch from "./components/InputSearch";
 import LabelBadge from "./components/LabelBadge";
+import MainContainer from "./components/MainContainer";
+
 import NewMsgBtn from "./components/NewMsgBtn";
 import SendBtn from "./components/SendBtn";
 
@@ -18,19 +20,31 @@ export default function App() {
         </div>
         <div style={{ background: 'red'  }} >
           <p>11:34</p> */}
-      <Badge>45</Badge>
+      {/* <Badge>45</Badge>
       <NewMsgBtn />
       <EmailLi />
       <SendBtn />
       <EmailType />
       <InputSearch />
-      <LabelBadge 
-      // color="rgba(253, 94, 94, 1)"
-      />
-      <Editor/>
-      
+      <LabelBadge />
+      <Editor/> */}
+
       {/* </div>
       </div> */}
+
+      <MainContainer/>
+       
+        {/* <Badge>45</Badge>
+        <NewMsgBtn />
+        <EmailLi />
+        <SendBtn />
+        <EmailType />
+        <InputSearch />
+        <LabelBadge />
+        <Editor /> */}
+
+
+     
     </div>
   )
 }

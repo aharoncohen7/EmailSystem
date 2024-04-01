@@ -42,3 +42,8 @@ span::first-letter {
 }
 
 
+svg:hover {
+  color: var(--primary-color);
+ 
+}
+
