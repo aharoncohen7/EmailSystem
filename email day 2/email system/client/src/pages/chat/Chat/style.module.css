@@ -1,0 +1,9 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    /* width: 50%; */
+    /* height: 100vh; */
+    border: 1px solid black;
+
+}

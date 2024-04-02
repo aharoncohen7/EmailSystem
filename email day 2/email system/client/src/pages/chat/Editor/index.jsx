@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import styles from './style.module.css'
 import { FiAlignRight } from "react-icons/fi";
 import { FiAlignLeft } from "react-icons/fi";
@@ -9,7 +9,7 @@ import { BsListUl } from "react-icons/bs";
 import { FaBold } from "react-icons/fa6";
 import { FaItalic } from "react-icons/fa";
 import { FaUnderline } from "react-icons/fa6";
-import { TbBucketDroplet } from "react-icons/tb"; 
+import { TbBucketDroplet } from "react-icons/tb";
 import Colors from '../Colors';
 
 
@@ -23,11 +23,38 @@ const Editor = () => {
         underline: false,
     });
     const [textFormatting, setTextFormatting] = React.useState("left")
-
+    const divRef = React.useRef(null);
+    
 
     const toggleFontFormatting = (mode) => {
         setFormatting({ ...formatting, [mode]: !formatting[mode] });
     };
+
+
+    function handleSelect() {
+        //בחירת טקסט
+        const selection = window.getSelection();
+        const selectedText = selection.toString();
+        if (selectedText) {
+            // יצירת תגית עם העיצוב הנבחר
+            const span = document.createElement('span');
+
+            span.textContent = selectedText;
+            span.style.color = `${selectedColor}`;
+
+            //מחיקת הטקסט בטווח שנבחר ושתילת התגית הקודמת
+            const range = selection.getRangeAt(0);
+            range.deleteContents();
+            range.insertNode(span);
+            // בסיום הפעולות, נבטל את כל הבחירות בעמוד
+            window.getSelection().removeAllRanges();
+        }
+        else{
+            document.execCommand('styleWithCSS', false, true);
+    document.execCommand('foreColor', false,selectedColor);
+        }
+    }
+
 
 
     return (
@@ -36,14 +63,15 @@ const Editor = () => {
 
                 <div
                     contentEditable={true}
-                    // onSelectCapture={}
-                    type="text"
+                    onClick={handleSelect}
                     value={text}
-                    style={{color: selectedColor}}
+                    // style={{color: selectedColor}}
+                    // onClick={()=>setDefaultColor(selectedColor)}
                     onChange={(e) => setText(e.target.value)}
                     placeholder='Write your message...'
-                    className={styles.input }
+                    className={styles.input}
                 />
+                <div dangerouslySetInnerHTML={{ __html: text }} />
 
                 <div className={styles.formatting}>
                     <div className={styles.fontFormats}>
@@ -72,38 +100,39 @@ const Editor = () => {
                             }}
                         />
 
-                        <TbBucketDroplet style={{color: selectedColor}} size={20} onClick={()=>setShowColors(true)} />
-                        {showColors && <Colors setColor={setSelectedColor} setShowColors={setShowColors}/>}
+                        <TbBucketDroplet style={{ color: selectedColor }} size={20} onClick={() => setShowColors(true)} />
+                        {showColors && <Colors setColor={setSelectedColor} setShowColors={setShowColors} />}
                     </div>
 
                     <div className={styles.textFormats}>
                         <BsListUl
-                            onClick={()=>setTextFormatting('listUl')}
-                            className={textFormatting == "listUl" ? styles.active : ''} 
-                            />
+                            onClick={() => setTextFormatting('listUl')}
+                            className={textFormatting == "listUl" ? styles.active : ''}
+                        />
                         <BsListOl
-                            onClick={()=>setTextFormatting('listOl')}
-                            className={textFormatting == "listOl" ? styles.active : ''} 
-                            />
+                            onClick={() => setTextFormatting('listOl')}
+                            className={textFormatting == "listOl" ? styles.active : ''}
+                        />
                         <FiAlignLeft
-                            onClick={()=>setTextFormatting('left')}
-                            className={textFormatting == "left" ? styles.active : ''} 
-                            />
+                            onClick={() => setTextFormatting('left')}
+                            className={textFormatting == "left" ? styles.active : ''}
+                        />
                         <FiAlignCenter
-                            onClick={()=>setTextFormatting('center')}
-                            className={textFormatting == "center" ? styles.active : ''} 
-                            />
+                            onClick={() => setTextFormatting('center')}
+                            className={textFormatting == "center" ? styles.active : ''}
+                        />
                         <FiAlignRight
-                            onClick={()=>setTextFormatting('right')}
-                            className={textFormatting == "right" ? styles.active : ''} 
-                            />
+                            onClick={() => setTextFormatting('right')}
+                            className={textFormatting == "right" ? styles.active : ''}
+                        />
                         <FiAlignJustify
-                        className={textFormatting === "justify" ? styles.active : ''}
-                            onClick={()=>setTextFormatting('justify')}
-                            
-                            />
+                            className={textFormatting === "justify" ? styles.active : ''}
+                            onClick={() => setTextFormatting('justify')}
+
+                        />
                     </div>
                 </div>
+                <div ></div>
             </div>
 
 

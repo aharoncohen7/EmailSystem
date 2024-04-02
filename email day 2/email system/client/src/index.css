@@ -23,6 +23,10 @@ a{
   color: inherit;
 }
 
+ul{
+  list-style: none;
+}
+
 /* p{
 
   text-transform: capitalize;
@@ -37,13 +41,13 @@ span::first-letter {
   --text-color: #8191A9;
   --primary-color: #00A389;
   --gray-bg-color: #a8a8a8;
-  --lightGray-bg-color: #f3f3f3;
-  background-color: #fceded;
+  --lightGray-bg-color: #ebe7e7;
+  /* background-color: #fceded; */
 }
 
-
+/* 
 svg:hover {
   color: var(--primary-color);
  
-}
+} */
 

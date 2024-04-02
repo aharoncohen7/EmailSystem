@@ -1,50 +1,25 @@
-import Badge from "./components/Badge";
-import Editor from "./components/Editor";
-import EmailLi from "./components/EmailLi";
-import EmailType from "./components/EmailType";
-import InputSearch from "./components/InputSearch";
-import LabelBadge from "./components/LabelBadge";
-import MainContainer from "./components/MainContainer";
+import { Route, Routes } from "react-router-dom";
+import MainLayout from "./layouts/MainLayout";
+import EmailsTypeLayout from "./layouts/EmailsTypeLayout";
+import EmailsListLayout from "./layouts/EmailsListLayout";
+import Chat from './pages/chat/Chat'
 
-import NewMsgBtn from "./components/NewMsgBtn";
-import SendBtn from "./components/SendBtn";
+
 
 export default function App() {
   return (
-    <div >
-      {/* <div style={{ display: 'flex' , padding: '8px', width: '800px'}}>
-        <img src="./vite.svg" alt="" />
-        <div style={{background: 'green', flexGrow: 1}} >
-          <h3>Jessica Koel</h3>
-          <p>hey jhon...</p>
-        </div>
-        <div style={{ background: 'red'  }} >
-          <p>11:34</p> */}
-      {/* <Badge>45</Badge>
-      <NewMsgBtn />
-      <EmailLi />
-      <SendBtn />
-      <EmailType />
-      <InputSearch />
-      <LabelBadge />
-      <Editor/> */}
-
-      {/* </div>
-      </div> */}
-
-      <MainContainer/>
-       
-        {/* <Badge>45</Badge>
-        <NewMsgBtn />
-        <EmailLi />
-        <SendBtn />
-        <EmailType />
-        <InputSearch />
-        <LabelBadge />
-        <Editor /> */}
-
-
-     
+    <div>
+        <Routes>
+          <Route path="login" element={<h1>login</h1>} />
+          <Route element={<MainLayout />}>
+            <Route index element={<>home</>} />
+            <Route path="emails" element={<EmailsTypeLayout />} >
+              <Route path=":emailType" element={<EmailsListLayout />} >
+                <Route path=":emailId" element={<Chat/>} />
+              </Route>
+            </Route>
+          </Route>
+        </Routes>
     </div>
   )
 }

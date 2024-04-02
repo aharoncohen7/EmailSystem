@@ -1,0 +1,24 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    /* width: 6%; */
+    height: 100vh;
+    /* border: 1px solid black; */
+
+}
+
+.topSpace{
+    border-bottom: 1px;
+    
+
+
+}
+
+
+.layout{
+    display: grid;
+    grid-template-rows: 100vh;
+    grid-template-columns: 70px 250px 350px 1fr;
+
+}
