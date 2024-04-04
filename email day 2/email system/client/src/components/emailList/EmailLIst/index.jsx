@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import EmailLi from '../EmailLi'
 import InputSearch from '../InputSearch'
 import styles from './style.module.css'
 import { NavLink, useParams } from 'react-router-dom'
+
+
+
 
 const emailList = [
     {
@@ -177,45 +180,74 @@ const emailList = [
 ]
 
 
-
 const EmailLIst = () => {
-    const {emailType} = useParams()
+
+    const [input, setInput] = useState('')
+    const [filteredEmailList1, setFilteredEmailList1] = React.useState(emailList);
+
+    const { emailType } = useParams()
     let filter;
-    if(emailType=="inbox"){
+    if (emailType == "inbox") {
+        ;
         filter = "isRecieved"
     }
-    if(emailType=="sent emails"){
+    if (emailType == "sent emails") {
         filter = "isSent"
     }
-    if(emailType=="favorite"){
+    if (emailType == "favorite") {
         filter = "isFavorite"
     }
-    if(emailType=="deleted"){
+    if (emailType == "deleted") {
         filter = "isDeleted"
     }
 
-    const [filteredEmailList1, setFilteredEmailList1] = React.useState(emailList);
-    const [filteredEmailList2, setFilteredEmailList2] = React.useState(emailList);
+
     
 
+
+
+
+    // const [filteredEmailList2, setFilteredEmailList2] = React.useState(filteredEmailList1);
+
+    // const searchFilter = (input) => {
+    //     // if(!input){
+    //     //     setFilteredEmailList1(filteredEmailList1)
+    //     // }
+    //     const newEmailList = filteredEmailList1.filter((item) => {
+    //         return item.email.subject.toLowerCase().includes(input.toLowerCase())
+    //     })
+    //     setFilteredEmailList2(newEmailList)
+    // }
+
+
     useEffect(() => {
-        const basicFilter = ()=>{ 
+        const basicFilter = () => {
             const newEmailList = emailList.filter((item) => {
-                return item[filter];
+                return item[filter] && item.email.subject.toLowerCase().includes(input.toLowerCase());
             })
-            setFilteredEmailList2(newEmailList)
+            setFilteredEmailList1(newEmailList)
         }
         basicFilter()
-    },[filter])
+    }, [emailType, input])
 
 
 
-    const searchFilter = (input) => {
-        const newEmailList = filteredEmailList1.filter((item) => {
-            return item.email.subject.toLowerCase().includes(input.toLowerCase())
-        })
-        setFilteredEmailList2(newEmailList)
-    }
+
+
+    // useEffect(() => {
+    //     const basicFilter2 = ()=>{ 
+    //         const newEmailList = filteredEmailList1.filter((item) => {
+    //             return item.email.subject.toLowerCase().includes(input.toLowerCase())
+    //         })
+    //         setFilteredEmailList1(newEmailList)
+    //     }
+    //     basicFilter2()
+    // },[input])
+
+
+
+
+
 
 
 
@@ -240,12 +272,12 @@ const EmailLIst = () => {
 
             <div className={styles.main}>
                 <div className={styles.header}>
-                    <InputSearch sendInput={searchFilter} />
+                    <InputSearch sendInput={setInput} />
 
                 </div>
 
                 {
-                    filteredEmailList2.map((item, index) => {
+                    filteredEmailList1.map((item, index) => {
                         return (
                             <NavLink
                                 key={item._id}
@@ -253,11 +285,9 @@ const EmailLIst = () => {
                                 className={({ isActive }) =>
                                     `${isActive ? styles.active : ""} ${styles.box}`
                                 }
-                                style={({isActive})=>isActive ? { boxShadow: "0px 3px 6px rgb(212, 210, 210)" } : {}}
-                                
+                                style={({ isActive }) => isActive ? { boxShadow: "0px 3px 6px rgb(212, 210, 210)" } : {}}
+
                             >
-
-
 
 
                                 <EmailLi item={item} />

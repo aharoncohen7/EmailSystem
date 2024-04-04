@@ -2,6 +2,7 @@ import React from 'react'
 import styles from './style.module.css'
 import Badge from '../Badge'
 import { BiSolidStar } from "react-icons/bi";
+import { FaEnvelope } from "react-icons/fa";
 
 const EmailLi = ({item}) => {
     const [isFavorite, setIsFavorite] = React.useState(true)
@@ -21,7 +22,7 @@ const EmailLi = ({item}) => {
         </div>
         <div className={styles.information} >
           <p className={styles.time}> 11:34</p>
-         {!item.isRead? <Badge>1</Badge>  : <BiSolidStar onClick={()=>{
+         {!item.isRead?  <FaEnvelope className={styles.envelope} /> : <BiSolidStar onClick={()=>{
          
             item.isFavorite = !item.isFavorite;
           

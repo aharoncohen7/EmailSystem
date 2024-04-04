@@ -1,9 +1,10 @@
 .main{
     display: flex;
     flex-direction: column;
+    padding: 0 10px 0 10px;
     /* justify-content: space-between; */
     /* width: 50%; */
     /* height: 100vh; */
-    border: 1px solid black;
+    /* border: 1px solid black; */
 
 }

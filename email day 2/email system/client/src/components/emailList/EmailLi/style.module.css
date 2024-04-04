@@ -24,6 +24,10 @@ h3{
     box-shadow: 0px 3px 6px rgb(212, 210, 210);
 }
 
+.envelope{
+    color: var(--primary-color);
+}
+
 
 
 

@@ -85,25 +85,25 @@
     pointer-events: none;
   } */
 
-p{
-    font-weight: 500;
-    
-}
-
-.li2:hover{
+  
+  .li2:hover{
     color: var(--primary-color);
     svg{
         color: var(--primary-color)
     }
-  
-
+    
+    
+}
+.ul p{
+    font-weight: 500;
+    
 }
 
-span{
+.ul span{
     flex-grow: 1;
 }
 
-svg{
+.ul svg{
     color: var(--gray-bg-color)
 }
 

@@ -25,7 +25,7 @@ const emailTypeIcons = [
 ]
 
 
-const EmailTypeList = () => {
+const EmailTypeList = ({}) => {
     const [isHovering, setIsHovering] = useState(false);
 
 

@@ -8,8 +8,10 @@ const MainLayout = () => {
   if (!isConnected) return (<h1>login</h1>)
   else return (
     <main className={styles.layout}>
-      <MainNav/>
+       
+      <MainNav />
       <Outlet />
+     
     </main>
   )
 }

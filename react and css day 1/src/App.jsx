@@ -14,9 +14,9 @@ function App() {
   return (
     <>
       <PopupContext.Provider value={{ setIsPpoupOpen, content} }>
-      {/* <MyButton onClick={setIsPpoupOpen}/> */}
-        {/* {isPpoupOpen &&   <PopUp />} */}
-        <Carousel />
+      <MyButton onClick={setIsPpoupOpen}/>
+        {isPpoupOpen &&   <PopUp />}
+        {/* <Carousel /> */}
       </PopupContext.Provider>
     </>
   )
