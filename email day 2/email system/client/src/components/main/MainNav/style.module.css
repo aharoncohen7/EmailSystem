@@ -7,6 +7,11 @@
     position: relative;
     background-color: rgb(252, 252, 252);
 
+    svg {
+        color: var(--gray-bg-color);
+        font-size: 24px;
+    }
+
 }
 
 .ul {
@@ -19,8 +24,8 @@
 
 .li {
     /* padding: 5px 25px 5px 25px; */
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     border-radius: 5px;
     display: flex;
     justify-content: center;
@@ -31,7 +36,7 @@
 }
 .li:hover{
    
-        background-color: var(--lightGray-bg-color);
+        background-color: var(--lightGreen-bg-color);
    
 }
 
@@ -45,26 +50,25 @@
 
 .box:hover {
     border-right-color: var(--primary-color);
+    svg{
+        color: var(--primary-color)
+    }
 
 
 }
 
-svg {
-    color: var(--gray-bg-color)
-}
 
-svg:hover {
-    color: var(--primary-color)
-}
+
+
 
 .active {
+    border-right-color: var(--primary-color);
+
     svg {
-        color: var(--primary-color)
+        color: var(--primary-color);
+        
     }
 
 }
 
-.box:has(.active) {
-    border-right: 3px solid var(--primary-color);
 
-}

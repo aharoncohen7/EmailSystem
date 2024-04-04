@@ -1,10 +1,10 @@
 import styles from './style.module.css'
-import { BiEnvelope } from "react-icons/bi";
+import { FaEnvelope } from "react-icons/fa";
 
 export default function NewMsgBtn() {
    return (
       <p className={styles.main}>
-        <BiEnvelope/>
+        <FaEnvelope/>
         <span className={styles.text}>New message</span> 
       </p>
    )

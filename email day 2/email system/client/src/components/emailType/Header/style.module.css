@@ -1,0 +1,35 @@
+.main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    Width: 100%;
+    Height:70px;
+    border-bottom: 1px solid var(--lightGray-bg-color);
+    font-weight: 600;
+    font-size: 26px;
+    letter-spacing: 0.5px;
+    
+    
+}
+
+.link{
+    
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--lightGray-bg-color);
+}
+
+
+/* .main:hover {
+    filter: brightness(90%);
+} */
+
+.main svg {
+    font-size: 16px;
+    color: var(--gray-bg-color)
+    /* padding: 10px; */
+}

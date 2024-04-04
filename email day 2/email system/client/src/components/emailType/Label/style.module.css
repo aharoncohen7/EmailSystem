@@ -1,0 +1,23 @@
+.main {
+    display: flex;
+    position: relative;
+}
+
+.rectangle {
+    height: 20px;
+    width: 30px;
+    border-radius: 5px 0px 0px 5px;
+    position: relative;
+}
+
+
+
+.triangle {
+    height: 15px;
+    width: 15px;
+    position: absolute;
+    border-radius: 2px;
+    left: 22.2px;
+    top: 2.45px;
+    transform: rotate(45deg);
+}

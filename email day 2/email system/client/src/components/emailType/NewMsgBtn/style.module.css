@@ -1,23 +1,28 @@
 .main {
-    background-color: var(--primary-color);
-    padding: 10px;
-    color: #fff;
-    border-radius: 8px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    Width: 249px;
-    Height: 51px;
     display: flex;
-    gap: 20px;
     align-items: center;
+    gap: 20px;
+    Width: 100%;
+    Height: 50px;
+    
+    border-radius: 10px;
+    padding: 20px;
+
+    background-color: var(--primary-color);
     transition: filter 0.1s;
-   
+
+    color: #fff;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    
 }
 
-.main:hover{
+.main:hover {
     filter: brightness(90%);
 }
 
-.main svg{
-    font-size: 26px;
+.main svg {
+    font-size: 16px;
+    color: #fff;
+    /* padding: 10px; */
 }

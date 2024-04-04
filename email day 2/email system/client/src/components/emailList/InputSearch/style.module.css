@@ -1,14 +1,13 @@
 .main{
     Width: 100%;
-    Height:47px;
+    Height:38px;
     /* border: 2.5px solid rgba(179, 189, 204, 1); */
     border-radius: 10px;
-    background-color: rgb(227, 233, 243);
-    color: rgb(166, 184, 212);
+    background-color: rgb(216, 217, 218);
     font-weight: 600;
     display: flex;
     justify-content: space-between;
-    padding: 15px;
+    padding: 10px;
     align-items: center;
     
 
@@ -16,15 +15,45 @@
 
 .input {
     
-    background-color: rgb(227, 233, 243);
+    background-color: rgb(216, 217, 218);
     border: none;
     outline: none;
     border-radius: 10px;
     width: 90%;
+    height: 30px;
+    padding: 0px;
+    
 
 
 }
 
-::placeholder {
-    color: rgb(166, 184, 212) ;
+.onSearch{
+    color: var(--primary-color);
+    animation: rotateAndScale 2s 3;
+    
+}
+
+input::placeholder {
+    color: #b4b4b4 ;
+}
+
+/* לתקן */
+/* svg:hover{
+    color: var(--gray-bg-color)
+
+
+} */
+
+
+
+@keyframes rotateAndScale {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(30deg) scale(0.8);
+    }
+    100% {
+        transform: rotate(0deg) scale(1);
+    }
 }

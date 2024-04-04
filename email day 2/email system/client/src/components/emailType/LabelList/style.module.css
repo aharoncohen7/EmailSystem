@@ -1,0 +1,78 @@
+h3{
+   color: var(--gray-bg-color);
+   padding-left: 10px;
+}
+
+.main{
+  display: flex;
+  flex-direction: column;
+  height: 130px;
+  overflow-y: scroll;
+}
+
+
+.box{
+    padding: 5px;
+    display: flex;
+    gap: 15px;
+}
+
+.more{
+  display: flex;
+  justify-content: space-between;
+
+
+}
+
+.plus{
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+    background-color: var(--lightGreen-bg-color);
+}
+
+
+.sss{
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+
+}
+
+
+.name{
+    color: var(--gray-bg-color);
+    font-weight: 600;
+    font-size: 15px;
+    
+}
+
+.name:hover{
+        
+    color: var(--primary-color);
+}
+
+
+  
+  /* עיצוב פס הגלילה */
+  .main::-webkit-scrollbar {
+    width: 5px; /* רוחב פס הגלילה */
+  }
+  
+  .main::-webkit-scrollbar-track {
+    background: #f1f1f1; /* צבע רקע של פס הגלילה */
+  }
+  
+  .main::-webkit-scrollbar-thumb {
+    background: #888; /* צבע פס הגלילה עצמו */
+  }
+  
+  .main::-webkit-scrollbar-thumb {
+    background: var(--primary-color); /* צבע פס הגלילה בעת העברת העכבר עליו */
+  }
+  

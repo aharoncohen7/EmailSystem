@@ -40,8 +40,10 @@ span::first-letter {
   --title-color: #071232;
   --text-color: #8191A9;
   --primary-color: #00A389;
-  --gray-bg-color: #a8a8a8;
-  --lightGray-bg-color: #ebe7e7;
+  --gray-bg-color: #9b9b9b;
+  --lightGray-bg-color: #e7e8e57f;
+  --textGrey: rgb(173, 172, 172);
+  --lightGreen-bg-color: #d6eae1;
   /* background-color: #fceded; */
 }
 

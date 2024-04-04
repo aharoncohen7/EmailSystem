@@ -1,0 +1,115 @@
+
+.ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 20px 10px 20px;
+}
+
+
+
+.box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    
+    :hover{
+        svg, span  {
+            color: var(--primary-color)
+        }
+        
+    }
+    
+}
+
+.box:has(.active) {
+    border-right: 3px solid var(--primary-color);
+
+}
+
+
+
+
+
+.li {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+}
+
+.li2{
+    position: relative;
+}
+
+.hiddenList{
+    position: absolute;
+    top: 40px;
+    left: -15px;
+    z-index: 4;
+    display: flex;
+    width: 200px;
+    height: 60px;
+    border-radius: 15px;
+    border: 3px solid #fff;
+    box-shadow: 0px 3px 6px rgb(212, 210, 210);
+}
+
+.hiddenItem{
+    background-color: #fff;
+    color: black;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 15px;
+    padding: 12px;
+    border-radius: 10px;
+    svg{
+        color: rgba(217, 217, 223, 0.63);
+    }
+}
+
+ .hiddenItem:hover{
+    
+        background-color: rgb(232, 232, 235);
+        color: var(--primary-color);
+    svg{
+        color: var(--primary-color)
+    }
+    
+}
+
+/* .li2:hover .more {
+    pointer-events: none;
+  } */
+
+p{
+    font-weight: 500;
+    
+}
+
+.li2:hover{
+    color: var(--primary-color);
+    svg{
+        color: var(--primary-color)
+    }
+  
+
+}
+
+span{
+    flex-grow: 1;
+}
+
+svg{
+    color: var(--gray-bg-color)
+}
+
+
+.active {
+    .icon, span  {
+        color: var(--primary-color)
+    }
+}

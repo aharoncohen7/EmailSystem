@@ -1,0 +1,36 @@
+.mainContainer{
+    padding-top: 5px;
+}
+
+.main{
+    padding: 10px;
+    margin-top: 15px;
+
+    background-color: var(--lightGray-bg-color);
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    height: 95vh;
+    gap: 14px;
+}
+
+.header{
+    display: flex;
+    align-items: center;
+    Width: 100%;
+    Height:70px;
+    border-bottom: 1px solid var(--lightGray-bg-color);
+    
+
+}
+
+.box{
+    border-radius: 10px;
+}
+
+
+.active{
+
+    background-color: #fff;
+    
+}

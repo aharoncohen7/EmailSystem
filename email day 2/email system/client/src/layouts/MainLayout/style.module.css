@@ -19,6 +19,6 @@
 .layout{
     display: grid;
     grid-template-rows: 100vh;
-    grid-template-columns: 70px 250px 350px 1fr;
+    grid-template-columns: 70px 240px 280px 1fr;
 
 }
