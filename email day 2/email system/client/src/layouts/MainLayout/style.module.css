@@ -2,6 +2,10 @@
     display: grid;
     grid-template-rows: 100vh;
     grid-template-columns: 70px 240px 280px 1fr;
+    /* white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; */
+
 
 }
 

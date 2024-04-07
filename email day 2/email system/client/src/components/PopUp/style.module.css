@@ -1,0 +1,48 @@
+.blur {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    background-color: rgba(79, 78, 78, 0.5);
+    z-index: 2;
+    top: 0;
+    left: 0;
+}
+
+.popup {
+    position: relative;
+    z-index: 5;
+    min-width: 400px;
+    min-height: 200px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: #a71010;
+}
+
+
+
+.content{
+    font-size: 20px;
+    min-width: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+
+}
+
+.colse {
+    position: absolute;
+    left: -16px;
+    top: -16px;
+    font-size: 40px;
+    min-width: 40px;
+    border-radius: 5px;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+
+
+

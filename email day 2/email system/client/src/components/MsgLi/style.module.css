@@ -1,0 +1,94 @@
+
+.main {
+    border-bottom: #DEE1E6 1px solid;
+    cursor: pointer;
+   
+
+}
+
+
+
+.collapsedMessage{
+    display: flex;
+    align-items: center ;
+    justify-content: space-between;
+    gap: 30px;
+    background-color: #f1f3f6;
+
+
+}
+
+.senderYou{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.senderAnothers{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+}
+
+
+.senderYou h3, .senderAnothers h3{
+    font-weight: 600;
+    font-size: 15.5px;
+    line-height: 20px;
+    padding: 10px;
+}
+
+.senderAnothers img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+
+
+.partialContent {
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    color: var(--text-color);
+
+}
+
+
+
+.date{
+    color: var(--text-color);
+    font-size: small;
+}
+
+.fullContent {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 20px;
+    color: rgb(84, 84, 85);
+    font-weight: 400;
+}
+
+
+
+
+
+
+
+
+
+
+.svg {
+    color: var(--text-color);
+    font-size: 35px;
+    width: 22px;
+    height: 22px;
+    /* flex-shrink: 0; */
+   
+}

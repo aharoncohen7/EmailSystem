@@ -50,15 +50,15 @@ const Editor = () => {
             window.getSelection().removeAllRanges();
         }
         else{
-            document.execCommand('styleWithCSS', false, true);
-    document.execCommand('foreColor', false,selectedColor);
+    //         document.execCommand('styleWithCSS', false, true);
+    // document.execCommand('foreColor', false,selectedColor);
         }
     }
 
 
 
     return (
-        <div className={styles.container}>
+        <div className={styles.main}>
             <div className={styles.editor}>
 
                 <div

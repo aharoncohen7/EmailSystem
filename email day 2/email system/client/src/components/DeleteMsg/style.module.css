@@ -1,0 +1,70 @@
+.main {
+  width: 450px;
+  height: 250px;
+  /* opacity: 0.5; */
+
+  padding: 40px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+
+}
+
+.msg {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Kumbh Sans", sans-serif;
+  user-select: none;
+  font-weight: 600;
+  font-size: 26px;
+}
+
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #fff;
+  transition: filter 0.1s;
+
+ 
+}
+
+.button1:hover,.button2:hover {
+  filter: brightness(90%);
+}
+
+.button1 {
+
+  height: 48px;
+  border-radius: 8px;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--primary-color);
+  color: #f5f1f1;
+  border: none;
+}
+
+
+.button2 {
+  height: 48px;
+  border-radius: 8px;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f1f1f1;
+  color: #fffafa;
+  border: none;
+  background-color: #ff7e7e;
+
+}
+
+button {
+  border: none;
+  /* ביטול המסגרת */
+}
