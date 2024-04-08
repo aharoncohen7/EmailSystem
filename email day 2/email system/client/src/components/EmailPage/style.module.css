@@ -1,10 +1,37 @@
 .main{
 
-   
+    
     padding: 10px;
+    flex-wrap: 1;
+    
     border-bottom: #DEE1E6 1px solid;
 
 }
 .msgLi{
     padding: 10px;
 }
+
+
+.list{
+    max-height: 40vh;
+    overflow: auto;
+}
+
+
+  /* עיצוב פס הגלילה */
+  .list::-webkit-scrollbar {
+    width: 5px; /* רוחב פס הגלילה */
+  }
+  
+  .list::-webkit-scrollbar-track {
+    background: #f1f1f1; /* צבע רקע של פס הגלילה */
+  }
+  
+  .list::-webkit-scrollbar-thumb {
+    background: #888; /* צבע פס הגלילה עצמו */
+  }
+  
+  .list::-webkit-scrollbar-thumb {
+    background: var(--primary-color); /* צבע פס הגלילה בעת העברת העכבר עליו */
+  }
+  

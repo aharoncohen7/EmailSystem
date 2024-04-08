@@ -41,6 +41,60 @@ const EmailPage = () => {
           "content": "Walla Sababa !!",
           "subject": "Meeting with new investors",
           "__v": 0
+        },
+        {
+          "_id": "6602c49deb02aca8db6f8276",
+          "to": ["user2@example.com"],
+          "from": "user1@example.com",
+          "date": "2024-03-21T10:08:00.000Z",
+          "content": "- Hi, I have a new meeting opportunity, and I don’t know how to use it",
+          "subject": "Meeting with new investors",
+          "__v": 0
+        },
+        {
+          "_id": "6602c49deb02aca8db6f8278",
+          "to": ["user1@example.com"],
+          "from": "user2@example.com",
+          "date": "2024-03-21T10:24:00.000Z",
+          "content": "Walla Sababa !!",
+          "subject": "Meeting with new investors",
+          "__v": 0
+        },
+        {
+          "_id": "6602c49deb02aca8db6f8276",
+          "to": ["user2@example.com"],
+          "from": "user1@example.com",
+          "date": "2024-03-21T10:08:00.000Z",
+          "content": "- Hi, I have a new meeting opportunity, and I don’t know how to use it",
+          "subject": "Meeting with new investors",
+          "__v": 0
+        },
+        {
+          "_id": "6602c49deb02aca8db6f8278",
+          "to": ["user1@example.com"],
+          "from": "user2@example.com",
+          "date": "2024-03-21T10:24:00.000Z",
+          "content": "Walla Sababa !!",
+          "subject": "Meeting with new investors",
+          "__v": 0
+        },
+        {
+          "_id": "6602c49deb02aca8db6f8276",
+          "to": ["user2@example.com"],
+          "from": "user1@example.com",
+          "date": "2024-03-21T10:08:00.000Z",
+          "content": "- Hi, I have a new meeting opportunity, and I don’t know how to use it",
+          "subject": "Meeting with new investors",
+          "__v": 0
+        },
+        {
+          "_id": "6602c49deb02aca8db6f8278",
+          "to": ["user1@example.com"],
+          "from": "user2@example.com",
+          "date": "2024-03-21T10:24:00.000Z",
+          "content": "Walla Sababa !!",
+          "subject": "Meeting with new investors",
+          "__v": 0
         }
       ],
       "__v": 0
@@ -58,10 +112,12 @@ const EmailPage = () => {
     <div className={styles.main}>
       <>
         <EmailTitle date={setDateAndTime(item.email.lastDate)} subject={item.email.subject} />
-        {item.email.msg.map((msg) => (
-          <div key={msg._id} className={styles.msgLi}>
-            <MsgLi msg={msg} thisUser={thisUser} isExpand={isExpand} setIsExpand={setIsExpand} /></div>
-        ))}
+        <div className={styles.list}>
+          {item.email.msg.map((msg) => (
+            <div key={msg._id} className={styles.msgLi}>
+              <MsgLi msg={msg} thisUser={thisUser} isExpand={isExpand} setIsExpand={setIsExpand} /></div>
+          ))}
+        </div>
       </>
     </div>
   )

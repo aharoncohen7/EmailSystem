@@ -10,7 +10,12 @@ import { FaBold } from "react-icons/fa6";
 import { FaItalic } from "react-icons/fa";
 import { FaUnderline } from "react-icons/fa6";
 import { TbBucketDroplet } from "react-icons/tb";
+import { MdDelete } from "react-icons/md";
+import { FaImage } from "react-icons/fa";
+import { FaFile } from "react-icons/fa";
+
 import Colors from '../Colors';
+import SendBtn from '../SendBtn';
 
 
 const Editor = () => {
@@ -24,7 +29,18 @@ const Editor = () => {
     });
     const [textFormatting, setTextFormatting] = React.useState("left")
     const divRef = React.useRef(null);
-    
+
+
+
+    const formattingOptions = [
+        { icon: BsListUl, value: 'listUl' },
+        { icon: BsListOl, value: 'listOl' },
+        { icon: FiAlignLeft, value: 'left' },
+        { icon: FiAlignCenter, value: 'center' },
+        { icon: FiAlignRight, value: 'right' },
+        { icon: FiAlignJustify, value: 'justify' }
+    ];
+
 
     const toggleFontFormatting = (mode) => {
         setFormatting({ ...formatting, [mode]: !formatting[mode] });
@@ -49,9 +65,9 @@ const Editor = () => {
             // בסיום הפעולות, נבטל את כל הבחירות בעמוד
             window.getSelection().removeAllRanges();
         }
-        else{
-    //         document.execCommand('styleWithCSS', false, true);
-    // document.execCommand('foreColor', false,selectedColor);
+        else {
+            //         document.execCommand('styleWithCSS', false, true);
+            // document.execCommand('foreColor', false,selectedColor);
         }
     }
 
@@ -59,14 +75,12 @@ const Editor = () => {
 
     return (
         <div className={styles.main}>
-            <div className={styles.editor}>
+            <div className={styles.editorBox}>
 
                 <div
                     contentEditable={true}
                     onClick={handleSelect}
                     value={text}
-                    // style={{color: selectedColor}}
-                    // onClick={()=>setDefaultColor(selectedColor)}
                     onChange={(e) => setText(e.target.value)}
                     placeholder='Write your message...'
                     className={styles.input}
@@ -105,37 +119,23 @@ const Editor = () => {
                     </div>
 
                     <div className={styles.textFormats}>
-                        <BsListUl
-                            onClick={() => setTextFormatting('listUl')}
-                            className={textFormatting == "listUl" ? styles.active : ''}
-                        />
-                        <BsListOl
-                            onClick={() => setTextFormatting('listOl')}
-                            className={textFormatting == "listOl" ? styles.active : ''}
-                        />
-                        <FiAlignLeft
-                            onClick={() => setTextFormatting('left')}
-                            className={textFormatting == "left" ? styles.active : ''}
-                        />
-                        <FiAlignCenter
-                            onClick={() => setTextFormatting('center')}
-                            className={textFormatting == "center" ? styles.active : ''}
-                        />
-                        <FiAlignRight
-                            onClick={() => setTextFormatting('right')}
-                            className={textFormatting == "right" ? styles.active : ''}
-                        />
-                        <FiAlignJustify
-                            className={textFormatting === "justify" ? styles.active : ''}
-                            onClick={() => setTextFormatting('justify')}
 
-                        />
+                        {formattingOptions.map(option => (
+                            <option.icon
+                                key={option.value}
+                                onClick={() => setTextFormatting(option.value)}
+                                className={textFormatting === option.value ? styles.active : ''}
+                            />
+                        ))}
                     </div>
                 </div>
-                <div ></div>
+
             </div>
-
-
+            <div className={styles.buttons}> 
+            
+            <span className={styles.sendButton}>< FaFile /> < FaImage/></span>
+            <span className={styles.sendButton}> <MdDelete/><SendBtn /></span>
+             </div>
         </div>
     )
 }
