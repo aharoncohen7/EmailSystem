@@ -1,5 +1,5 @@
 
-const emailController = require('../DL/controllers/email.controller')
+const emailController = require('../DL/controllers/chat.controller')
 const messageServices = require('../BL/message.services')
 const userServices = require('../BL/user.services')
 

@@ -13,6 +13,10 @@ app.use(express.json())//ממיר את הבקשה לJSON בצורה אוטומט
 app.use("/api/email",auth, mainRouter.emailRouter)
 app.use("/api/user",auth, mainRouter.userRouter)
 app.use("/api/user/emails",auth, mainRouter.usersEmailsRouter)
+app.use("/api/chat",auth, mainRouter.chatRouter)
+
+
+// require('./DL/test_data')
 
 
 app.listen(port,()=> console.log("server is running in port: " + port))//+ יצירת מאזין בפורט שמסופק + פונקציה שמופעלת בעת עליית השרת

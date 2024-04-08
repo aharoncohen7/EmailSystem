@@ -19,11 +19,17 @@ export default function App() {
           {/* <Route path="login" element={<h1>login</h1>} /> */}
           <Route element={<MainLayout />}>
             <Route path="emails" element={<EmailsTypeLayout />} >
+
               <Route path=":emailType" element={<EmailsListLayout />} >
+
                 <Route path=":emailId" element={<Chat />} />
+
               </Route>
+
             </Route>
+
           </Route>
+          
         </Routes>
         {content && <PopUp/>}
       </div></PopupContext.Provider>

@@ -3,6 +3,7 @@ import EmailLi from '../EmailLi'
 import InputSearch from '../InputSearch'
 import styles from './style.module.css'
 import { NavLink, useParams } from 'react-router-dom'
+import axios from 'axios';
 
 
 
@@ -179,30 +180,53 @@ const emailList = [
     }
 ]
 
+const flags = {
+    "inbox": "inbox",
+    "sent emails": "send",
+    "favorite": "favorite",
+    "deleted": "deleted",
+    "draft": "draft"
+}
 
 const EmailLIst = () => {
-
     const [input, setInput] = useState('')
-    const [filteredEmailList1, setFilteredEmailList1] = React.useState(emailList);
-
+    const [filteredEmailList, setFilteredEmailList] = React.useState([]);
     const { emailType } = useParams()
-    let filter;
-    if (emailType == "inbox") {
-        ;
-        filter = "isRecieved"
-    }
-    if (emailType == "sent emails") {
-        filter = "isSent"
-    }
-    if (emailType == "favorite") {
-        filter = "isFavorite"
-    }
-    if (emailType == "deleted") {
-        filter = "isDeleted"
-    }
+    const filter = flags[emailType]
+    console.log(filter);
+   
+    useEffect(() => {
+        const getInbox = async () => {
+            try {
+              const url = "http://localhost:4004/api/chat/flags";
+              const response = await axios.post(url, {
+                flags: ["notread", `${filter}`]
+              }, {
+                headers: {
+                  'Content-Type': 'application/json',
+                  // 'authorization': localStorage.getItem('Authorization') || ''
+                }
+              });
+              if (!response.data) {
+                if (response.status === 401) {
+                  // Handle unauthorized access
+                }
+                throw new Error(`Network response was not ok! status: ${response.status}`);
+              }
+              console.log(response.data);
+              setFilteredEmailList(response.data);
+            } catch (error) {
+              console.error("Error fetching posts:", error);
+            }
+          };
+          
 
 
-    
+        getInbox();
+    }, [emailType, input]);
+
+
+
 
 
 
@@ -225,7 +249,7 @@ const EmailLIst = () => {
             const newEmailList = emailList.filter((item) => {
                 return item[filter] && item.email.subject.toLowerCase().includes(input.toLowerCase());
             })
-            setFilteredEmailList1(newEmailList)
+            setFilteredEmailList(newEmailList)
         }
         basicFilter()
     }, [emailType, input])
@@ -277,7 +301,7 @@ const EmailLIst = () => {
                 </div>
 
                 {
-                    filteredEmailList1.map((item, index) => {
+                    filteredEmailList.map((item, index) => {
                         return (
                             <NavLink
                                 key={item._id}

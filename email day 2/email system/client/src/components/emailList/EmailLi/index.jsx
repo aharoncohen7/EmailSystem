@@ -5,11 +5,7 @@ import { BiSolidStar } from "react-icons/bi";
 import { FaEnvelope } from "react-icons/fa";
 
 const EmailLi = ({item}) => {
-    const [isFavorite, setIsFavorite] = React.useState(true)
-
-    
-
-
+  console.log(item);
 
   return (
    
@@ -18,7 +14,7 @@ const EmailLi = ({item}) => {
         src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
         <div className={styles.middle} >
           <h3>Jessica Koel</h3>
-          <p className={styles.msg}>{item.email.subject? item.email.subject : "hlloe jon.."}</p>
+          <p className={styles.msg}>{item?.chat?.subject ? item?.chat?.subject : "hlloe jon.."}</p>
         </div>
         <div className={styles.information} >
           <p className={styles.time}> 11:34</p>

@@ -5,7 +5,10 @@ import NewMsgBtn from '../NewMsgBtn'
 import Header from '../Header'
 import LabelList from '../LabelList'
 
+
 const EmailTypeNav = () => {
+
+  
   return (
     <div className={styles.main}>
         <Header/>

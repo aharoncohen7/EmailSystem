@@ -1,66 +1,57 @@
-const mongoose = require("mongoose");
-require("./message.model")
-require("./email.model")
-
+const mongoose = require('mongoose')
+require('./chat.model')
 
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
-        required: true,
-        unique: true
+        unique: true,
+        required: true
     },
     fullName: {
         type: String,
-        required: true,
+        required: true
     },
     password: {
         type: String,
-        required: true,
-        select: true,
+        select: false
     },
-
     avatar: String,
-    
-    isActive: {
-        type: Boolean, 
-        default: true
-    },
 
-    emails: [{
-        email: {
+    chats: [{
+        chat: {
             type: mongoose.SchemaTypes.ObjectId,
-            ref: 'email',
-            required: true,
+            ref: 'chat'
         },
-        isRead: {
-            type: Boolean, 
-            default: false
-        },
-        isSent: {
-            type: Boolean, 
-            default: false
-        },
-        isRecieved: {
-            type: Boolean, 
-            default: false
-        },
-        isFavorite: {
-            type: Boolean, 
-            default: false
-        },
-        isDeleted: {
-            type: Boolean, 
-            default: false
-        },
+        isSent: Boolean,
+        isRecieved: Boolean,
+        isFavorite: Boolean,
+        isDeleted: Boolean,
+        isDraft: Boolean,
+        isRead: { type: Boolean, default: false },
+        labels: [String]
     }],
 
+    isActive: {
+        type: Boolean,
+        default: true
+    }
 })
 
-
-const userModel = mongoose.model("user", userSchema)
+const userModel = mongoose.model('user', userSchema)
 
 module.exports = userModel
 
+async function go() {
+    require('dotenv').config()
+    require('../db').connect()
+    let chats2 = await userModel.findOne({_id:"660d26b92a155d99889d3942"}).populate('chats.chat')
+    let {chats} = await chats2.populate('chats.chat.msg')//.populate('chats.chat.to');
+    // console.log(chats[0].chat);
+    let res = chats.filter(c=>c.isRecieved)
+    console.log(res);
+
+}
+// go()
 
 
 
