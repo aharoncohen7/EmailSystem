@@ -5,14 +5,19 @@ const userModel = require("../models/user.model")
 async function create(data) {
     return await userModel.create(data)
 }
-async function read(filter) {
+async function read(filter, populate={}) {
     console.log(filter);
-    return await userModel.find({ ...filter, isActive: true })
+    let data = await userModel.find({ ...filter, isActive: true })
+    if(populate.chats) data=await data.populate('chats.chat')
+    if(populate.users) data=await data.populate('chats.chat.members')
+    return data
 }
+
 async function readOne(filter, populate={}) {
+    console.log(filter);
     let data = await userModel.findOne({ ...filter, isActive: true })
-    // if(populate.chats) data=await data.populate('chats.chat')
-    // if(populate.users) data=await data.populate('chats.chat.members')
+    if(populate.chats) data=await data.populate('chats.chat')
+    if(populate.users) data=await data.populate('chats.chat.members')
     return data//.toObject()
 }
 
@@ -23,9 +28,12 @@ async function update(id, data) {
 async function del(id) {
     return await update(id, { isActive: false })
 }
+
 async function save(user) {
     return await user.save()
 }
+
+
 async function readByFlags(id, flags = [], populate = {}) {
     let data = await userModel.findOne({ _id: id, isActive: true })
     data.chats = data.chats.filter(c => flags.every(f => {
@@ -44,6 +52,33 @@ async function readByFlags(id, flags = [], populate = {}) {
 
 const userController = { create, read, readOne, update, del, save, readByFlags }
 module.exports = userController
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // async function create(data){
 //     return await userModel.create(data)
 // }

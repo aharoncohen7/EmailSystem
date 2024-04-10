@@ -3,7 +3,7 @@ const userRouter = express.Router()
 const userServices = require("../BL/user.services")
 
 
-// קבלת כולם
+// קבלת כל היוזרים
 userRouter.get("/", async (req, res) => {
     console.log("start get all");
     try {
@@ -16,7 +16,7 @@ userRouter.get("/", async (req, res) => {
     }
 });
 
-// קבלה לפי ID
+// קבלת יוזר לפי מזהה
 userRouter.get("/:userId", async (req, res) => {
     console.log("start get user by id");
     const userId = req.params.userId;
@@ -31,7 +31,7 @@ userRouter.get("/:userId", async (req, res) => {
 });
 
 
-// new user
+// יצירת יוזר
 userRouter.post("/", async (req, res) => {
     console.log("start create new user");
     const userToCreate = req.body;
@@ -47,7 +47,7 @@ userRouter.post("/", async (req, res) => {
 });
 
 
-// delete user (update)
+// מחיקת יוזר עדכון
 userRouter.put("/:userId", async (req, res) => {
     console.log("start delete user");
     const userId = req.params.userId;
@@ -60,6 +60,25 @@ userRouter.put("/:userId", async (req, res) => {
         res.status(400).send(err.msg || err.message || "wrong")
     }
 });
+
+
+module.exports = { userRouter }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // // דואר נכנס
@@ -135,7 +154,7 @@ userRouter.put("/:userId", async (req, res) => {
 //         const userId = req.user._id;
 //         const emailId = req.params.emailId;  
 //         console.log(field, userId, emailId)              
-//         const updatedEmail = await userServices.updateEmail({_id:userId, emails:{$elemMatch:{email:{_id: emailId}}}}, field)
+//         const updatedEmail = await userServices.updateChat({_id:userId, emails:{$elemMatch:{email:{_id: emailId}}}}, field)
 //         console.log(updatedEmail);
 //        res.send(updatedEmail)
 //     }
@@ -146,5 +165,3 @@ userRouter.put("/:userId", async (req, res) => {
 
 
 
-
-module.exports = { userRouter }

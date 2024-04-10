@@ -1,11 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import styles from './style.module.css'
 import MsgLi from '../MsgLi';
 import EmailTitle from '../EmailTitle';
-import { setDateAndTime } from './../../helpers/index.js'
+import { formatDateTime } from './../../helpers/index.js'
+import  axios from 'axios';
 
 const EmailPage = () => {
+  const { chatId } = useParams()
+  console.log(chatId);
   const [isExpand, setIsExpand] = useState(false);
+  const [itemChat, setItemChat] = useState({});
+
   const thisUser = { "userId": "602c49ceb02aca8db6f826d", "emailAddress": "user2@example.com" }
 
   const item =
@@ -107,15 +113,45 @@ const EmailPage = () => {
     "_id": "6602c49eeb02aca8db6f8287"
   }
 
+  const getChat = async () => {
+    try {
+      const url = `http://localhost:4004/api/chats/${chatId}`;
+      const response = await axios.get(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          // 'authorization': localStorage.getItem('Authorization') || ''
+        }
+      });
+      if (!response.data) {
+        console.log();
+        if (response.status === 401) {
+          // Handle unauthorized access
+        }
+        throw new Error(`Network response was not ok! status: ${response.status}`);
+      }
+      console.log("this chat 😊🐱‍💻", response.data);
+      setItemChat(response.data);
+    } catch (error) {
+      console.error("Error fetching :", error);
+    }
+  };
+
+
+  useEffect(() => {
+    getChat()
+  }, [chatId]);
+
+
 
   return (
     <div className={styles.main}>
       <>
-        <EmailTitle date={setDateAndTime(item.email.lastDate)} subject={item.email.subject} />
+        <EmailTitle date={itemChat?.lastDate ? formatDateTime(itemChat.lastDate) : "00:00"} subject={itemChat.subject} />
         <div className={styles.list}>
-          {item.email.msg.map((msg) => (
+          {itemChat.msg && itemChat.msg.map((msg) => (
             <div key={msg._id} className={styles.msgLi}>
-              <MsgLi msg={msg} thisUser={thisUser} isExpand={isExpand} setIsExpand={setIsExpand} /></div>
+              <MsgLi msg={msg} thisUser={thisUser} isExpand={isExpand} setIsExpand={setIsExpand} />
+              </div>
           ))}
         </div>
       </>

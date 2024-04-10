@@ -1,6 +1,3 @@
-
-
-
 const chatModel = require('../models/chat.model')
 
 //CRRUD
@@ -10,8 +7,11 @@ async function create(data) {
 async function read(filter,isPopulate) {
     return await chatModel.find(filter).populate(isPopulate ? 'msg' :'')
 }
-async function readOne(filter) {
-    return await chatModel.findOne(filter)
+async function readOne(filter, isPopulate) {
+    return await chatModel.findOne(filter).populate(isPopulate ? ['msg', 'members', {path: 'members.from',
+    populate: {
+        path: 'avatar'
+    }}] :'')
 }
 async function update(id, data) {
     // return await chatModel.findOneAndUpdate({_id:id}, data,{new : true})
@@ -27,6 +27,40 @@ async function delForEver(id){
 
 
 module.exports = { create, read, readOne, update, del, delForEver }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

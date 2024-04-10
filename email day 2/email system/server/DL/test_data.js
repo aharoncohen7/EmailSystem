@@ -222,17 +222,25 @@ async function go() {
         first.chats.push({
             chat: ee._id,
             isSent: true,
+            isSent: Boolean(Math.round(Math.random())),
+            isFavorite: Boolean(Math.round(Math.random())),
+            isDeleted: Boolean(Math.round(Math.random())),
+            isDraft: Boolean(Math.round(Math.random())),
             isRecieved: ee.members.includes(first._id, 1),
         })
         await first.save();
 
         ee.members
             .filter(m => m._id != first._id)
-            .forEach(async m =>{
-                let mm = members.find(mem=>mem._id==m._id)
+            .forEach(async m => {
+                let mm = members.find(mem => mem._id == m._id)
                 mm.chats.push({
                     chat: ee._id,
                     isRecieved: true,
+                    isSent: Boolean(Math.round(Math.random())),
+                    isFavorite: Boolean(Math.round(Math.random())),
+                    isDeleted: Boolean(Math.round(Math.random())),
+                    isDraft: Boolean(Math.round(Math.random())),
                 })
                 await mm.save()
             })

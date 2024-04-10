@@ -55,7 +55,7 @@ h3{
     flex-grow: 1;
 }
 
-.msg {
+.subject {
     color: var(--textGrey);
     font-size: small;
     font-weight: 400;

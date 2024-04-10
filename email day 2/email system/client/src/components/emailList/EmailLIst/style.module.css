@@ -10,9 +10,37 @@
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    height: 95vh;
+    height: 94vh;
     gap: 14px;
+    /* overflow: auto; */
 }
+
+.emailList{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* height: 800px; */
+    overflow: auto;
+}
+
+
+
+  /* עיצוב פס הגלילה */
+  .emailList::-webkit-scrollbar {
+    width: 5px; /* רוחב פס הגלילה */
+  }
+  
+  .emailList::-webkit-scrollbar-track {
+    background: #f1f1f1; /* צבע רקע של פס הגלילה */
+  }
+  
+  .emailList::-webkit-scrollbar-thumb {
+    background: #888; /* צבע פס הגלילה עצמו */
+  }
+  
+  .emailList::-webkit-scrollbar-thumb {
+    background: var(--primary-color); /* צבע פס הגלילה בעת העברת העכבר עליו */
+  }
 
 .header{
     display: flex;

@@ -17,12 +17,12 @@ export default function App() {
       <div>
         <Routes>
           {/* <Route path="login" element={<h1>login</h1>} /> */}
-          <Route element={<MainLayout />}>
-            <Route path="emails" element={<EmailsTypeLayout />} >
+          <Route path="" element={<MainLayout />}>
+            <Route path="chats" element={<EmailsTypeLayout />} >
 
-              <Route path=":emailType" element={<EmailsListLayout />} >
+              <Route path=":chatType" element={<EmailsListLayout />} >
 
-                <Route path=":emailId" element={<Chat />} />
+                <Route path=":chatId" element={<Chat />} />
 
               </Route>
 

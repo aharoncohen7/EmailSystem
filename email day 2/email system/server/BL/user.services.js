@@ -4,7 +4,7 @@ const userControler =
 
 async function getAll(filter) {
   let users = await userControler.read(filter)
-  users
+  return users
 }
 
 async function getById(filter) {
@@ -25,9 +25,10 @@ async function deleteById(id) {
 }
 
 
-async function updateEmail(filter, emailId, field) {
+async function updateChat(filter, emailId, field) {
+  console.log(filter, emailId, field);
   let user = await userControler.readOne(filter)
-  const foundEmail = user.emails.find(email => email._id == emailId);
+  const foundEmail = user.chats.find(email => email._id == emailId);
   if(field=="isSent"||field=="isRecieved"){
     foundEmail[field] = true;
   }
@@ -37,6 +38,7 @@ async function updateEmail(filter, emailId, field) {
   await user.save()
   return user
 }
+
 
 
 async function getEmailsByFilter(filter, field) {
@@ -55,7 +57,7 @@ module.exports = {
   getById,
   create,
   deleteById,
-  updateEmail,
+  updateChat,
   getEmailsByFilter,
   // getAllEmailMsg
 }

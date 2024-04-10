@@ -1,5 +1,5 @@
 
-const emailController = require('../DL/controllers/chat.controller')
+const chatController = require('../DL/controllers/chat.controller')
 const messageServices = require('../BL/message.services')
 const userServices = require('../BL/user.services')
 
@@ -9,11 +9,11 @@ async function getAll() {
 }
 
 async function getAllRecieved() {
-  return await emailController.read({}, true)
+  return await chatController.read({}, true)
 }
 
 async function getAllEmailMsg(emailId) {
-  return await emailController.read({_id: emailId}, true)
+  return await chatController.read({_id: emailId}, true)
 }
 
 // שליחת הודעה לשיחה קיימת
@@ -25,7 +25,7 @@ async function addMessageToEmail(msg, emailId) {
   //יצירת הודעה
   let msgDB = await messageServices.createMessage(msg)
   //הבאת אמייל שורש
-  let updatedEmail = await emailController.readOne({ _id: emailId })
+  let updatedEmail = await chatController.readOne({ _id: emailId })
   //הוספת הודעה לשיחה
   updatedEmail.msg.push(msgDB._id)
   //עדכון זמן אחרון
@@ -34,7 +34,7 @@ async function addMessageToEmail(msg, emailId) {
    //קבלת משתמש שולח
    let userFrom = await userServices.getById({_id:msg.from})
    //קבלת אייטם שמכיל את האמייל אצל היוזר
-   let userFrom_Email = userFrom.emails.find(item => item.email == emailId)
+   let userFrom_Email = userFrom.chats.find(item => item.email == emailId)
    //עדכון שליחה
    userFrom_Email.isSent = true;
    //עדכון קריאה
@@ -42,15 +42,14 @@ async function addMessageToEmail(msg, emailId) {
    //שמירה
    userFrom.save()
   //  קבלת נמען
-   let userTo_Email = userTo.emails.find(item => item.email == emailId)
+   let userTo_Email = userTo.chats.find(item => item.email == emailId)
    //עדכון קבלה
    userTo_Email.isRecieved = true;
   // עדכון אי קריאה
   userTo_Email.isRead  = false;
   //  שמירה
    userTo.save()
-
-  return await emailController.readOne({ _id: emailId }, true)
+  return await chatController.readOne({ _id: emailId }, true)
 }
 
 
@@ -66,24 +65,24 @@ async function sendNewEmail(msg, subject) {
   //קבלת מזהה הודעה חדשה
   const msgId= msgDB._id;
   //יצירת אמייל חדש ושיבוץ ההודעה החדשה
-  let emailDB = await emailController.create({subject, msg: msgId})
+  let emailDB = await chatController.create({subject, msg: msgId})
   let emailId = emailDB._id;
   //קבלת משתמש שולח
   let userFrom = await userServices.getById({_id:msg.from})
   // console.log(userFrom);
   // הוספת שיחה לשולח
-  userFrom.emails.push({email: emailId})
+  userFrom.chats.push({email: emailId})
   //עדכון שליחה
-  userFrom.emails[userFrom.emails.length-1].isSent = true;
+  userFrom.chats[userFrom.chats.length-1].isSent = true;
   //עדכון קריאה
-  userFrom.emails[userFrom.emails.length-1].isRead = true;
+  userFrom.chats[userFrom.chats.length-1].isRead = true;
   userFrom.save()
   //הכנסת שיחה למקבל
-  userTo.emails.push({email: emailId})
+  userTo.chats.push({email: emailId})
   //עדכון קבלה
-  userTo.emails[userTo.emails.length-1].isRecieved = true;
+  userTo.chats[userTo.chats.length-1].isRecieved = true;
   //עדכון אי קריאה כששלח לעצמו
-  // userFrom.emails[userFrom.emails.length-1].isRead = false;
+  // userFrom.chats[userFrom.chats.length-1].isRead = false;
   userTo.save()
   return userTo
 }

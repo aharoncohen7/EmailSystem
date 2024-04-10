@@ -28,13 +28,13 @@ const EmailTypeList = () => {
 
 
     const [isHovering, setIsHovering] = useState(false);
-    const [emailsUser, setEmailsUser] = useState([]);
+    const [numNotRead, setNumNotRead] = useState([]);
 // const [filteredData, setFilteredData] = useState([]);
 
 
-const getInbox = async () => {
+const getNotRead = async () => {
     try {
-      const url = "http://localhost:4004/api/chat/";
+      const url = "http://localhost:4004/api/user-chats/not-read";
       const response = await axios.get(url, {
         headers: {
           'Content-Type': 'application/json',
@@ -48,9 +48,9 @@ const getInbox = async () => {
         throw new Error(`Network response was not ok! status: ${response.status}`);
       }
       console.log(response.data);
-      setEmailsUser(response.data);
+      setNumNotRead(response.data);
     } catch (error) {
-      console.error("Error fetching posts:", error);
+      console.error("Error fetching notRead:", error);
     }
   };
 
@@ -59,34 +59,7 @@ const getInbox = async () => {
 
 
 useEffect(() => {
-//   const getInbox = async () => {
-//     try {
-//       const url = "http://localhost:4004/api/chat/flags";
-//       const response = await axios.get(url, {
-//         headers: {
-//           'Content-Type': 'application/json',
-//           // 'authorization': localStorage.getItem('Authorization') || ''
-//         },
-//         body:{
-//           flags:["notread", "inbox"]}
-//       });
-//       if (!response.data) {
-//         if (response.status === 401) {
-          
-//         }
-//         throw new Error(`Network response was not ok! status: ${response.status}`);
-//       }
-//       console.log(response.data);
-//       setEmailsUser(response.data);
-
-//       // console.log(response.data);
-//     } catch (error) {
-//       console.error("Error fetching posts:", error);
-//     }
-//   };
-
-  
-  getInbox();
+  getNotRead();
 }, []);
 
 
@@ -106,7 +79,7 @@ useEffect(() => {
                     <li className={styles.li} title={obj.name}>
                         <obj.icon className={styles.icon} />
                         <span className={styles.name}>{obj.name}</span>
-                        {(obj.name=="Favorite" || obj.name=="Inbox") && <Badge>{emailsUser[obj.name2]}</Badge>}
+                        {((obj.name=="Favorite" || obj.name=="Inbox") && numNotRead[obj.name2]) && <Badge>{numNotRead[obj.name2]}</Badge>}
                     </li>
 
                 </NavLink>

@@ -9,9 +9,9 @@ const labeledColors = [
     { name: "Work In Progress", color: "green" },
     { name: "Personal", color: "blue" },
     { name: "Urgent", color: "yellow" },
-    { name: "Important", color: "pink" },
-    { name: "Family", color: "purple" },
-    { name: "Social", color: "brown" }
+    { name: "Important", color: "#FFA07A" },
+    { name: "Family", color: "#6495ED" },
+    { name: "Social", color: "#FFB6C1" }
 ];
 
 

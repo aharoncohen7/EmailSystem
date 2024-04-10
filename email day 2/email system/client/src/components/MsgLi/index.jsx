@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from './style.module.css'
 import { BiSolidShare } from "react-icons/bi";
-import { setDateAndTime } from "./../../helpers/index.js"
+import { formatDateTime } from "./../../helpers/index.js"
 
 export const MsgLi = ({ msg, thisUser, setIsExpand, isExpand }) => {
   console.log(msg._id);
@@ -44,7 +44,7 @@ return (
        
        
         {/* תאריך3 */}
-        <span className={styles.date}>{setDateAndTime(msg.date)}</span>
+        <span className={styles.date}>{formatDateTime(msg.date)}</span>
       </div>
     </div>
 

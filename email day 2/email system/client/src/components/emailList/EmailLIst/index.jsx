@@ -191,82 +191,54 @@ const flags = {
 const EmailLIst = () => {
     const [input, setInput] = useState('')
     const [filteredEmailList, setFilteredEmailList] = React.useState([]);
-    const { emailType } = useParams()
-    const filter = flags[emailType]
+    const {chatType } = useParams()
+    const filter = flags[chatType]
     console.log(filter);
    
-    useEffect(() => {
-        const getInbox = async () => {
-            try {
-              const url = "http://localhost:4004/api/chat/flags";
-              const response = await axios.post(url, {
-                flags: ["notread", `${filter}`]
-              }, {
-                headers: {
-                  'Content-Type': 'application/json',
-                  // 'authorization': localStorage.getItem('Authorization') || ''
-                }
-              });
-              if (!response.data) {
-                if (response.status === 401) {
-                  // Handle unauthorized access
-                }
-                throw new Error(`Network response was not ok! status: ${response.status}`);
-              }
-              console.log(response.data);
-              setFilteredEmailList(response.data);
-            } catch (error) {
-              console.error("Error fetching posts:", error);
+    const getChatsByChatType = async () => {
+        try {
+          const url = `http://localhost:4004/api/user-chats/by-plag/${filter}`;
+          const response = await axios.get(url, {
+            // flags: ["notread", `${filter}`]
+          }, {
+            headers: {
+              'Content-Type': 'application/json',
+              // 'authorization': localStorage.getItem('Authorization') || ''
             }
-          };
-          
-
-
-        getInbox();
-    }, [emailType, input]);
-
-
-
-
-
-
-
-    // const [filteredEmailList2, setFilteredEmailList2] = React.useState(filteredEmailList1);
-
-    // const searchFilter = (input) => {
-    //     // if(!input){
-    //     //     setFilteredEmailList1(filteredEmailList1)
-    //     // }
-    //     const newEmailList = filteredEmailList1.filter((item) => {
-    //         return item.email.subject.toLowerCase().includes(input.toLowerCase())
-    //     })
-    //     setFilteredEmailList2(newEmailList)
-    // }
+          });
+          if (!response.data) {
+            if (response.status === 401) {
+              // Handle unauthorized access
+            }
+            throw new Error(`Network response was not ok! status: ${response.status}`);
+          }
+          console.log(response.data);
+          setFilteredEmailList(response.data);
+        } catch (error) {
+          console.error("Error fetching p:", error);
+        }
+      };
 
 
     useEffect(() => {
-        const basicFilter = () => {
-            const newEmailList = emailList.filter((item) => {
-                return item[filter] && item.email.subject.toLowerCase().includes(input.toLowerCase());
-            })
-            setFilteredEmailList(newEmailList)
-        }
-        basicFilter()
-    }, [emailType, input])
+        getChatsByChatType();
+    }, [chatType, input]);
 
-
-
-
-
+    // חיפוש פנימי לא עובד כרגע
     // useEffect(() => {
-    //     const basicFilter2 = ()=>{ 
-    //         const newEmailList = filteredEmailList1.filter((item) => {
-    //             return item.email.subject.toLowerCase().includes(input.toLowerCase())
+    //     const basicFilter = () => {
+    //         const newEmailList = filteredEmailList.filter((item) => {
+    //             return item[filter] && item.email.subject.toLowerCase().includes(input.toLowerCase());
     //         })
-    //         setFilteredEmailList1(newEmailList)
+    //         setFilteredEmailList(newEmailList)
     //     }
-    //     basicFilter2()
-    // },[input])
+    //     basicFilter()
+    // }, [chatType, input])
+
+
+
+
+    
 
 
 
@@ -300,12 +272,13 @@ const EmailLIst = () => {
 
                 </div>
 
-                {
+               <span className={styles.emailList}>
+               {
                     filteredEmailList.map((item, index) => {
                         return (
                             <NavLink
                                 key={item._id}
-                                to={`${item._id}`}
+                                to={`${item.chat._id}`}
                                 className={({ isActive }) =>
                                     `${isActive ? styles.active : ""} ${styles.box}`
                                 }
@@ -320,6 +293,7 @@ const EmailLIst = () => {
                         )
                     })
                 }
+               </span>
 
             </div>
 
@@ -328,4 +302,40 @@ const EmailLIst = () => {
     )
 }
 
-export default EmailLIst
+export default EmailLIst;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //  חיפוש פנימי - מבוטל
+    // const searchFilter = (input) => {
+    //     // if(!input){
+    //     //     setFilteredEmailList1(filteredEmailList1)
+    //     // }
+    //     const newEmailList = filteredEmailList1.filter((item) => {
+    //         return item.email.subject.toLowerCase().includes(input.toLowerCase())
+    //     })
+    //     setFilteredEmailList2(newEmailList)
+    // }
+
+
+    // useEffect(() => {
+    //     const basicFilter2 = ()=>{ 
+    //         const newEmailList = filteredEmailList1.filter((item) => {
+    //             return item.email.subject.toLowerCase().includes(input.toLowerCase())
+    //         })
+    //         setFilteredEmailList1(newEmailList)
+    //     }
+    //     basicFilter2()
+    // },[input])

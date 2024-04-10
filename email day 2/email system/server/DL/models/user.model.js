@@ -22,11 +22,11 @@ const userSchema = new mongoose.Schema({
             type: mongoose.SchemaTypes.ObjectId,
             ref: 'chat'
         },
-        isSent: Boolean,
-        isRecieved: Boolean,
-        isFavorite: Boolean,
-        isDeleted: Boolean,
-        isDraft: Boolean,
+        isSent: { type: Boolean, default: false },
+        isRecieved: { type: Boolean, default: false },
+        isFavorite: { type: Boolean, default: false },
+        isDeleted: { type: Boolean, default: false },
+        isDraft: { type: Boolean, default: true },
         isRead: { type: Boolean, default: false },
         labels: [String]
     }],
