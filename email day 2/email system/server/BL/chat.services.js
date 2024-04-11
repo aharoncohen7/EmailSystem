@@ -32,7 +32,7 @@ async function getNotRead(userId) {
 
 // קבלת צאטים לפי קטגוריה
 async function getChats(userId, flag) {
-  console.log(flag);
+  console.log(userId, flag);
   if (!funcs[flag]) throw { msg: 'no filter found' }
   let { chats } = await userController.readByFlags(userId, funcs[flag], { chats: true, users: true });
   return chats
@@ -139,10 +139,29 @@ async function addMessageToChat(body) {
 
 
 // קבלת צ'אט מסויים עבור הצד הימני באתר
+// async function getChatById(chatId, userId) {
+//   console.log(chatId, userId);
+//   let { chats } = await userController.readByFlags(userId, ["inbox"], { chats: true, users: true });
+//   console.log("🚀 ~ getChatById ~ chats:", chats)
+  
+//   const chatToShow = chats.find(c => c.chat == chatId)
+//   console.log("🚀 ~ getChatById ~ chatToShow:", chatToShow)
+// //   if(chatToShow.members.includes(userId)){
+// //     return chatToShow;
+// //  }
+// //  else{
+// //    return null
+// //  }
+// return chatToShow
+// }
+
+
+// // קבלת צ'אט מסויים עבור הצד הימני באתר
 async function getChatById(chatId, userId) {
   console.log(chatId, userId);
   const chatToShow = await chatController.readOne({_id: chatId}, true);
-  console.log(chatToShow);
+  console.log("🚀 ~ getChatById ~ chatToShow:", chatToShow)
+  // console.log(chatToShow);
 //   if(chatToShow.members.includes(userId)){
 //     return chatToShow;
 //  }

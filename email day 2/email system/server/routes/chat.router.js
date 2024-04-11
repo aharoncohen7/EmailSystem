@@ -59,11 +59,12 @@ chatRouter.post("/", async (req, res) => {
 
 
 // שליחת הודעה בצ'אט קיים
-chatRouter.put("/", async (req, res) => {
+chatRouter.put("/:chatId", async (req, res) => {
     console.log("start add new message to old chat");
     try {
         req.body.from = req.user._id;
-        console.log(req.user._id);       
+        req.body.chatId = req.params.chatId;
+        // console.log(req.user._id);       
         const updatedChat = await chatServices.addMessageToChat(req.body)
         // console.log(newEmail);
         res.send(updatedChat)

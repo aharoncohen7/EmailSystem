@@ -1,4 +1,5 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
+import { useParams } from 'react-router-dom'
 import styles from './style.module.css'
 import { FiAlignRight } from "react-icons/fi";
 import { FiAlignLeft } from "react-icons/fi";
@@ -16,9 +17,11 @@ import { FaFile } from "react-icons/fa";
 
 import Colors from '../Colors';
 import SendBtn from '../SendBtn';
+import axios from 'axios';
 
 
-const Editor = () => {
+const Editor = ({setChange}) => {
+    const { chatId } = useParams()
     const [selectedColor, setSelectedColor] = React.useState("black");
     const [showColors, setShowColors] = React.useState(false);
     const [text, setText] = React.useState("");
@@ -29,6 +32,38 @@ const Editor = () => {
     });
     const [textFormatting, setTextFormatting] = React.useState("left")
     const divRef = React.useRef(null);
+
+    async function sendMessage() {
+        if (text) {
+            try {
+                const url = `http://localhost:4004/api/chats/${chatId}`;
+                const response = await axios.put(url, {
+                    content: text
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // 'authorization': localStorage.getItem('Authorization') || ''
+                    }
+                });
+                if (!response.data) {
+
+                    if (response.status === 401) {
+                        // Handle unauthorized access
+                    }
+                    throw new Error(`Network response was not ok! status: ${response.status}`);
+                }
+                console.log("response.data 😊🐱‍💻", response.data);
+                setText("")
+                setChange(prev=>{return !prev})
+            } catch (error) {
+                console.error("Error sending message :", error);
+            }
+        }
+    };
+
+
+
+
 
 
 
@@ -78,14 +113,18 @@ const Editor = () => {
             <div className={styles.editorBox}>
 
                 <div
+                    ref={divRef}
                     contentEditable={true}
                     onClick={handleSelect}
                     value={text}
-                    onChange={(e) => setText(e.target.value)}
+                    onInput={(e) => {
+                        console.log(e.target.value);
+                        setText(divRef.current.textContent)
+                    }}
                     placeholder='Write your message...'
                     className={styles.input}
                 />
-                <div dangerouslySetInnerHTML={{ __html: text }} />
+                {/* <div dangerouslySetInnerHTML={{ __html: text }} /> */}
 
                 <div className={styles.formatting}>
                     <div className={styles.fontFormats}>
@@ -131,11 +170,11 @@ const Editor = () => {
                 </div>
 
             </div>
-            <div className={styles.buttons}> 
-            
-            <span className={styles.sendButton}>< FaFile /> < FaImage/></span>
-            <span className={styles.sendButton}> <MdDelete/><SendBtn /></span>
-             </div>
+            <div className={styles.buttons}>
+
+                <span className={styles.sendButton}>< FaFile /> < FaImage /></span>
+                <span className={styles.sendButton} onClick={sendMessage}> <MdDelete /><SendBtn /></span>
+            </div>
         </div>
     )
 }

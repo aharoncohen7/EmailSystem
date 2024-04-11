@@ -36,6 +36,8 @@ async function save(user) {
 
 async function readByFlags(id, flags = [], populate = {}) {
     let data = await userModel.findOne({ _id: id, isActive: true })
+    console.log("🚀 ~ readByFlags ~ data:", data)
+    
     data.chats = data.chats.filter(c => flags.every(f => {
         if (typeof f === 'object') {
             let [[k, v]] = Object.entries(f)
