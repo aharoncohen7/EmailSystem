@@ -4,7 +4,7 @@ import { BiSolidShare } from "react-icons/bi";
 import { formatDateTime } from "./../../helpers/index.js"
 
 export const MsgLi = ({ msg, chatToShow, thisUser, setIsExpand, isExpand }) => {
-  console.log(msg._id);
+  console.log(msg);
   const isSent = msg.from == thisUser._id;
   const isThisExpand = isExpand == msg._id;
 
@@ -51,7 +51,7 @@ export const MsgLi = ({ msg, chatToShow, thisUser, setIsExpand, isExpand }) => {
           }
 
           {/* 2תוכן מקוצר הכותרת */}
-          {!isThisExpand && <p className={styles.partialContent}> {msg.content} </p>}
+          {!isThisExpand && <p className={styles.partialContent}> {msg.content.replace(/<[^>]+>/g, '')} </p>}
 
 
           {/* תאריך3 */}
@@ -62,8 +62,8 @@ export const MsgLi = ({ msg, chatToShow, thisUser, setIsExpand, isExpand }) => {
 
 
       {/* תוכן מלא */}
-      {isThisExpand && <p className={styles.fullContent}>
-        {msg.content}
+      {isThisExpand && <p className={styles.fullContent}  >
+      <div dangerouslySetInnerHTML={{ __html: msg.content }} />
       </p>}
 
 

@@ -15,7 +15,7 @@ const EmailPage = ({change}) => {
 
   const thisUser = {
     email: "user1@example.com",
-    _id: "66170ecce1dc4522e7fa52f8",
+    _id: "6617d4a80c4b7ac054155405",
     fullName: "Moshe Cohen",
     password: "123qwe",
     avatar: "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairTheCaesar&accessoriesType=Sunglasses&hairColor=Auburn&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Side&eyebrowType=RaisedExcitedNatural&mouthType=Smile&skinColor=Yellow",
@@ -49,9 +49,6 @@ const EmailPage = ({change}) => {
   useEffect(() => {
     getChat()
   }, [chatId, change]);
-
-
-
 
 
   return (

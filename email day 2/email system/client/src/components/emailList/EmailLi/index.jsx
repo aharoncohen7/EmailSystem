@@ -6,7 +6,39 @@ import { FaEnvelope } from "react-icons/fa";
 import { getDescriptionOrTime } from '../../../helpers';
 
 const EmailLi = ({ item }) => {
-  // console.log(item.chat.members[0].avatar ?? item.chat.members[0].avatar );
+  console.log(item.chat.members[0].avatar ?? item.chat.members[0].avatar );
+
+
+  const updateIsFavorite = async () => {
+    try {
+      const url = `http://localhost:4004/api/user-chats/by-plag/${filter}`;
+      const response = await axios.get(url, {
+        // flags: ["notread", `${filter}`]
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          // 'authorization': localStorage.getItem('Authorization') || ''
+        }
+      });
+      if (!response.data) {
+        if (response.status === 401) {
+          // Handle unauthorized access
+        }
+        throw new Error(`Network response was not ok! status: ${response.status}`);
+      }
+      console.log(response.data);
+      setFilteredEmailList(response.data);
+    } catch (error) {
+      console.error("Error fetching p:", error);
+    }
+  };
+
+
+
+
+
+
+
 
   return (
 

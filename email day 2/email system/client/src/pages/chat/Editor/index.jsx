@@ -14,13 +14,14 @@ import { TbBucketDroplet } from "react-icons/tb";
 import { MdDelete } from "react-icons/md";
 import { FaImage } from "react-icons/fa";
 import { FaFile } from "react-icons/fa";
+import { PiSelectionAll } from "react-icons/pi";
 
 import Colors from '../Colors';
 import SendBtn from '../SendBtn';
 import axios from 'axios';
 
 
-const Editor = ({setChange}) => {
+const Editor = ({ setChange }) => {
     const { chatId } = useParams()
     const [selectedColor, setSelectedColor] = React.useState("black");
     const [showColors, setShowColors] = React.useState(false);
@@ -30,15 +31,34 @@ const Editor = ({setChange}) => {
         italic: false,
         underline: false,
     });
-    const [textFormatting, setTextFormatting] = React.useState("left")
-    const divRef = React.useRef(null);
+    const [textFormatting, setTextFormatting] = React.useState("underline");
+    const style ={
+        textDecoration: formatting.underline ? 'underline' : 'none',
+        fontStyle: formatting.italic ? 'italic' : 'none',
+        fontWeight: formatting.bold ? 'bold' : 'normal'
+    }
+    const divRef = useRef(null);
+
+    console.log(text);
+    useEffect(() => {
+        handleSelect()
+    }, [selectedColor])
+
+
+
+
+
+
+
+
+    //     }, [selectedColor])
 
     async function sendMessage() {
         if (text) {
             try {
                 const url = `http://localhost:4004/api/chats/${chatId}`;
                 const response = await axios.put(url, {
-                    content: text
+                    content: `<span style=${style}>${text}</span>`
                 }, {
                     headers: {
                         'Content-Type': 'application/json',
@@ -54,7 +74,8 @@ const Editor = ({setChange}) => {
                 }
                 console.log("response.data 😊🐱‍💻", response.data);
                 setText("")
-                setChange(prev=>{return !prev})
+                divRef.current.innerText = "";
+                setChange(prev => { return !prev })
             } catch (error) {
                 console.error("Error sending message :", error);
             }
@@ -89,7 +110,6 @@ const Editor = ({setChange}) => {
         if (selectedText) {
             // יצירת תגית עם העיצוב הנבחר
             const span = document.createElement('span');
-
             span.textContent = selectedText;
             span.style.color = `${selectedColor}`;
 
@@ -99,12 +119,21 @@ const Editor = ({setChange}) => {
             range.insertNode(span);
             // בסיום הפעולות, נבטל את כל הבחירות בעמוד
             window.getSelection().removeAllRanges();
+            setText(divRef.current.innerHTML)
         }
-        else {
-            //         document.execCommand('styleWithCSS', false, true);
-            // document.execCommand('foreColor', false,selectedColor);
-        }
+        // else {
+        //             document.execCommand('styleWithCSS', false, true);
+        //     document.execCommand('foreColor', false,selectedColor);
+        // }
     }
+
+
+
+    const handleSelectAll = () => {
+        divRef.current.select();
+        inputRef.current.focus();
+    };
+
 
 
 
@@ -115,15 +144,19 @@ const Editor = ({setChange}) => {
                 <div
                     ref={divRef}
                     contentEditable={true}
-                    onClick={handleSelect}
+                    // onClick={handleSelect}
+                    style={style}
                     value={text}
                     onInput={(e) => {
-                        console.log(e.target.value);
-                        setText(divRef.current.textContent)
+                        console.log(e.target.innerHTML);
+                        // setText(e.target.innerHTML);
+                        setText(divRef.current.innerHTML);
+
                     }}
-                    placeholder='Write your message...'
-                    className={styles.input}
+                    // placeholder='Write your message...'
+                    className={`${styles.input}`}
                 />
+
                 {/* <div dangerouslySetInnerHTML={{ __html: text }} /> */}
 
                 <div className={styles.formatting}>
@@ -152,6 +185,13 @@ const Editor = ({setChange}) => {
                                 toggleFontFormatting('underline')
                             }}
                         />
+                        {/* <PiSelectionAll
+                            value='selectAll'
+                            className={styles.selectAll}
+                            onClick={handleSelectAll}
+                        /> */}
+
+
 
                         <TbBucketDroplet style={{ color: selectedColor }} size={20} onClick={() => setShowColors(true)} />
                         {showColors && <Colors setColor={setSelectedColor} setShowColors={setShowColors} />}
@@ -171,9 +211,11 @@ const Editor = ({setChange}) => {
 
             </div>
             <div className={styles.buttons}>
-
                 <span className={styles.sendButton}>< FaFile /> < FaImage /></span>
-                <span className={styles.sendButton} onClick={sendMessage}> <MdDelete /><SendBtn /></span>
+                <span className={styles.sendButton} onClick={sendMessage}>
+                    <MdDelete onClick={sendMessage} />
+                    <SendBtn onClick={() => divRef.current.innerText = ""} />
+                </span>
             </div>
         </div>
     )
