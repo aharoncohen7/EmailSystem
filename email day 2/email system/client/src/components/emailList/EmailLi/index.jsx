@@ -4,15 +4,16 @@ import Badge from '../Badge'
 import { BiSolidStar } from "react-icons/bi";
 import { FaEnvelope } from "react-icons/fa";
 import { getDescriptionOrTime } from '../../../helpers';
+import axios from 'axios'
 
-const EmailLi = ({ item }) => {
+const EmailLi = ({ item, setChange}) => {
   console.log(item.chat.members[0].avatar ?? item.chat.members[0].avatar );
 
 
-  const updateIsFavorite = async () => {
+  const updateFields = async (field) => {
     try {
-      const url = `http://localhost:4004/api/user-chats/by-plag/${filter}`;
-      const response = await axios.get(url, {
+      const url = `http://localhost:4004/api/user-chats/${item._id}/${field}`;
+      const response = await axios.put(url, {
         // flags: ["notread", `${filter}`]
       }, {
         headers: {
@@ -26,15 +27,26 @@ const EmailLi = ({ item }) => {
         }
         throw new Error(`Network response was not ok! status: ${response.status}`);
       }
-      console.log(response.data);
-      setFilteredEmailList(response.data);
+      // console.log(response.data);
+      setChange(prev => { return !prev })
     } catch (error) {
       console.error("Error fetching p:", error);
     }
   };
 
 
+function hendelOpenChat(event){
+  event.stopPropagation();
+  if(!item.isRead){
+    updateFields('isRead')
+  } 
+}
 
+function updateIsFavorite(event){
+  event.stopPropagation();
+  updateFields('isFavorite')
+  
+}
 
 
 
@@ -42,7 +54,7 @@ const EmailLi = ({ item }) => {
 
   return (
 
-    <div className={styles.main}>
+    <div className={styles.main} onClick={(e)=>hendelOpenChat(e)}> 
       <img className={styles.avatar}
         src=
         {item?.chat?.members?.[0]?.avatar ? item.chat.members[0].avatar
@@ -54,11 +66,7 @@ const EmailLi = ({ item }) => {
       </div>
       <div className={styles.information} >
         <p className={styles.time}>{item?.chat?.lastDate ? getDescriptionOrTime(item.chat.lastDate) : "00:00"}</p>
-        {!item.isRead ? <FaEnvelope className={styles.envelope} /> : <BiSolidStar onClick={() => {
-
-          item.isFavorite = !item.isFavorite;
-
-        }} className={item.isFavorite ? styles.isFavorite : styles.notFavorite} />}
+        {!item.isRead ? <FaEnvelope className={styles.envelope} /> : <BiSolidStar onClick={(e)=>updateIsFavorite(e)} className={item.isFavorite ? styles.isFavorite : styles.notFavorite} />}
 
 
       </div>

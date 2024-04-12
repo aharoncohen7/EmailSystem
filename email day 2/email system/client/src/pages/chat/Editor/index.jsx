@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styles from './style.module.css'
 import { FiAlignRight } from "react-icons/fi";
@@ -21,7 +21,7 @@ import SendBtn from '../SendBtn';
 import axios from 'axios';
 
 
-const Editor = ({ setChange }) => {
+const Editor = ({ setChange, setResetKey}) => {
     const { chatId } = useParams()
     const [selectedColor, setSelectedColor] = React.useState("black");
     const [showColors, setShowColors] = React.useState(false);
@@ -31,34 +31,35 @@ const Editor = ({ setChange }) => {
         italic: false,
         underline: false,
     });
-    const [textFormatting, setTextFormatting] = React.useState("underline");
-    const style ={
+    const [textFormatting, setTextFormatting] = React.useState("right");
+    const jsxStyle ={
         textDecoration: formatting.underline ? 'underline' : 'none',
         fontStyle: formatting.italic ? 'italic' : 'none',
-        fontWeight: formatting.bold ? 'bold' : 'normal'
+        fontWeight: formatting.bold ? 'bold' : 'normal',
+        textAlign: textFormatting,
+        textDirection: 'rtl'
     }
+    const cssStyle = `
+    "text-decoration: ${formatting.underline ? 'underline' : 'none'};
+    font-style: ${formatting.italic ? 'italic' : 'normal'};
+    font-weight: ${formatting.bold ? 'bold' : 'normal'};
+    text-align: ${textFormatting}";
+`;
+
     const divRef = useRef(null);
 
-    console.log(text);
+    // console.log(text);
+   
     useEffect(() => {
         handleSelect()
     }, [selectedColor])
-
-
-
-
-
-
-
-
-    //     }, [selectedColor])
 
     async function sendMessage() {
         if (text) {
             try {
                 const url = `http://localhost:4004/api/chats/${chatId}`;
                 const response = await axios.put(url, {
-                    content: `<span style=${style}>${text}</span>`
+                    content: `<span><span  dir="rtl" style=${cssStyle}> ${text} </span></span>`
                 }, {
                     headers: {
                         'Content-Type': 'application/json',
@@ -72,10 +73,11 @@ const Editor = ({ setChange }) => {
                     }
                     throw new Error(`Network response was not ok! status: ${response.status}`);
                 }
-                console.log("response.data 😊🐱‍💻", response.data);
-                setText("")
-                divRef.current.innerText = "";
+                // console.log("response.data 😊🐱‍💻", response.data);
+                // setText("")
+                // divRef.current.innerText = "";
                 setChange(prev => { return !prev })
+                handleReset()
             } catch (error) {
                 console.error("Error sending message :", error);
             }
@@ -129,32 +131,77 @@ const Editor = ({ setChange }) => {
 
 
 
-    const handleSelectAll = () => {
-        divRef.current.select();
-        inputRef.current.focus();
-    };
+    // const handleInput = (e) => {
+    //     // הגדרת כיוון הטקסט לימין
+    //     divRef.current.style.textAlign = 'right';
+    //     // הגדרת מיקום הסמן בסוף הטקסט
+    //     divRef.current.setSelectionRange(divRef.current.innerHTML.length);
+    //     // ניתן כאן להוסיף כל פעולות נוספות שתרצה לבצע כאשר מתבצעת קליטת טקסט בשדה העריכה
+    //     console.log(e.target.innerHTML);
+    //     // setText(e.target.innerHTML);
+    //     setText(divRef.current.innerHTML);
+    
+    // }
 
 
+    // const handleSelectAll = () => {
+    //     divRef.current.select();
+    //     inputRef.current.focus();
+    // };
+    // useEffect(() => {
+    //     if (divRef.current) {
+    //       divRef.current.focus();
+    //       const range = document.createRange();
+    //       const sel = window.getSelection();
+    //       range.setStart(divRef.current.childNodes[0], 0);
+    //       range.collapse(true);
+    //       sel.removeAllRanges();
+    //       sel.addRange(range);
+    //     }
+    //   }, [divRef]);
+    // useEffect(() => {
+    //     if (divRef.current) {
+    //       divRef.current.focus();
+    //       const selection = window.getSelection();
+    //       const range = selection.getRangeAt(0) || document.createRange();
+    //       range.selectNodeContents(divRef.current);
+    //       range.collapse(true);
+    //       selection.removeAllRanges();
+    //       selection.addRange(range);
+    //     }
+    //   }, [divRef]);
 
+    
+    const handleReset = () => {
+        // Increment the key to force component remount
+        setResetKey(prevKey => prevKey + 1);
+      };
+    
 
     return (
-        <div className={styles.main}>
+        <div className={styles.main} >
             <div className={styles.editorBox}>
 
                 <div
                     ref={divRef}
                     contentEditable={true}
                     // onClick={handleSelect}
-                    style={style}
-                    value={text}
-                    onInput={(e) => {
+                    style={{
+                        ...jsxStyle,
+                        // color: text ? 'inherit' : 'gray', // הוספת צבע אפור לטקסט הדיפולטי
+                      }}
+                    value={text || 'Write your message...'}
+                    // onInput={handleInput}
+                    onInput={ 
+                        (e) => {
                         console.log(e.target.innerHTML);
                         // setText(e.target.innerHTML);
                         setText(divRef.current.innerHTML);
 
-                    }}
-                    // placeholder='Write your message...'
-                    className={`${styles.input}`}
+                    }
+                }
+                    
+                    className={styles.input}
                 />
 
                 {/* <div dangerouslySetInnerHTML={{ __html: text }} /> */}

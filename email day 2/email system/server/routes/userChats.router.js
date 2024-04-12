@@ -80,10 +80,10 @@ userChatsRouter.post('/flags', async (req, res) => {
 // מקבל מזהה מטוקן רק עבור משתמש נוכחי
 // עדכון דגלים בצ'אט מסויים
 // עדכונים של כמה חברים יגיע רק בעת פעולות אחרות כמו שליחת הודעה ואין צורך באנד פוינט למצב כזה
-userChatsRouter.put("/?/:chatId", async (req, res) => {
+userChatsRouter.put("/:chatId/:filedToUpdate", async (req, res) => {
     console.log("start update itemChat on userChats");
     try {
-        const field = req.body.filedToUpdate;
+        const field = req.params.filedToUpdate;
         const userId = req.user._id;
         const chatId = req.params.chatId;  
         // console.log(field, userId, chatId)              

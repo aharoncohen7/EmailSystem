@@ -7,14 +7,14 @@ import EmailPage from '../../../components/EmailPage'
 
 const Chat = () => {
   const [change, setChange] = useState(false)
+  const [resetKey, setResetKey] = useState(0);
 
 
   return (
     <div className={styles.main}>
       <ChatHeader />
       <EmailPage change={change}/>
-      <Editor setChange={setChange}/>
-      {/* <SendBtn /> */}
+      <Editor setChange={setChange} key={resetKey} setResetKey={setResetKey}/>
     </div>
   )
 }

@@ -25,17 +25,24 @@ async function deleteById(id) {
 }
 
 
-async function updateChat(filter, emailId, field) {
-  console.log(filter, emailId, field);
+async function updateChat(filter, chatId, field) {
+  console.log(filter, chatId, field);
   let user = await userControler.readOne(filter)
-  const foundEmail = user.chats.find(email => email._id == emailId);
+  const foundChat = user.chats.find(chat => chat._id == chatId);
+  if(!foundChat){
+    return null;
+  }
   if(field=="isSent"||field=="isRecieved"){
-    foundEmail[field] = true;
+    foundChat[field] = true;
   }
   else{
-    foundEmail[field] = !foundEmail[field]
+    console.log(foundChat);
+    foundChat[field] = !foundChat[field]
+    console.log("ghfgh------------------------ghfgh");
+    
   }
   await user.save()
+  
   return user
 }
 
