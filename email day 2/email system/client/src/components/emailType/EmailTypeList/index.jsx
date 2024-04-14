@@ -79,7 +79,7 @@ useEffect(() => {
                     <li className={styles.li} title={obj.name}>
                         <obj.icon className={styles.icon} />
                         <span className={styles.name}>{obj.name}</span>
-                        {((obj.name=="Favorite" || obj.name=="Inbox") && numNotRead[obj.name2]) && <Badge>{numNotRead[obj.name2]}</Badge>}
+                        {(numNotRead[obj.name2]>0&& (obj.name=="Favorite" || obj.name=="Inbox"))   ? <Badge number={numNotRead[obj.name2]}/> : null}
                     </li>
 
                 </NavLink>

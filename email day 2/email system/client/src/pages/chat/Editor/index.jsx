@@ -15,51 +15,81 @@ import { MdDelete } from "react-icons/md";
 import { FaImage } from "react-icons/fa";
 import { FaFile } from "react-icons/fa";
 import { PiSelectionAll } from "react-icons/pi";
+import { MdFormatTextdirectionRToL } from "react-icons/md";
+import { MdFormatTextdirectionLToR } from "react-icons/md";
+
 
 import Colors from '../Colors';
 import SendBtn from '../SendBtn';
 import axios from 'axios';
 
 
-const Editor = ({ setChange, setResetKey}) => {
+const Editor = ({ setChange, setResetKey }) => {
     const { chatId } = useParams()
-    const [selectedColor, setSelectedColor] = React.useState("black");
+
+    const divRef = useRef(null);
+
+    const [content, setContent] = React.useState("");
+    // הצגת סרגל צבעים
     const [showColors, setShowColors] = React.useState(false);
-    const [text, setText] = React.useState("");
+    // צבע טקסט
+    const [selectedColor, setSelectedColor] = React.useState("black");
+    //כיוון טקסט
+    const [textDirection, setTextDirection] = React.useState("rtl");
+
+    // עיצוב טקסט - הדגשות
     const [formatting, setFormatting] = React.useState({
         bold: false,
         italic: false,
         underline: false,
     });
+    //  עיצחב מטקסט - יישור שורות
     const [textFormatting, setTextFormatting] = React.useState("right");
-    const jsxStyle ={
+    // עיצוב עבור תצוגת השולח
+    const jsxStyle = {
         textDecoration: formatting.underline ? 'underline' : 'none',
         fontStyle: formatting.italic ? 'italic' : 'none',
         fontWeight: formatting.bold ? 'bold' : 'normal',
-        textAlign: textFormatting,
-        textDirection: 'rtl'
+        // textAlign: textFormatting,
+        color: selectedColor,
+
+        // textDirection: 'rtl'
     }
+    // עיצוב עבור התוכן הנשלח
     const cssStyle = `
     "text-decoration: ${formatting.underline ? 'underline' : 'none'};
     font-style: ${formatting.italic ? 'italic' : 'normal'};
     font-weight: ${formatting.bold ? 'bold' : 'normal'};
     text-align: ${textFormatting}";
+    color: ${selectedColor};
 `;
 
-    const divRef = useRef(null);
+    // עדכון סוג הדגשת פונט
+    const toggleFontFormatting = (mode) => {
+        setFormatting({ ...formatting, [mode]: !formatting[mode] });
+    };
 
-    // console.log(text);
-   
+
+    // בעת בחירת צבע- הטקסט המודגש יקבל את הצבע
     useEffect(() => {
         handleSelect()
-    }, [selectedColor])
+    }, [selectedColor, formatting])
+
+    // useEffect(() => {
+    //     handleSelect()
+    // }, [formatting])
+
+
+
+
+
 
     async function sendMessage() {
-        if (text) {
+        if (content) {
             try {
                 const url = `http://localhost:4004/api/chats/${chatId}`;
                 const response = await axios.put(url, {
-                    content: `<span><span  dir="rtl" style=${cssStyle}> ${text} </span></span>`
+                    content: `<span  dir="rtl" style=${cssStyle}> ${content} </span>`
                 }, {
                     headers: {
                         'Content-Type': 'application/json',
@@ -74,7 +104,7 @@ const Editor = ({ setChange, setResetKey}) => {
                     throw new Error(`Network response was not ok! status: ${response.status}`);
                 }
                 // console.log("response.data 😊🐱‍💻", response.data);
-                // setText("")
+                // setContent("")
                 // divRef.current.innerText = "";
                 setChange(prev => { return !prev })
                 handleReset()
@@ -96,13 +126,12 @@ const Editor = ({ setChange, setResetKey}) => {
         { icon: FiAlignLeft, value: 'left' },
         { icon: FiAlignCenter, value: 'center' },
         { icon: FiAlignRight, value: 'right' },
-        { icon: FiAlignJustify, value: 'justify' }
+        { icon: FiAlignJustify, value: 'justify' },
+        // { icon: MdFormatTextdirectionRToL, value: 'rtl' },
+        // { icon: MdFormatTextdirectionLToR, value: 'ltr' }
     ];
 
 
-    const toggleFontFormatting = (mode) => {
-        setFormatting({ ...formatting, [mode]: !formatting[mode] });
-    };
 
 
     function handleSelect() {
@@ -113,7 +142,8 @@ const Editor = ({ setChange, setResetKey}) => {
             // יצירת תגית עם העיצוב הנבחר
             const span = document.createElement('span');
             span.textContent = selectedText;
-            span.style.color = `${selectedColor}`;
+            Object.assign(span.style, jsxStyle);
+            // span.style.color = `${selectedColor}`;
 
             //מחיקת הטקסט בטווח שנבחר ושתילת התגית הקודמת
             const range = selection.getRangeAt(0);
@@ -121,62 +151,46 @@ const Editor = ({ setChange, setResetKey}) => {
             range.insertNode(span);
             // בסיום הפעולות, נבטל את כל הבחירות בעמוד
             window.getSelection().removeAllRanges();
-            setText(divRef.current.innerHTML)
+            setContent(divRef.current.innerHTML)
         }
-        // else {
-        //             document.execCommand('styleWithCSS', false, true);
-        //     document.execCommand('foreColor', false,selectedColor);
-        // }
+
     }
 
+    //  שינוי סגנון לפי מיקום נוכחי לללא בחירת טקסט
+    function handleMouseDown() {
+        // קבלת מיקום הסמן מתוך האירוע
+        const selection = window.getSelection();
+        if (!selection.isCollapsed) {
+            return;
+        }
+        // קבלת טווח
+        const range = selection.getRangeAt(0);
 
-
-    // const handleInput = (e) => {
-    //     // הגדרת כיוון הטקסט לימין
-    //     divRef.current.style.textAlign = 'right';
-    //     // הגדרת מיקום הסמן בסוף הטקסט
-    //     divRef.current.setSelectionRange(divRef.current.innerHTML.length);
-    //     // ניתן כאן להוסיף כל פעולות נוספות שתרצה לבצע כאשר מתבצעת קליטת טקסט בשדה העריכה
-    //     console.log(e.target.innerHTML);
-    //     // setText(e.target.innerHTML);
-    //     setText(divRef.current.innerHTML);
+        // יצירת אלמנט <span> עם תו בלתי נראה
+        const caretSpan = document.createElement('span');
+        caretSpan.textContent = '\u200B';
+        // החלת סגנון נבחר על הספאן החדש
+        Object.assign(caretSpan.style, jsxStyle);
     
-    // }
+        // הוספת האלמנט <span> במיקום הסמן
+        range.insertNode(caretSpan);
+        range.setStartBefore(caretSpan);
+        range.setEndAfter(caretSpan);
+        // ביטול בחירה
+        range.collapse(false);
 
-
-    // const handleSelectAll = () => {
-    //     divRef.current.select();
-    //     inputRef.current.focus();
-    // };
-    // useEffect(() => {
-    //     if (divRef.current) {
-    //       divRef.current.focus();
-    //       const range = document.createRange();
-    //       const sel = window.getSelection();
-    //       range.setStart(divRef.current.childNodes[0], 0);
-    //       range.collapse(true);
-    //       sel.removeAllRanges();
-    //       sel.addRange(range);
-    //     }
-    //   }, [divRef]);
-    // useEffect(() => {
-    //     if (divRef.current) {
-    //       divRef.current.focus();
-    //       const selection = window.getSelection();
-    //       const range = selection.getRangeAt(0) || document.createRange();
-    //       range.selectNodeContents(divRef.current);
-    //       range.collapse(true);
-    //       selection.removeAllRanges();
-    //       selection.addRange(range);
-    //     }
-    //   }, [divRef]);
-
+        // עדכון הסלקציה
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
     
+
+    // איפוס הגדרות
     const handleReset = () => {
         // Increment the key to force component remount
         setResetKey(prevKey => prevKey + 1);
-      };
-    
+    };
+
 
     return (
         <div className={styles.main} >
@@ -184,27 +198,28 @@ const Editor = ({ setChange, setResetKey}) => {
 
                 <div
                     ref={divRef}
+                    dir={textDirection}
                     contentEditable={true}
-                    // onClick={handleSelect}
-                    style={{
-                        ...jsxStyle,
-                        // color: text ? 'inherit' : 'gray', // הוספת צבע אפור לטקסט הדיפולטי
-                      }}
-                    value={text || 'Write your message...'}
-                    // onInput={handleInput}
-                    onInput={ 
+                    onMouseUp={handleMouseDown}
+                    // style={{
+                    //     ...jsxStyle,
+                    //     // color: content ? 'inherit' : 'gray', // הוספת צבע אפור לטקסט הדיפולטי
+                    // }}
+                    // value={content.length>100 || 'Write your message...'}
+                    style={{ textAlign: textFormatting }}
+                    onInput={
                         (e) => {
-                        console.log(e.target.innerHTML);
-                        // setText(e.target.innerHTML);
-                        setText(divRef.current.innerHTML);
+                            console.log(e.target.innerHTML);
+                            // setContent(e.target.innerHTML);
+                            setContent(divRef.current.innerHTML);
 
+                        }
                     }
-                }
-                    
+
                     className={styles.input}
                 />
 
-                {/* <div dangerouslySetInnerHTML={{ __html: text }} /> */}
+                {/* <div dangerouslySetInnerHTML={{ __html: content }} /> */}
 
                 <div className={styles.formatting}>
                     <div className={styles.fontFormats}>
@@ -253,15 +268,16 @@ const Editor = ({ setChange, setResetKey}) => {
                                 className={textFormatting === option.value ? styles.active : ''}
                             />
                         ))}
+                        {textDirection == "ltr" ? <MdFormatTextdirectionRToL className={styles.svg} onClick={() => setTextDirection('rtl')} /> : <MdFormatTextdirectionLToR className={styles.svg} onClick={() => setTextDirection('ltr')} />}
                     </div>
                 </div>
 
             </div>
             <div className={styles.buttons}>
                 <span className={styles.sendButton}>< FaFile /> < FaImage /></span>
-                <span className={styles.sendButton} onClick={sendMessage}>
-                    <MdDelete onClick={sendMessage} />
-                    <SendBtn onClick={() => divRef.current.innerText = ""} />
+                <span className={styles.sendButton}  >
+                    <MdDelete onClick={handleReset}  />
+                    <SendBtn sendMessage={sendMessage} />
                 </span>
             </div>
         </div>

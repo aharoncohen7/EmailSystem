@@ -4,7 +4,7 @@ import Badge from '../Badge'
 import { BiSolidStar } from "react-icons/bi";
 import { FaEnvelope } from "react-icons/fa";
 import { getDescriptionOrTime } from '../../../helpers';
-import axios from 'axios'
+import axios from 'axios';
 
 const EmailLi = ({ item, setChange}) => {
   console.log(item.chat.members[0].avatar ?? item.chat.members[0].avatar );
@@ -35,11 +35,10 @@ const EmailLi = ({ item, setChange}) => {
   };
 
 
-function hendelOpenChat(event){
-  event.stopPropagation();
-  if(!item.isRead){
-    updateFields('isRead')
-  } 
+function handleIsRead(event){
+  // if (event.target.id === "chatLi"&&(!item.isRead)) {
+       updateFields('isRead')
+  // } 
 }
 
 function updateIsFavorite(event){
@@ -52,9 +51,10 @@ function updateIsFavorite(event){
 
 
 
+
   return (
 
-    <div className={styles.main} onClick={(e)=>hendelOpenChat(e)}> 
+    <div id="chatLi" className={styles.main} onClick={handleIsRead}> 
       <img className={styles.avatar}
         src=
         {item?.chat?.members?.[0]?.avatar ? item.chat.members[0].avatar
@@ -66,7 +66,7 @@ function updateIsFavorite(event){
       </div>
       <div className={styles.information} >
         <p className={styles.time}>{item?.chat?.lastDate ? getDescriptionOrTime(item.chat.lastDate) : "00:00"}</p>
-        {!item.isRead ? <FaEnvelope className={styles.envelope} /> : <BiSolidStar onClick={(e)=>updateIsFavorite(e)} className={item.isFavorite ? styles.isFavorite : styles.notFavorite} />}
+        {!item.isRead ? <FaEnvelope className={styles.envelope} /> : <BiSolidStar onClick={updateIsFavorite} className={item.isFavorite ? styles.isFavorite : styles.notFavorite} />}
 
 
       </div>

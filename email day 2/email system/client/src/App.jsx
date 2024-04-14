@@ -11,6 +11,7 @@ export const PopupContext = createContext(true)
 
 export default function App() {
   const [content, setContent] = useState("")
+  
 
   return (
     <PopupContext.Provider value={{ content, setContent }}>

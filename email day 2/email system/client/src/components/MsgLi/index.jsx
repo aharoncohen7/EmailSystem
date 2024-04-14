@@ -1,67 +1,48 @@
-import { useState } from 'react';
+
 import styles from './style.module.css'
+import DomPurify from 'dompurify';
+import MsgContent from '../MsgContent/index.jsx';
 import { BiSolidShare } from "react-icons/bi";
 import { formatDateTime } from "./../../helpers/index.js"
-import DomPurify from 'dompurify';
 
 
-
+// יחידה הודעה בצ'אט
 export const MsgLi = ({ msg, chatToShow, thisUser, setIsExpand, isExpand }) => {
-
-  console.log(msg.content);
-  const isSent = msg.from == thisUser._id;
+  const youSent = msg.from == thisUser._id;
   const isThisExpand = isExpand == msg._id;
 
-  const hendelClick = () => {
+  // בוחר הודעה מורחבת
+  const handelExpand = () => {
     setIsExpand((prev) => {
       if (prev == msg._id) { return false } else { return msg._id }
     })
   }
-
-
+ // מוצא את המשתמש המתאים בעזרת המזהה של השולח
   function getSender() {
-    // מוצא את המשתמש המתאים בעזרת המזהה של השולח
     return chatToShow.members.find(member => member._id == msg.from);
-
   };
+  // ניטור הודעה
   const sanitizedHTML = DomPurify.sanitize(msg.content);
-  // const sanitizedHTML = DomPurify.sanitize(msg.content, {
-  //   ALLOWED_TAGS: ['b', 'i', 'em', 'strong'],
-  //   ALLOWED_ATTR: ['style'],
-  // });
-
-  const fff = `<span style="color: yellow;">
-  <span  
-  dir="rtl"
-   style=
-  "text-decoration: none;
-  font-style: normal;
-  font-weight: normal;
-  text-align: right;"
-  
-> what is <span style="color: yellow;">your</span> <span style="color: green;">favorite</span> ? </span></span>`
-
 
 
   return (
     <>
       {/* מיכל ראשי */}
-      <div onClick={hendelClick} className={styles.main}>
+      <div onClick={handelExpand} className={styles.main}>
 
-
-        {/* הודעה מכווצת */}
+        {/*   פרטי הודעה + הודעה מכווצת */}
         <div className={styles.collapsedMessage}>
-
-
           {/* מחבר הודעה1 */}
-          {isSent ?
-            <span className={styles.senderYou} ><span className={styles.avatar}>
-              <BiSolidShare className={styles.svg} /></span><h3 className={styles.name}>You</h3></span>
+          {youSent ?
+            <span className={styles.youSend} ><span className={styles.avatar}>
+              <BiSolidShare className={styles.svg} />
+              </span>
+              <h3 className={styles.name}>You</h3>
+              </span>
             :
-            <div className={styles.senderAnothers}>
-              <img
-              className={styles.avatar}
-              src=
+            <div className={styles.othersSend}>
+              <img className={styles.avatar}
+                src=
                 {getSender() ? getSender().avatar :
                   "https://media.cnn.com/api/v1/images/stellar/prod/231218193302-bill-gates-portrait-121823.jpg?q=w_1110,c_fill"}
                 alt="" />
@@ -71,20 +52,18 @@ export const MsgLi = ({ msg, chatToShow, thisUser, setIsExpand, isExpand }) => {
             </div>
           }
 
-          {/* 2תוכן מקוצר הכותרת */}
-          {!isThisExpand && <p className={styles.partialContent}> {msg.content.replace(/<[^>]+>/g, '')} </p>}
+         {/* תוכן הודעה מקוצר ללא עיצוב */}
+          {!isThisExpand && <p className={styles.partialContent}> {sanitizedHTML.replace(/<[^>]+>/g, '')} </p>}
 
 
-          {/* תאריך3 */}
+          {/* תאריך אחרון */}
           <span className={styles.date}>{formatDateTime(msg.date)}</span>
         </div>
       </div>
 
-
-
-      {/* תוכן מלא */}
+      {/* מורחב - תוכן מלא ומעוצב*/}
       {isThisExpand && <span className={styles.fullContent}  >
-        <div className={styles.conent} dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
+         <MsgContent msgContent={msg.content} />
       </span>}
 
 

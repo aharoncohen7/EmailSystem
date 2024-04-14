@@ -16,7 +16,7 @@
     color: hsl(225, 14%, 83%);
     border-radius: 8px;
     /* width: 100%; */
-    height: 15vh;
+    height: 17vh;
     position: relative;
     /* max-height: 40vh; */
     
@@ -107,6 +107,7 @@
     gap: 20px;
     color: #cdd0d9;
     flex-grow: 3;
+    /* height: 90px; */
 
 
 }
@@ -153,6 +154,11 @@
     }
 
 
+}
+
+.svg{
+    color: var(--primary-color);
+    font-size: 16px;
 }
 
 .sendButton{

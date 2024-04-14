@@ -14,7 +14,7 @@ const mainNavIcons = [
     { icon: MdAvTimer, name: "Timer" },
     { icon: BsClipboardCheck, name: "Tasks" },
     { icon: FaRegEye, name: "Watch" },
-    { icon: IoMdContacts, name: "Emails" },
+    { icon: IoMdContacts, name: "Chats" },
     { icon: IoMdStats, name: "Stats" },
     { icon: IoVideocam, name: "Video" }
 ]

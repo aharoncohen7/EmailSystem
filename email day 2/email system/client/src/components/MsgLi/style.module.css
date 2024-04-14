@@ -21,80 +21,6 @@
 
 }
 
-.senderYou{
-    display: flex;
-    align-items: center;
-    min-width: 90px;
-    gap: 10px;
-    padding-left: 10px ;
-}
-
-.senderAnothers{
-    display: flex;
-    padding-left: 10px ;
-    min-width: 90px;
-    align-items: center;
-    gap: 10px;
-
-}
-
-
-.senderYou h3, .senderAnothers h3{
-    font-weight: 600;
-    font-size: 15.5px;
-    line-height: 20px;
-    padding: 10px;
-}
-
-.senderAnothers img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.conent{
-
-    word-wrap: break-word;
-    overflow-wrap: break-word; 
-}
-
-.partialContent {
-    flex-grow: 1;
-    min-width:90px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: var(--text-color);
-    word-wrap: break-word;
-    overflow-wrap: hidden;
-
-}
-
-
-
-.date{
-    color: var(--text-color);
-    font-size: small;
-}
-
-.fullContent {
-    /* white-space: nowrap; */
-    /* overflow: hidden; */
-    /* word-wrap: break-word; */
-    /* overflow-wrap: break-word;  */
-    /* text-overflow: ellipsis; */
-    padding: 20px;
-    /* color: rgb(84, 84, 85);
-    font-weight: 400; */
-    /* padding: 80px; */
-}
-
-
-
-
-
-
 .avatar{
 
     min-width:30px;
@@ -115,3 +41,76 @@
     /* flex-shrink: 0; */
    
 }
+
+
+.youSend{
+    display: flex;
+    align-items: center;
+    min-width: 90px;
+    gap: 10px;
+    padding-left: 10px ;
+}
+
+.othersSend{
+    display: flex;
+    padding-left: 10px ;
+    min-width: 90px;
+    align-items: center;
+    gap: 10px;
+
+}
+
+.othersSend img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.youSend h3, .othersSend h3{
+    font-weight: 600;
+    font-size: 15.5px;
+    line-height: 20px;
+    padding: 10px;
+}
+
+.content{
+    text-align: inherit;
+    word-wrap: break-word;
+    overflow-wrap: break-word; 
+}
+
+.partialContent {
+    flex-grow: 1;
+    min-width:90px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-color);
+    word-wrap: break-word;
+    overflow-wrap: hidden;
+
+}
+
+.fullContent {
+    /* white-space: nowrap; */
+    /* overflow: hidden; */
+    /* word-wrap: break-word; */
+    /* overflow-wrap: break-word;  */
+    /* text-overflow: ellipsis; */
+    padding: 20px;
+    /* color: rgb(84, 84, 85);
+    font-weight: 400; */
+    /* padding: 80px; */
+}
+
+.date{
+    color: var(--text-color);
+    font-size: small;
+}
+
+
+
+
+
+

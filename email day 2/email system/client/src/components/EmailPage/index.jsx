@@ -7,12 +7,14 @@ import { formatDateTime } from './../../helpers/index.js'
 import axios from 'axios';
 import Editor from '../../pages/chat/Editor/index.jsx';
 
-const EmailPage = ({change}) => {
+const EmailPage = ({ change }) => {
   const { chatId } = useParams()
   console.log(chatId);
   const [isExpand, setIsExpand] = useState(false);
   const [itemChat, setItemChat] = useState({});
 
+
+  // יוזר לדוגמה
   const thisUser = {
     email: "user1@example.com",
     _id: "6617d4a80c4b7ac054155405",
@@ -21,35 +23,32 @@ const EmailPage = ({change}) => {
     avatar: "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairTheCaesar&accessoriesType=Sunglasses&hairColor=Auburn&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Side&eyebrowType=RaisedExcitedNatural&mouthType=Smile&skinColor=Yellow",
   }
 
-
-  const getChat = async () => {
-    try {
-      const url = `http://localhost:4004/api/chats/${chatId}`;
-      const response = await axios.get(url, {
-        headers: {
-          'Content-Type': 'application/json',
-          // 'authorization': localStorage.getItem('Authorization') || ''
-        }
-      });
-      if (!response.data) {
-        console.log();
-        if (response.status === 401) {
-          // Handle unauthorized access
-        }
-        throw new Error(`Network response was not ok! status: ${response.status}`);
-      }
-      console.log("this chat 😊🐱‍💻", response.data);
-      setItemChat(response.data);
-    } catch (error) {
-      console.error("Error fetching :", error);
-    }
-  };
-
-
+  // קבלת צ'אט
   useEffect(() => {
+    const getChat = async () => {
+      try {
+        const url = `http://localhost:4004/api/chats/${chatId}`;
+        const response = await axios.get(url, {
+          headers: {
+            'Content-Type': 'application/json',
+            // 'authorization': localStorage.getItem('Authorization') || ''
+          }
+        });
+        if (!response.data) {
+          console.log();
+          if (response.status === 401) {
+            // Handle unauthorized access
+          }
+          throw new Error(`Network response was not ok! status: ${response.status}`);
+        }
+        console.log("this chat 😊🐱‍💻", response.data);
+        setItemChat(response.data);
+      } catch (error) {
+        console.error("Error fetching :", error);
+      }
+    };
     getChat()
   }, [chatId, change]);
-
 
   return (
     <div className={styles.main}>

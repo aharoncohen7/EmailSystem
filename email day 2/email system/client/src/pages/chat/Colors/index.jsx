@@ -2,7 +2,7 @@ import React from 'react'
 import { IoColorPalette } from "react-icons/io5";
 import styles from './style.module.css';
 
-const myColors = ["red", "green", "blue", "yellow", "pink", "purple", "brown", "rgba(253, 94, 94, 1)"];
+const myColors = ["black", "red", "green", "blue", "yellow", "pink", "purple", "brown", "rgba(253, 94, 94, 1)"];
 
 
 
