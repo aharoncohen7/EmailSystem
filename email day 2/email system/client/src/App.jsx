@@ -5,6 +5,7 @@ import EmailsListLayout from "./layouts/EmailsListLayout";
 import Chat from './pages/chat/Chat'
 import { useState, createContext} from "react";
 import PopUp from "./components/PopUp";
+import NewMessage from "./components/NewMessage";
 export const PopupContext = createContext(true)
 
 
@@ -19,7 +20,8 @@ export default function App() {
         <Routes>
           {/* <Route path="login" element={<h1>login</h1>} /> */}
           <Route path="" element={<MainLayout />}>
-            <Route path="chats" element={<EmailsTypeLayout />} >
+            <Route path=":chats" element={<EmailsTypeLayout />} >
+              <Route path="new-message" element={<NewMessage/>} />
 
               <Route path=":chatType" element={<EmailsListLayout />} >
 

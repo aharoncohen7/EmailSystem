@@ -1,5 +1,6 @@
 .mainContainer{
     padding-top: 5px;
+    
 }
 
 .main{
@@ -18,9 +19,12 @@
 .emailList{
     display: flex;
     flex-direction: column;
+    padding-bottom: 5px;
     gap: 10px;
     /* height: 800px; */
     overflow: auto;
+    border-radius: 10px;
+    /* background-color: crimson; */
 }
 
 

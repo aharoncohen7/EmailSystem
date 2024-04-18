@@ -14,7 +14,9 @@ const Chat = () => {
     <div className={styles.main}>
       <ChatHeader />
       <EmailPage change={change}/>
-      <Editor setChange={setChange} key={resetKey} setResetKey={setResetKey}/>
+      <span className={styles.editorBox}>
+        <Editor setChange={setChange} key={resetKey} setResetKey={setResetKey}/>
+        </span>
     </div>
   )
 }

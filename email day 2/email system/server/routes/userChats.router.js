@@ -20,7 +20,7 @@ userChatsRouter.get('/not-read', async (req, res) => {
 
 //של יוזר
 // קבלת צ'אטים לפי קטגוריה 1 מסוימת
-userChatsRouter.get('/by-plag/:flag', async (req, res) => {
+userChatsRouter.get('/by-flag/:flag', async (req, res) => {
     console.log(req.user._id);
     try {
         let result = await chatServices.getChats(req.user._id, req.params.flag)
@@ -52,9 +52,25 @@ userChatsRouter.get('/by-plag/:flag', async (req, res) => {
 //של יוזר
 // קבלת צ'אטים לפי מערך קטגוריות מסוימות
 userChatsRouter.post('/flags', async (req, res) => {
-    console.log(req.body);
+    console.log(req.body, "lllllllllllllllllllllllll");
     try {
         let result = await chatServices.getChatsByFlags(req.user._id, req.body.flags)
+        res.send(result)
+    }
+    catch (err) {
+        console.log(err);
+        res.status(400).send(err.message)
+    }
+})
+
+
+
+// קבלת צ'אטים לפי סינון
+userChatsRouter.post('/chat-list', async (req, res) => {
+
+    console.log(req.body, "ffffffffffffffffffffffffffffffffffffffffff");
+    try {
+        let result = await chatServices.getChatList(req.user._id, req.body.flags, req.body.input)
         res.send(result)
     }
     catch (err) {
@@ -122,11 +138,11 @@ module.exports = { userChatsRouter }
 //     try {
 //         const userId = req.user._id;
 //         console.log(userId);                   
-//         const allRecieved = await userServices.getEmailsByFilter({_id:userId,
-//             //  emails:{$elemMatch:{isRecieved:true}}
-//             }, "isRecieved")
-//         console.log("allRecieved", allRecieved);
-//         res.send(allRecieved)
+//         const allReceived = await userServices.getEmailsByFilter({_id:userId,
+//             //  emails:{$elemMatch:{isReceived:true}}
+//             }, "isReceived")
+//         console.log("allReceived", allReceived);
+//         res.send(allReceived)
 
 //     }
 //     catch (err) {
@@ -172,9 +188,9 @@ module.exports = { userChatsRouter }
 //     try {
 //         const userId = req.user._id;
 //         console.log(userId);                   
-//         const allRecieved = await userServices.getEmailsByFilter({_id:userId, emails:{$elemMatch:{isRead:false}}})
-//         console.log(allRecieved);
-//         res.send(allRecieved)
+//         const allReceived = await userServices.getEmailsByFilter({_id:userId, emails:{$elemMatch:{isRead:false}}})
+//         console.log(allReceived);
+//         res.send(allReceived)
 
 //     }
 //     catch (err) {
@@ -189,7 +205,7 @@ module.exports = { userChatsRouter }
 //         const byUserId = {_id: req.user._id} 
 //         const byField = req.params.isSomething                  
 //         const filterdEmails = await userServices.getEmailsByFilter(byUserId, byField)
-//         console.log("allRecieved", filterdEmails);
+//         console.log("allReceived", filterdEmails);
 //         res.send(filterdEmails)
 
 //     }
@@ -207,11 +223,11 @@ module.exports = { userChatsRouter }
 //     try {
 //         const userId = req.user._id;
 //         console.log(userId);                   
-//         const allRecieved = await userServices.getEmailsByFilter({_id:userId,
-//             //  emails:{$elemMatch:{isRecieved:true}}
-//             }, "isRecieved")
-//         console.log("allRecieved", allRecieved);
-//         res.send(allRecieved)
+//         const allReceived = await userServices.getEmailsByFilter({_id:userId,
+//             //  emails:{$elemMatch:{isReceived:true}}
+//             }, "isReceived")
+//         console.log("allReceived", allReceived);
+//         res.send(allReceived)
 
 //     }
 //     catch (err) {
@@ -257,9 +273,9 @@ module.exports = { userChatsRouter }
 //     try {
 //         const userId = req.user._id;
 //         console.log(userId);                   
-//         const allRecieved = await userServices.getEmailsByFilter({_id:userId, emails:{$elemMatch:{isRead:false}}})
-//         console.log(allRecieved);
-//         res.send(allRecieved)
+//         const allReceived = await userServices.getEmailsByFilter({_id:userId, emails:{$elemMatch:{isRead:false}}})
+//         console.log(allReceived);
+//         res.send(allReceived)
 
 //     }
 //     catch (err) {
@@ -273,7 +289,7 @@ module.exports = { userChatsRouter }
 //         const byUserId = {_id: req.user._id} 
 //         const byField = req.params.isSomething                  
 //         const filterdEmails = await userServices.getEmailsByFilter(byUserId, byField)
-//         console.log("allRecieved", filterdEmails);
+//         console.log("allReceived", filterdEmails);
 //         res.send(filterdEmails)
 
 //     }

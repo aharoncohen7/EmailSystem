@@ -8,7 +8,7 @@ async function getAll() {
   return await read({})
 }
 
-async function getAllRecieved() {
+async function getAllReceived() {
   return await chatController.read({}, true)
 }
 
@@ -44,7 +44,7 @@ async function addMessageToEmail(msg, emailId) {
   //  קבלת נמען
    let userTo_Email = userTo.chats.find(item => item.email == emailId)
    //עדכון קבלה
-   userTo_Email.isRecieved = true;
+   userTo_Email.isReceived = true;
   // עדכון אי קריאה
   userTo_Email.isRead  = false;
   //  שמירה
@@ -80,7 +80,7 @@ async function sendNewEmail(msg, subject) {
   //הכנסת שיחה למקבל
   userTo.chats.push({email: emailId})
   //עדכון קבלה
-  userTo.chats[userTo.chats.length-1].isRecieved = true;
+  userTo.chats[userTo.chats.length-1].isReceived = true;
   //עדכון אי קריאה כששלח לעצמו
   // userFrom.chats[userFrom.chats.length-1].isRead = false;
   userTo.save()
@@ -92,4 +92,4 @@ async function sendNewEmail(msg, subject) {
 
 
 
-module.exports = { getAll, getAllEmailMsg, getAllRecieved, addMessageToEmail, sendNewEmail }
+module.exports = { getAll, getAllEmailMsg, getAllReceived, addMessageToEmail, sendNewEmail }

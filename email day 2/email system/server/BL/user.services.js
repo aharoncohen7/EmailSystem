@@ -32,7 +32,7 @@ async function updateChat(filter, chatId, field) {
   if(!foundChat){
     return null;
   }
-  if(field=="isSent"||field=="isRecieved"){
+  if(field=="isSent"||field=="isReceived"){
     foundChat[field] = true;
   }
   else{

@@ -226,7 +226,7 @@ async function go() {
             isFavorite: Boolean(Math.round(Math.random())),
             isDeleted: Boolean(Math.round(Math.random())),
             isDraft: Boolean(Math.round(Math.random())),
-            isRecieved: ee.members.includes(first._id, 1),
+            isReceived: ee.members.includes(first._id, 1),
         })
         await first.save();
 
@@ -236,7 +236,7 @@ async function go() {
                 let mm = members.find(mem => mem._id == m._id)
                 mm.chats.push({
                     chat: ee._id,
-                    isRecieved: true,
+                    isReceived: true,
                     isSent: Boolean(Math.round(Math.random())),
                     isFavorite: Boolean(Math.round(Math.random())),
                     isDeleted: Boolean(Math.round(Math.random())),
@@ -251,7 +251,7 @@ async function go() {
     // ru1.chats.push({
     //     chat: chatDB[0]._id,
     //     isSent: true,
-    //     isRecieved: true,
+    //     isReceived: true,
     //     isFavorite: false,
     //     isDeleted: false,
     // })
@@ -261,14 +261,14 @@ async function go() {
     // ru2.chats.push({
     //     chat: chatDB[0]._id,
     //     isSent: true,
-    //     isRecieved: true,
+    //     isReceived: true,
     //     isFavorite: false,
     //     isDeleted: false,
     // },
     //     {
     //         chat: chatDB[1]._id,
     //         isSent: true,
-    //         isRecieved: true,
+    //         isReceived: true,
     //         isFavorite: false,
     //         isDeleted: false,
     //     })
@@ -277,7 +277,7 @@ async function go() {
     // ru3.chats.push({
     //     chat: chatDB[1]._id,
     //     isSent: true,
-    //     isRecieved: true,
+    //     isReceived: true,
     //     isFavorite: false,
     //     isDeleted: false,
     // })

@@ -1,20 +1,30 @@
 .main {
-    background-color: var(--primary-color);
-    /* padding: 15px; */
-    color: #fff;
-    border-radius: 8px;
-    font-weight: 400;
     letter-spacing: 1px;
+    font-size: small;
+    display: flex;
+    align-items: center;
+    gap: 10px;
     Width: 100px;
     Height: 41px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-    font-size: small;
+    
+    border-radius: 10px;
+    padding: 20px;
 
+    background-color: var(--primary-color);
+    transition: filter 0.1s;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 500;
+ 
+    
 }
 
-.main svg{
-    font-size: 20px;
+.main:hover {
+    filter: brightness(90%);
+}
+
+.main svg {
+    font-size: 16px;
+    color: #fff;
+  
 }

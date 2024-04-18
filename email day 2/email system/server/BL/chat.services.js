@@ -21,10 +21,10 @@ async function getNotRead(userId) {
   let { chats } = await userController.readOne({ _id: userId });
   // console.log(chats);
   const nums = {
-    inbox: chats.filter(c => c.isRead == false && c.isDeleted == false && c.isRecieved == true).length,
+    inbox: chats.filter(c => c.isRead == false && c.isDeleted == false && c.isReceived == true).length,
     send: chats.filter(c => c.isRead == false && c.isDeleted == false && c.isSent == true).length,
     favorite: chats.filter(c => c.isRead == false && c.isDeleted == false && c.isFavorite == true).length,
-    deleted: chats.filter(c => c.isRead == false && c.isDeleted == false && c.isRecieved == true).length,
+    deleted: chats.filter(c => c.isRead == false && c.isDeleted == false && c.isReceived == true).length,
   }
   // console.log(nums);
   return nums
@@ -46,6 +46,33 @@ async function getChatsByFlags(userId, flags) {
   let { chats } = await userController.readByFlags(userId, arrayFlags, { chats: true, users: true });
   return chats
 }
+
+
+// קבלת רשימת צ'אטים לפי עמוד וסינון לפי חיפוש
+async function getChatList(userId, flags, input) {
+  console.log(flags, input);
+  const arrayFlags = flags.flatMap(flag => funcs[flag])
+  console.log(arrayFlags);
+  let { chats } = await userController.readByFlags(userId, arrayFlags, { chats: true, users: true });
+//   if(input) {
+//   const chatList = chats.filter(item => item.chat.subject.toLowerCase().includes(input.toLowerCase()))
+//   return chatList
+// }
+
+  if(input) {
+const chatList = filterArrayByString(chats, input.toLowerCase())
+  return chatList
+}
+
+  return chats
+}
+
+
+
+
+
+
+
 
 // עדכון למצב קראתי אצל יוזר מסויים
 async function updateReadChat(userId, chatId) {
@@ -95,13 +122,13 @@ async function sendNewChat(req) {
   //עדכון קבלה
   usersTo.map((user) => {
     user.chats.push({ chat: chatId })
-    user.chats[user.chats.length - 1].isRecieved = true;
+    user.chats[user.chats.length - 1].isReceived = true;
     user.chats[user.chats.length - 1].isRead = false;
     user.save()
   })
   // userTo.chats.push({ email: emailId })
 
-  // userTo.chats[userTo.chats.length - 1].isRecieved = true;
+  // userTo.chats[userTo.chats.length - 1].isReceived = true;
 
   // userTo.save()
   return chatId
@@ -129,7 +156,7 @@ async function addMessageToChat(body) {
     }
     else {
       // console.log(member._id, "member");
-      member_chat.isRecieved = true;
+      member_chat.isReceived = true;
       member_chat.isRead = false;
     }
     member.save()
@@ -175,7 +202,7 @@ async function getAll() {
   return await chatController.read({})
 }
 
-async function getAllRecieved() {
+async function getAllReceived() {
   return await chatController.read({}, true)
 }
 // כפול
@@ -185,6 +212,30 @@ async function getAllRecieved() {
 
 
 module.exports = {
-  getNotRead, getChats, getChatsByFlags, getChatById, updateReadChat, updateNotReadChat, addMessageToChat, sendNewChat,
-  // getAll, getAllChatMsg, getAllRecieved,
+  getNotRead, getChats, getChatsByFlags, getChatList, getChatById, updateReadChat, updateNotReadChat, addMessageToChat, sendNewChat,
+  // getAll, getAllChatMsg, getAllReceived,
+}
+
+
+// חיפוש בתוכן צ'אט
+function filterArrayByString(arr, searchString) {
+  // יצירת מערך חדש שיכיל את כל האיברים שמכילים את המחרוזת המחפשת
+  const filteredArray = arr.filter(item => {
+      // בדיקה אם הסובייקט של השיחה מכיל את המחרוזת
+      if (item.chat.subject && item.chat.subject.toLowerCase().includes(searchString)) {
+          return true;
+      }
+      // בדיקה אם קיימת הודעה בשיחה שהתוכן שלה מכיל את המחרוזת
+      if (item.chat.msg.some(msg => msg.content && msg.content.toLowerCase().includes(searchString))) {
+          return true;
+      }
+      // בדיקה אם קיימים חברים בשיחה שהשם של אחד מהם מכיל את המחרוזת
+      if (item.chat.members.some(member => member.fullName && member.fullName.toLowerCase().includes(searchString))) {
+          return true;
+      }
+      // אם המחרוזת לא נמצאה באף אחד מהשדות, נחזיר false
+      return false;
+  });
+
+  return filteredArray;
 }

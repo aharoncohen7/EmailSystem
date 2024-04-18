@@ -86,9 +86,9 @@ module.exports = { userRouter }
 //     try {
 //         const userId = req.user._id;
 //         console.log(userId);                   
-//         const allRecieved = await userServices.getEmailsByFilter({_id:userId, emails:{$elemMatch:{isRecieved:true}}})
-//         console.log(allRecieved);
-//         res.send(allRecieved)
+//         const allReceived = await userServices.getEmailsByFilter({_id:userId, emails:{$elemMatch:{isReceived:true}}})
+//         console.log(allReceived);
+//         res.send(allReceived)
 
 //     }
 //     catch (err) {
@@ -134,9 +134,9 @@ module.exports = { userRouter }
 //     try {
 //         const userId = req.user._id;
 //         console.log(userId);                   
-//         const allRecieved = await userServices.getEmailsByFilter({_id:userId, emails:{$elemMatch:{isRead:false}}})
-//         console.log(allRecieved);
-//         res.send(allRecieved)
+//         const allReceived = await userServices.getEmailsByFilter({_id:userId, emails:{$elemMatch:{isRead:false}}})
+//         console.log(allReceived);
+//         res.send(allReceived)
 
 //     }
 //     catch (err) {

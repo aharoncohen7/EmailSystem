@@ -1,5 +1,5 @@
 require("dotenv").config()//מייצר גישה למשתני סביבה
-const port = process.env.PORT || 4002
+const port = process.env.PORT || 4004
 const express = require("express")// - מקבל פונקציה - ייבוא ספריה שמסוגלת לייצר 
 app = express()//הקמת שרת - קריאה לפונקציה
 const mainRouter = require('./routes/main.router');

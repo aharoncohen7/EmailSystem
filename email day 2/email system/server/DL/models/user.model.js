@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
             ref: 'chat'
         },
         isSent: { type: Boolean, default: false },
-        isRecieved: { type: Boolean, default: false },
+        isReceived: { type: Boolean, default: false },
         isFavorite: { type: Boolean, default: false },
         isDeleted: { type: Boolean, default: false },
         isDraft: { type: Boolean, default: true },
@@ -47,7 +47,7 @@ async function go() {
     let chats2 = await userModel.findOne({_id:"660d26b92a155d99889d3942"}).populate('chats.chat')
     let {chats} = await chats2.populate('chats.chat.msg')//.populate('chats.chat.to');
     // console.log(chats[0].chat);
-    let res = chats.filter(c=>c.isRecieved)
+    let res = chats.filter(c=>c.isReceived)
     console.log(res);
 
 }
@@ -76,7 +76,7 @@ async function go() {
 //     },
 //     side: {
 //         type: String,
-//         enum: ['sent', "recieved"],
+//         enum: ['sent', "received"],
 
 //     },
 //     status: {

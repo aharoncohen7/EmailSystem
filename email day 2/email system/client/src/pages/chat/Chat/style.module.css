@@ -5,3 +5,8 @@
     overflow: auto;
     justify-content: space-between;
 }
+
+.editorBox{
+    padding: 0px 20px 0px 20px;
+    height: 30vh;
+}

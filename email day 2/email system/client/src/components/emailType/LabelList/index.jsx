@@ -5,13 +5,13 @@ import { IoMdMore } from "react-icons/io";
 import { NavLink } from 'react-router-dom';
 
 const labeledColors = [
-    { name: "Work", color: "red" },
-    { name: "Work In Progress", color: "green" },
-    { name: "Personal", color: "blue" },
-    { name: "Urgent", color: "yellow" },
+    { name: "Work", color: '#B3BDCC' },
+    { name: "Work In Progress", color: '#FD5E5E' },
+    { name: "Personal", color: '#FFD900' },
+    { name: "Urgent", color: "#FF6347" },
     { name: "Important", color: "#FFA07A" },
     { name: "Family", color: "#6495ED" },
-    { name: "Social", color: "#FFB6C1" }
+    { name: "Social", color: "#FFB6C1" } 
 ];
 
 
