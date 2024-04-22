@@ -31,6 +31,21 @@ userRouter.get("/:userId", async (req, res) => {
 });
 
 
+// קבלת יוזרים לפי כתובת אימייל
+userRouter.get("/by-email/:email", async (req, res) => {
+    console.log("start get user by email");
+    const searchString = req.params.email;
+    try {
+        const users = await userServices.getMembersByEmail(searchString)
+        console.log(users);
+        res.send(users)
+    }
+    catch (err) {
+        res.status(400).send(err.msg || err.message || "wrong")
+    }
+});
+
+
 // יצירת יוזר
 userRouter.post("/", async (req, res) => {
     console.log("start create new user");

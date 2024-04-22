@@ -23,7 +23,7 @@ a{
   color: inherit;
 }
 
-ul{
+ul, li{
   list-style: none;
 }
 

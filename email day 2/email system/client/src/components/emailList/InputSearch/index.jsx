@@ -9,7 +9,8 @@ const InputSearch = ({ sendInput }) => {
         <div className={styles.main}>
             <input className={styles.input} type="text" placeholder='Search' onChange={(e) => {
                 setText(e.target.value)
-                sendInput(e.target.value)
+                if(e.target.value.length>2){
+                sendInput(e.target.value)}
             }
             } maxLength={30} />
             <FaSearch className={text ? styles.onSearch : ""} />

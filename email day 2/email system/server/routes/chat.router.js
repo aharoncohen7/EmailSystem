@@ -48,7 +48,7 @@ chatRouter.post("/", async (req, res) => {
         req.body.from = req.user._id;  
         // console.log(req.body.from);       
         const newChat = await chatServices.sendNewChat(req)
-        // console.log(newEmail);
+        console.log("nbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
         res.send(newChat)
        
     }

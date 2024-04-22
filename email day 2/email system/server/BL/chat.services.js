@@ -54,15 +54,15 @@ async function getChatList(userId, flags, input) {
   const arrayFlags = flags.flatMap(flag => funcs[flag])
   console.log(arrayFlags);
   let { chats } = await userController.readByFlags(userId, arrayFlags, { chats: true, users: true });
-//   if(input) {
-//   const chatList = chats.filter(item => item.chat.subject.toLowerCase().includes(input.toLowerCase()))
-//   return chatList
-// }
+  //   if(input) {
+  //   const chatList = chats.filter(item => item.chat.subject.toLowerCase().includes(input.toLowerCase()))
+  //   return chatList
+  // }
 
-  if(input) {
-const chatList = filterArrayByString(chats, input.toLowerCase())
-  return chatList
-}
+  if (input) {
+    const chatList = filterArrayByString(chats, input.toLowerCase())
+    return chatList
+  }
 
   return chats
 }
@@ -96,6 +96,14 @@ async function updateNotReadChat(userId, chatId) {
 //שליחת מייל חדש
 async function sendNewChat(req) {
   console.log("sendNewChat");
+  // הוספת שולח לחברי צ'אט
+  let members = [req.body.from];
+  // המרה לכתובת למזהה
+  for (const member of req.body.members) {
+    const user = await userController.readOne({ email: member });
+    members=[...members, user.id];
+  }
+  // console.log(members, "members");
   //יצירת צ'אט חדש ושיבוץ ההודעה החדשה
   let chatDB = await chatController.create({
     subject: req.body.subject,
@@ -103,21 +111,22 @@ async function sendNewChat(req) {
       from: req.user._id,
       content: req.body.content
     }],
-    members: req.body.members,
+    members: members
   })
+  
   let chatId = chatDB._id;
   //קבלת משתמש שולח
-  let userFrom = await userServices.getById({ _id: req.user._id })
+  let userFrom = await userServices.getById({ _id: req.body.from })
   // console.log(userFrom);
-  // הוספת שיחה לשולח
-  userFrom.chats.push({ chat: chatId })
+  // // הוספת שיחה לשולח
+  // userFrom.chats.push({ chat: chatId })
   //עדכון שליחה
   userFrom.chats[userFrom.chats.length - 1].isSent = true;
   //עדכון קריאה
   userFrom.chats[userFrom.chats.length - 1].isRead = true;
   userFrom.save()
   // מערך משתתפים
-  let usersTo = await userServices.getAll({ _id: { $in: req.body.members } })
+  let usersTo = await userServices.getAll({ _id: { $in: members } })
   //הכנסת שיחה למקבל
   //עדכון קבלה
   usersTo.map((user) => {
@@ -170,7 +179,7 @@ async function addMessageToChat(body) {
 //   console.log(chatId, userId);
 //   let { chats } = await userController.readByFlags(userId, ["inbox"], { chats: true, users: true });
 //   console.log("🚀 ~ getChatById ~ chats:", chats)
-  
+
 //   const chatToShow = chats.find(c => c.chat == chatId)
 //   console.log("🚀 ~ getChatById ~ chatToShow:", chatToShow)
 // //   if(chatToShow.members.includes(userId)){
@@ -186,16 +195,16 @@ async function addMessageToChat(body) {
 // // קבלת צ'אט מסויים עבור הצד הימני באתר
 async function getChatById(chatId, userId) {
   console.log(chatId, userId);
-  const chatToShow = await chatController.readOne({_id: chatId}, true);
+  const chatToShow = await chatController.readOne({ _id: chatId }, true);
   console.log("🚀 ~ getChatById ~ chatToShow:", chatToShow)
   // console.log(chatToShow);
-//   if(chatToShow.members.includes(userId)){
-//     return chatToShow;
-//  }
-//  else{
-//    return null;
-//  }
-return chatToShow
+  //   if(chatToShow.members.includes(userId)){
+  //     return chatToShow;
+  //  }
+  //  else{
+  //    return null;
+  //  }
+  return chatToShow
 }
 
 async function getAll() {
@@ -221,20 +230,20 @@ module.exports = {
 function filterArrayByString(arr, searchString) {
   // יצירת מערך חדש שיכיל את כל האיברים שמכילים את המחרוזת המחפשת
   const filteredArray = arr.filter(item => {
-      // בדיקה אם הסובייקט של השיחה מכיל את המחרוזת
-      if (item.chat.subject && item.chat.subject.toLowerCase().includes(searchString)) {
-          return true;
-      }
-      // בדיקה אם קיימת הודעה בשיחה שהתוכן שלה מכיל את המחרוזת
-      if (item.chat.msg.some(msg => msg.content && msg.content.toLowerCase().includes(searchString))) {
-          return true;
-      }
-      // בדיקה אם קיימים חברים בשיחה שהשם של אחד מהם מכיל את המחרוזת
-      if (item.chat.members.some(member => member.fullName && member.fullName.toLowerCase().includes(searchString))) {
-          return true;
-      }
-      // אם המחרוזת לא נמצאה באף אחד מהשדות, נחזיר false
-      return false;
+    // בדיקה אם הסובייקט של השיחה מכיל את המחרוזת
+    if (item.chat.subject && item.chat.subject.toLowerCase().includes(searchString)) {
+      return true;
+    }
+    // בדיקה אם קיימת הודעה בשיחה שהתוכן שלה מכיל את המחרוזת
+    if (item.chat.msg.some(msg => msg.content && msg.content.toLowerCase().includes(searchString))) {
+      return true;
+    }
+    // בדיקה אם קיימים חברים בשיחה שהשם של אחד מהם מכיל את המחרוזת
+    if (item.chat.members.some(member => member.fullName && member.fullName.toLowerCase().includes(searchString))) {
+      return true;
+    }
+    // אם המחרוזת לא נמצאה באף אחד מהשדות, נחזיר false
+    return false;
   });
 
   return filteredArray;

@@ -35,6 +35,7 @@ export default function App() {
           
         </Routes>
         {content && <PopUp/>}
-      </div></PopupContext.Provider>
+      </div>
+      </PopupContext.Provider>
   )
 }

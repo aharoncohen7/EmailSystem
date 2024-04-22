@@ -17,7 +17,7 @@ const ChatHeader = () => {
 
     <div className={styles.main}>
 
-      <p className={styles.libels} href=""><LabelBadge /></p>
+      <span className={styles.libels} href=""><LabelBadge /></span>
 
     
 

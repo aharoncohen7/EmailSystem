@@ -31,16 +31,13 @@ const EmailTypeList = () => {
 
 
     const [isHovering, setIsHovering] = useState(false);
-
-
-
     const { loading, data, error, fetchData } = useAxiosReq({ defaultVal: {}, method: 'GET', url: 'user-chats/not-read' })
     // console.log( loading);
 
 
-    useEffect(() => {
-        setInterval(() => { fetchData() }, 3000 * 60);
-    }, []);
+    // useEffect(() => {
+    //     setInterval(() => { fetchData() }, 3000 * 60);
+    // }, []);
 
 
 

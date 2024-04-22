@@ -20,7 +20,7 @@ export const axiosReq = async ({ method = 'POST', body, url }) => {
        console.log('api req result 🐱 \n', { result })
  
  
-       return result
+       return result;
  
     } catch (error) {
        console.log('api error 🤢 \n', { error })

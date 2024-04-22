@@ -26,9 +26,7 @@ const EmailLIst = () => {
 
 
     useEffect(() => {
-      // setInterval(() => {
          fetchData() 
-        // }, 3000 * 60);
   }, [chatType, input, change]);
 
 
