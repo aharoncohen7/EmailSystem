@@ -7,21 +7,16 @@ import { IoCloseCircle } from "react-icons/io5";
 
 
 const PopUp = () => {
-    const { content, setContent } = useContext(PopupContext)
-    console.log(content);
+    const { popUpContent, setPopUpContent } = useContext(PopupContext)
+    console.log(popUpContent);
 
     return (
         // מעטפת כללית כהה
-        <div className={styles.blur} onClick={() => setContent(false)}>
+        <div className={styles.blur} onClick={() => setPopUpContent(false)}>
             {/* חלון תוכן */}
             <div className={styles.popup} onClick={(e) => e.stopPropagation()}>
-                {/* <span className={styles.colsePopup} > */}
-                {/* כפתור סגירה */}
-            
-                    <IoCloseCircle className={styles.colse} onClick={() => setContent(false)}/>
-            
-                <span className={styles.content}>{content}   </span>
-                {/* </span> */}
+                <IoCloseCircle className={styles.close} onClick={() => setPopUpContent(null)} />
+                <span className={styles.content}>{popUpContent}   </span>
             </div>
         </div>
     )

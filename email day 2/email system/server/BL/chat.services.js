@@ -40,9 +40,12 @@ async function getChats(userId, flag) {
 
 // קבלת צאטים לפי מספר קטגוריות
 async function getChatsByFlags(userId, flags) {
+  
+  flags= [...flags, "deleted"]
   console.log(flags);
   const arrayFlags = flags.flatMap(flag => funcs[flag])
-  console.log(arrayFlags);
+  
+  console.log("🚀 ~ getChatsByFlags ~ arrayFlags:", arrayFlags)
   let { chats } = await userController.readByFlags(userId, arrayFlags, { chats: true, users: true });
   return chats
 }
@@ -50,6 +53,8 @@ async function getChatsByFlags(userId, flags) {
 
 // קבלת רשימת צ'אטים לפי עמוד וסינון לפי חיפוש
 async function getChatList(userId, flags, input) {
+  
+  flags= [...flags, "deleted"]
   console.log(flags, input);
   const arrayFlags = flags.flatMap(flag => funcs[flag])
   console.log(arrayFlags);
@@ -97,50 +102,59 @@ async function updateNotReadChat(userId, chatId) {
 async function sendNewChat(req) {
   console.log("sendNewChat");
   // הוספת שולח לחברי צ'אט
-  let members = [req.body.from];
+  let membersId = [];
   // המרה לכתובת למזהה
   for (const member of req.body.members) {
     const user = await userController.readOne({ email: member });
-    members=[...members, user.id];
+    membersId = [ ...membersId, user.id];
   }
+  membersId = [req.body.from, ...membersId];
   // console.log(members, "members");
   //יצירת צ'אט חדש ושיבוץ ההודעה החדשה
-  let chatDB = await chatController.create({
+  let newChat = await chatController.create({
     subject: req.body.subject,
     msg: [{
       from: req.user._id,
       content: req.body.content
     }],
-    members: members
+    members: membersId
   })
-  
-  let chatId = chatDB._id;
+
+  // let chatId = chatDB._id;
   //קבלת משתמש שולח
-  let userFrom = await userServices.getById({ _id: req.body.from })
-  // console.log(userFrom);
-  // // הוספת שיחה לשולח
-  // userFrom.chats.push({ chat: chatId })
-  //עדכון שליחה
-  userFrom.chats[userFrom.chats.length - 1].isSent = true;
-  //עדכון קריאה
-  userFrom.chats[userFrom.chats.length - 1].isRead = true;
-  userFrom.save()
+  // let userFrom = await userServices.getById({ _id: req.body.from })
+  // // console.log(userFrom);
+  // // // הוספת שיחה לשולח
+  // // userFrom.chats.push({ chat: chatId })
+  // //עדכון שליחה
+  // userFrom.chats[userFrom.chats.length - 1].isSent = true;
+  // userFrom.chats[userFrom.chats.length - 1].isReceived = false;
+  // userFrom.chats[userFrom.chats.length - 1].isRead = true;
+  // userFrom.save()
   // מערך משתתפים
-  let usersTo = await userServices.getAll({ _id: { $in: members } })
+  let members = await userServices.getAll({ _id: { $in: membersId } })
   //הכנסת שיחה למקבל
   //עדכון קבלה
-  usersTo.map((user) => {
-    user.chats.push({ chat: chatId })
-    user.chats[user.chats.length - 1].isReceived = true;
-    user.chats[user.chats.length - 1].isRead = false;
-    user.save()
+  members.map((member, index) => {
+    member.chats.push({ chat: newChat._id })
+    if (index === 0) {
+      member.chats[member.chats.length - 1].isSent = true;
+      member.chats[member.chats.length - 1].isReceived = false;
+      member.chats[member.chats.length - 1].isRead = true;
+    }
+    else {
+      member.chats[member.chats.length - 1].isReceived = true;
+      member.chats[member.chats.length - 1].isRead = false;
+    }
+    member.save()
   })
+
   // userTo.chats.push({ email: emailId })
 
   // userTo.chats[userTo.chats.length - 1].isReceived = true;
 
   // userTo.save()
-  return chatId
+  return newChat._id
 }
 
 

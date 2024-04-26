@@ -17,6 +17,21 @@ userChatsRouter.get('/not-read', async (req, res) => {
     }
 })
 
+// קבלת צאט לפי מזהה פנימי
+userChatsRouter.get('/by-id/:chatId', async (req, res) => {
+    console.log(req.user._id);
+    try {
+        let result = await userServices.getUserChat({_id: req.user._id}, req.params.chatId)
+        res.send(result)
+    }
+    catch (err) {
+        console.log(err);
+        res.status(400).send(err.message)
+    }
+})
+
+
+
 
 //של יוזר
 // קבלת צ'אטים לפי קטגוריה 1 מסוימת
@@ -52,7 +67,7 @@ userChatsRouter.get('/by-flag/:flag', async (req, res) => {
 //של יוזר
 // קבלת צ'אטים לפי מערך קטגוריות מסוימות
 userChatsRouter.post('/flags', async (req, res) => {
-    console.log(req.body, "lllllllllllllllllllllllll");
+    // console.log(req.body);
     try {
         let result = await chatServices.getChatsByFlags(req.user._id, req.body.flags)
         res.send(result)
@@ -63,12 +78,10 @@ userChatsRouter.post('/flags', async (req, res) => {
     }
 })
 
-
-
 // קבלת צ'אטים לפי סינון
 userChatsRouter.post('/chat-list', async (req, res) => {
 
-    console.log(req.body, "ffffffffffffffffffffffffffffffffffffffffff");
+    // console.log(req.body);
     try {
         let result = await chatServices.getChatList(req.user._id, req.body.flags, req.body.input)
         res.send(result)
@@ -79,23 +92,28 @@ userChatsRouter.post('/chat-list', async (req, res) => {
     }
 })
 
-
-
-
-
-
-
-
-
+// עדכון דגלים בצ'אט מסויים - לפי מזהה פנימי
+userChatsRouter.put("/update-chat/:chatId/:filedToUpdate", async (req, res) => {
+    console.log("start update itemChat2 !! on userChats");
+    try {
+        const field = req.params.filedToUpdate;
+        const userId = req.user._id;
+        const chat = await userServices.getUserChat({_id: req.user._id}, req.params.chatId)
+        console.log(field, userId, chat.id)              
+        const updatedChat = await userServices.updateChat({_id: userId}, chat.id,  field)
+        console.log(updatedChat);
+        res.send(updatedChat)
+    }
+    catch (err) {
+        res.status(400).send(err.msg || err.message || "wrong")
+    }
+});
 
 
 
 
 // בעייתי, מעדכן תמיד את ההיפך
-//של יוזר
-// מקבל מזהה מטוקן רק עבור משתמש נוכחי
 // עדכון דגלים בצ'אט מסויים
-// עדכונים של כמה חברים יגיע רק בעת פעולות אחרות כמו שליחת הודעה ואין צורך באנד פוינט למצב כזה
 userChatsRouter.put("/:chatId/:filedToUpdate", async (req, res) => {
     console.log("start update itemChat on userChats");
     try {

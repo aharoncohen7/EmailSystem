@@ -19,7 +19,7 @@ const EmailLIst = () => {
     const [change, setChange] = useState(false)
     const {chatType } = useParams()
     const filter = flags[chatType]
-    console.log(filter);
+    // console.log(filter);
    
 
     const { loading, data, error , fetchData} = useAxiosReq({ defaultVal: {}, method: 'POST', url: `user-chats/chat-list`, body: { flags: [ `${filter}`], input: input }})
@@ -36,12 +36,12 @@ const EmailLIst = () => {
 
             <div className={styles.main}>
                 <div className={styles.header}>
-                    <InputSearch sendInput={setInput} />
+                    <InputSearch sendInput={setInput} loading={loading} />
 
                 </div>
 
                <span className={styles.emailList}>
-               {data.length &&
+               {data.length ?
                     data.map((item, index) => {
                         return (
                             <NavLink
@@ -60,7 +60,7 @@ const EmailLIst = () => {
 
                         )
                     })
-                }
+                : <span className={styles.noResults}>אין תוצאות</span>} 
                </span>
 
             </div>

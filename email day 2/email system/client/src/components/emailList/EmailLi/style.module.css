@@ -7,8 +7,6 @@
     Width: 100%;
     Height: 60px;
     gap: 10px;
-
-
     border-radius: 10px;
     padding: 10px;
 }
@@ -32,21 +30,6 @@ h3{
 .envelope{
     color: var(--primary-color);
 }
-
-
-
-
-.notifications {
-    /* background-color: #fff; */
-    
-
-}
-
-/* .main:active {
-    
-    box-shadow: none;
-} */
-
 
 
 .avatar {

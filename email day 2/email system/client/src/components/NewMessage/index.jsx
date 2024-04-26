@@ -8,8 +8,8 @@ import { axiosReq } from '../../helpers';
 // יוזר לדוגמה
 const thisUser =
 {
-  email: "user2@example.com",
-  _id: "6621944e5a00541a3453f3d4",
+  email: "user1@example.com",
+  _id: "662ad1cb71375af1dc73fb45",
   fullName: "Moshe Cohen",
   password: "123qwe",
   avatar: "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairTheCaesar&accessoriesType=Sunglasses&hairColor=Auburn&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Side&eyebrowType=RaisedExcitedNatural&mouthType=Smile&skinColor=Yellow",

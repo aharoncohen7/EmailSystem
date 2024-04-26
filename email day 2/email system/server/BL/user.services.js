@@ -8,7 +8,7 @@ async function getAll(filter) {
 }
 
 async function getById(filter) {
-  console.log("in getById");
+  console.log("in get user By Id");
   let user = await userController.readOne(filter)
   // console.log(user);
   return user
@@ -32,6 +32,18 @@ async function deleteById(id) {
   let deletedUser = await userController.del(id)
   return deletedUser
 }
+
+async function getUserChat(filter, chatId) {
+  // console.log(filter, chatId, field);
+  let user = await userController.readOne(filter)
+  const foundChat = user.chats.find(chat => chat.chat == chatId);
+  if(!foundChat){
+    return null;
+  }
+    console.log(foundChat);
+  return foundChat
+}
+
 
 
 async function updateChat(filter, chatId, field) {
@@ -73,5 +85,6 @@ module.exports = {
   deleteById,
   updateChat,
   getEmailsByFilter,
+  getUserChat
   // getAllEmailMsg
 }

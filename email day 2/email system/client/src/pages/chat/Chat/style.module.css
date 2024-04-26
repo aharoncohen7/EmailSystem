@@ -4,9 +4,19 @@
     padding: 0 10px 0 10px;
     overflow: auto;
     justify-content: space-between;
+    /* flex-shrink: 0; */
+}
+
+.chat{
+    /* flex-shrink: 1; */
+    /* height: 100%; */
+    flex-grow: 1;
+    flex-shrink: 1;
+
 }
 
 .editorBox{
     padding: 0px 20px 0px 20px;
     height: 30vh;
+    /* flex-shrink: 0; */
 }

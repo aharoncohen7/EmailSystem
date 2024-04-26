@@ -27,14 +27,14 @@
 
 }
 
-.onSearch{
+.loading{
     color: var(--primary-color);
     animation: rotateAndScale 2s 3;
     
 }
 
 input::placeholder {
-    color: #b4b4b4 ;
+    color: #888888;
 }
 
 /* לתקן */

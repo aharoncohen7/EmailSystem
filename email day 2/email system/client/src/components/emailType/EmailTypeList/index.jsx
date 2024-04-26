@@ -42,10 +42,10 @@ const EmailTypeList = () => {
 
 
     return (
-        <ul className={styles.ul}>
+        <ul className={styles.main}>
             <span className={loading ? 'loading' : ''}>
 
-                {loading && <h1>loading...</h1>}
+                {loading && <h2>loading...</h2>}
                 {emailTypeIcons.map((obj) => (
                     <NavLink
                         key={obj.name}

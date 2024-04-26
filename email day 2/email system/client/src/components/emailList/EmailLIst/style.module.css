@@ -66,3 +66,19 @@
     background-color: #fff;
     
 }
+
+.noResults{
+
+    /* background-color: var(--lightGray-bg-color); */
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    Width: 100%;
+    Height: 60px;
+    gap: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2);
+}
+  

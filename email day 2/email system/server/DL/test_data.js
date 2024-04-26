@@ -76,16 +76,22 @@ async function go() {
             msg: [{
                 from: ru2._id,
                 date: "2024-03-21T10:00:00.000Z",
-                content: "Greeting and you??",
+                content: `<span  dir="ltr" style="text-decoration: none; font-style: normal;
+                font-weight: normal; text-align: left";>
+                Greeting and you?? </span>`
 
             }, {
                 from: ru1._id,
                 date: "2024-03-21T10:08:00.000Z",
-                content: "Fine, and you?",
+                content: `<span  dir="ltr" style="text-decoration: none; font-style: normal;
+                font-weight: normal; text-align: left";>
+                Fine, and you? </span>`,
             }, {
                 from: ru6._id,
                 date: "2024-03-21T10:24:00.000Z",
-                content: "Walla Sababa !!",
+                content:`<span  dir="ltr" style="text-decoration: none; font-style: normal;
+                font-weight: normal; text-align: left";>
+                Walla Sababa !! </span>`,
             },],
             lastDate: "2024-03-21T10:24:00.000Z"
         },
@@ -95,21 +101,29 @@ async function go() {
             msg: [{
                 from: ru3._id,
                 date: "2024-03-20T09:30:00.000Z",
-                content: "Could you please send me the report?",
+                content: `<span  dir="ltr" style="text-decoration: none; font-style: normal;
+                font-weight: normal; text-align: left";>
+                Could you please send me the report? </span>`,
             },
             {
                 from: ru2._id,
                 date: "2024-03-20T10:45:00.000Z",
-                content: "whyyyyy?!?!",
+                content: `<span  dir="ltr" style="text-decoration: none; font-style: normal;
+                font-weight: normal; text-align: left";>
+                whyyyyy?!?! </span>`,
             }, {
 
                 from: ru3._id,
                 date: "2024-03-20T10:57:00.000Z",
-                content: "why whyyyyyyy?!?!",
+                content:  `<span  dir="ltr" style="text-decoration: none; font-style: normal;
+                font-weight: normal; text-align: left";>
+                why whyyyyyyy?!?! </span>`,
             }, {
                 from: ru6._id,
                 date: "2024-03-21T07:30:00.000Z",
-                content: "Ok, i'm fired!",
+                content: `<span  dir="ltr" style="text-decoration: none; font-style: normal;
+                font-weight: normal; text-align: left";>
+                Ok, i'm fired! </span>`,
             },],
             lastDate: "2024-03-21T07:30:00.000Z"
         },
@@ -120,12 +134,16 @@ async function go() {
                 {
                     from: ru2._id,
                     date: "2024-04-08T11:00:00.000Z",
-                    content: "Just a reminder about our meeting tomorrow.",
+                    content: `<span  dir="ltr" style="text-decoration: none; font-style: normal;
+                    font-weight: normal; text-align: left";>
+                    Just a reminder about our meeting tomorrow. </span>`,
                 },
                 {
                     from: ru3._id,
                     date: "2024-04-08T11:05:00.000Z",
-                    content: "Thanks for the heads-up. Looking forward to it!",
+                    content: `<span  dir="ltr" style="text-decoration: none; font-style: normal;
+                    font-weight: normal; text-align: left";>
+                    Thanks for the heads-up. Looking forward to it! </span>`,
                 }
             ],
             lastDate: "2024-04-08T11:05:00.000Z"
@@ -137,12 +155,16 @@ async function go() {
                 {
                     from: ru5._id,
                     date: "2024-04-08T12:00:00.000Z",
-                    content: "I'm thinking of taking a vacation next month.",
+                    content: `<span  dir="ltr" style="text-decoration: none; font-style: normal;
+                    font-weight: normal; text-align: left";>
+                    I'm thinking of taking a vacation next month. </span>`,
                 },
                 {
                     from: ru6._id,
                     date: "2024-04-08T12:10:00.000Z",
-                    content: "That sounds like a great idea! Where are you planning to go?",
+                    content: `<span  dir="ltr" style="text-decoration: none; font-style: normal;
+                    font-weight: normal; text-align: left";>
+                    That sounds like a great idea! Where are you planning to go? </span>`,
                 }
             ],
             lastDate: "2024-04-08T12:10:00.000Z"
@@ -154,17 +176,23 @@ async function go() {
                 {
                     from: ru1._id,
                     date: "2024-04-08T13:00:00.000Z",
-                    content: "I have some ideas for a new feature. Can we discuss?",
+                    content: `<span  dir="ltr" style="text-decoration: none; font-style: normal;
+                    font-weight: normal; text-align: left";>
+                    I have some ideas for a new feature. Can we discuss? </span>`,
                 },
                 {
                     from: ru3._id,
                     date: "2024-04-08T13:15:00.000Z",
-                    content: "Sure! Let's schedule a meeting to brainstorm.",
+                    content: `<span  dir="ltr" style="text-decoration: none; font-style: normal;
+                    font-weight: normal; text-align: left";>
+                    Sure! Let's schedule a meeting to brainstorm. </span>`,
                 },
                 {
                     from: ru4._id,
                     date: "2024-04-08T13:30:00.000Z",
-                    content: "Count me in! I'm excited to hear your ideas.",
+                    content: `<span  dir="ltr" style="text-decoration: none; font-style: normal;
+                    font-weight: normal; text-align: left";>
+                    I'll prepare the necessary documents for the meeting. </span>`,
                 }
             ],
             lastDate: "2024-04-08T13:30:00.000Z"
@@ -176,17 +204,24 @@ async function go() {
                 {
                     from: ru2._id,
                     date: "2024-04-08T14:00:00.000Z",
-                    content: "Let's organize a team-building event next month.",
+                    content: `<span  dir="ltr" style="text-decoration: none; font-style: normal;
+                    font-weight: normal; text-align: left";>
+                    Let's organize a team-building event next month. </span>`,
                 },
                 {
                     from: ru5._id,
                     date: "2024-04-08T14:15:00.000Z",
-                    content: "That sounds like a fantastic idea! Any suggestions?",
+                    content:`<span  dir="ltr" style="text-decoration: none; font-style: normal;
+                    font-weight: normal; text-align: left";>
+                    That sounds like a fantastic idea! Any suggestions? </span>` ,
                 },
                 {
                     from: ru6._id,
                     date: "2024-04-08T14:30:00.000Z",
-                    content: "I'll check some options and get back to you.",
+                    content: `<span  dir="ltr" style="text-decoration: none; font-style: normal;
+                    font-weight: normal; text-align: left";>
+                    I'll check some options and get back to you. </span>`
+                    ,
                 }
             ],
             lastDate: "2024-04-08T14:30:00.000Z"
@@ -198,17 +233,26 @@ async function go() {
                 {
                     from: ru1._id,
                     date: "2024-04-08T15:00:00.000Z",
-                    content: "We need to discuss the budget for the upcoming project.",
+                    content: `<span  dir="ltr" style="text-decoration: none; font-style: normal;
+                            font-weight: normal; text-align: left";>
+                             We need to discuss the budget for the upcoming project. </span>`,
                 },
                 {
                     from: ru2._id,
                     date: "2024-04-08T15:15:00.000Z",
-                    content: "Agreed. Let's schedule a meeting to review.",
+                    content: `<span  dir="ltr" style="text-decoration: none; font-style: normal;
+                    font-weight: normal; text-align: left";>
+                    Agreed. Let's schedule a meeting to review. </span>`
+                    ,
                 },
                 {
                     from: ru4._id,
                     date: "2024-04-08T15:30:00.000Z",
-                    content: "I'll prepare the necessary documents for the meeting.",
+                    content: `<span  dir="ltr" style="text-decoration: none; font-style: normal;
+                    font-weight: normal; text-align: left";>
+                    I'll prepare the necessary documents for the meeting. </span>`
+                    
+                    ,
                 }
             ],
             lastDate: "2024-04-08T15:30:00.000Z"

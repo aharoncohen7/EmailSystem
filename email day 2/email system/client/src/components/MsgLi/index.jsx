@@ -2,14 +2,21 @@
 import styles from './style.module.css'
 import DomPurify from 'dompurify';
 import MsgContent from '../MsgContent/index.jsx';
-import { BiSolidShare } from "react-icons/bi";
+import { IoIosShareAlt } from "react-icons/io";
 import { formatDateTime } from "./../../helpers/index.js"
+import { FaHandHoldingHeart } from "react-icons/fa";
+
 
 
 // יחידה הודעה בצ'אט
 export const MsgLi = ({ msg, chatToShow, thisUser, setIsExpand, isExpand }) => {
   const youSent = msg.from == thisUser._id;
   const isThisExpand = isExpand == msg._id;
+  const dirMatch = msg.content?.match(/<[^>]+dir\s*=\s*["'](\w+)["'][^>]*>/);
+  const dir = dirMatch ? dirMatch[1] : "rtl";
+  // console.log(dir);
+
+
 
   // בוחר הודעה מורחבת
   const handelExpand = () => {
@@ -17,7 +24,7 @@ export const MsgLi = ({ msg, chatToShow, thisUser, setIsExpand, isExpand }) => {
       if (prev == msg._id) { return false } else { return msg._id }
     })
   }
- // מוצא את המשתמש המתאים בעזרת המזהה של השולח
+  // מוצא את המשתמש המתאים בעזרת המזהה של השולח
   function getSender() {
     return chatToShow.members.find(member => member._id == msg.from);
   };
@@ -35,10 +42,12 @@ export const MsgLi = ({ msg, chatToShow, thisUser, setIsExpand, isExpand }) => {
           {/* מחבר הודעה1 */}
           {youSent ?
             <span className={styles.youSend} ><span className={styles.avatar}>
-              <BiSolidShare className={styles.svg} />
-              </span>
-              <h3 className={styles.name}>You</h3>
-              </span>
+              <IoIosShareAlt  className={styles.svg} />
+            </span>
+              <h3 className={styles.name}>You
+                {/* <FaHandHoldingHeart/> */}
+              </h3>
+            </span>
             :
             <div className={styles.othersSend}>
               <img className={styles.avatar}
@@ -52,8 +61,10 @@ export const MsgLi = ({ msg, chatToShow, thisUser, setIsExpand, isExpand }) => {
             </div>
           }
 
-         {/* תוכן הודעה מקוצר ללא עיצוב */}
-          {!isThisExpand && <p className={styles.partialContent}> {sanitizedHTML.replace(/<[^>]+>/g, '')} </p>}
+          {/* תוכן הודעה מקוצר ללא עיצוב */}
+          {!isThisExpand && <p
+            dir={dir}
+            className={styles.partialContent}> {`-${sanitizedHTML.replace(/<[^>]+>/g, '').replaceAll('&nbsp;', '')}`} </p>}
 
 
           {/* תאריך אחרון */}
@@ -63,7 +74,7 @@ export const MsgLi = ({ msg, chatToShow, thisUser, setIsExpand, isExpand }) => {
 
       {/* מורחב - תוכן מלא ומעוצב*/}
       {isThisExpand && <span className={styles.fullContent}  >
-         <MsgContent msgContent={msg.content} />
+        <MsgContent msgContent={msg.content} />
       </span>}
 
 

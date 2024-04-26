@@ -150,3 +150,30 @@ export function getDescriptionOrTime(timeString) {
 //       return "last week, ";
 //   }
 // }
+
+
+ // const someElement = document.createElement('span');
+    // someElement.innerHTML = 'חוכמת אתונה';
+    // document.body.appendChild(someElement);
+    // const direction = window.getComputedStyle(someElement).direction;
+    // if (direction === 'rtl') {
+    //     // הגדרת המקלדת היא כנראה עברית
+    //     console.log("he");
+    // } else {
+    //     console.log("en");
+    //     // הגדרת המקלדת היא כנראה לא עברית
+    // }
+    // document.body.removeChild(someElement);
+
+
+    //   window.addEventListener('load', () => {
+    //   const userLanguage = navigator.language || navigator.languages[0];
+
+    //   if (userLanguage.startsWith('he')) {
+    //     // שפת המקלדת הנוכחית היא עברית
+    //     console.log('Hebrew keyboard layout detected');
+    //   } else {
+    //     // שפת המקלדת הנוכחית היא אנגלית או אחרת
+    //     console.log('Non-Hebrew keyboard layout detected');
+    //   }
+    // });

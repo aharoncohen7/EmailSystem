@@ -4,7 +4,7 @@ module.exports = {
         Sent: "isSent",
         Inbox: "isReceived",
         Favorite: "isFavorite",
-        Deleted: "isDeleted",
+        Deleted: {"isDeleted": false},
         Draft: "isDraft",
         Read: "isRead",
         NotRead: {"isRead":false},

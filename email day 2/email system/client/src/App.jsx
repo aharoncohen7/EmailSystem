@@ -10,12 +10,27 @@ export const PopupContext = createContext(true)
 
 
 
+// יוזר לדוגמה
+const thisUser =
+{
+  email: "user1@example.com",
+  _id: "662ad1cb71375af1dc73fb45",
+  fullName: "Moshe Cohen",
+  password: "123qwe",
+  avatar: "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairTheCaesar&accessoriesType=Sunglasses&hairColor=Auburn&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Side&eyebrowType=RaisedExcitedNatural&mouthType=Smile&skinColor=Yellow",
+}
+
+
+
 export default function App() {
-  const [content, setContent] = useState("")
+  const [popUpContent, setPopUpContent] = useState("")
+
+
+
   
 
   return (
-    <PopupContext.Provider value={{ content, setContent }}>
+    <PopupContext.Provider value={{ popUpContent, setPopUpContent }}>
       <div>
         <Routes>
           {/* <Route path="login" element={<h1>login</h1>} /> */}
@@ -34,7 +49,7 @@ export default function App() {
           </Route>
           
         </Routes>
-        {content && <PopUp/>}
+        {popUpContent && <PopUp/>}
       </div>
       </PopupContext.Provider>
   )

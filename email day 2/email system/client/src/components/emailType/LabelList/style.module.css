@@ -6,7 +6,7 @@ h3{
 .main{
   display: flex;
   flex-direction: column;
-  height: 130px;
+  height: 170px;
   overflow-y: scroll;
 }
 

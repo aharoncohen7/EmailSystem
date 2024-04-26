@@ -37,14 +37,14 @@ async function save(user) {
 
 async function readByFlags(id, flags = [], populate = {}) {
     let data = await userModel.findOne({ _id: id, isActive: true })
-    console.log("🚀 ~ readByFlags ~ data:", data)
+    // console.log("🚀 ~ readByFlags ~ data:", data)
     
-    data.chats = data.chats.filter(c => flags.every(f => {
-        if (typeof f === 'object') {
-            let [[k, v]] = Object.entries(f)
+    data.chats = data.chats.filter(c => flags.every(flag => {
+        if (typeof flag === 'object') {
+            let [[k, v]] = Object.entries(flag)
             return c[k] == v
         }
-        return c[f]
+        return c[flag]
     }))
     if (populate.chats) data = await data.populate('chats.chat')
     if (populate.users) data = await data.populate({ path: 'chats.chat.members', select: "fullName avatar" })
