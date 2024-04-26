@@ -46,15 +46,12 @@ const EmailLIst = () => {
                         return (
                             <NavLink
                                 key={item._id}
-                                to={`${item.chat._id}`}
+                                to={`${item._id}`}
                                 className={({ isActive }) =>
                                     `${isActive ? styles.active : ""} ${styles.box}`
                                 }
                                 style={({ isActive }) => isActive ? { boxShadow: "0px 3px 6px rgb(212, 210, 210)" } : {}}
-
                             >
-
-
                                 <EmailLi item={item} setChange={setChange}/>
                             </NavLink>
 

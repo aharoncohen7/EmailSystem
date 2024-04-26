@@ -25,7 +25,6 @@ const NewMessage = () => {
   const [members, setMembers] = useState([]);
 
   function addMember() {
-
     setMembers(prevState => {
         // יצירת סט עם הערכים הקיימים במערך הקודם
         const uniqueSet = new Set(prevState);
@@ -55,7 +54,8 @@ const NewMessage = () => {
     if (searchString.trim() !== '') {
       try {
         const result = await axiosReq({ method: 'GET', url: `users/by-email/${searchString}` })
-        setMemberList(result);
+        const result2 = result.filter(member =>  member.email !== thisUser.email)
+        setMemberList(result2);
       } catch (e) {
         console.error(e)
       }

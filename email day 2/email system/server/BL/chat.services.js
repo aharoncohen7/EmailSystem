@@ -133,6 +133,7 @@ async function sendNewChat(req) {
   // userFrom.save()
   // מערך משתתפים
   let members = await userServices.getAll({ _id: { $in: membersId } })
+  let userChatId;
   //הכנסת שיחה למקבל
   //עדכון קבלה
   members.map((member, index) => {
@@ -141,6 +142,7 @@ async function sendNewChat(req) {
       member.chats[member.chats.length - 1].isSent = true;
       member.chats[member.chats.length - 1].isReceived = false;
       member.chats[member.chats.length - 1].isRead = true;
+      userChatId = member.chats[member.chats.length - 1].id;
     }
     else {
       member.chats[member.chats.length - 1].isReceived = true;
@@ -154,7 +156,7 @@ async function sendNewChat(req) {
   // userTo.chats[userTo.chats.length - 1].isReceived = true;
 
   // userTo.save()
-  return newChat._id
+  return userChatId;
 }
 
 

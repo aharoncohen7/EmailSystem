@@ -12,7 +12,7 @@ const EmailLi = ({ item }) => {
   // const { loading, data, error, fetchData } = useAxiosReq({ defaultVal: {}, method: 'PUT', url: `user-chats/${item._id}/isRead` })
   // const [isFavorite, setIsFavorite] = useState(item.isFavorite)
 
-  const updateFields = ()=>{
+  const updateIsRead = ()=>{
     if(!item.isRead){
       axiosReq({  method: 'PUT', url: `user-chats/${item._id}/isRead` })
       setIsRead(true)
@@ -81,8 +81,7 @@ const EmailLi = ({ item }) => {
 
 
   return (
-
-    <div id="chatLi" className={styles.main} onClick={updateFields}>
+    <div id="chatLi" className={styles.main} onClick={updateIsRead}>
       <img className={styles.avatar}
         src=
         {item?.chat?.members?.[0]?.avatar ? item.chat.members[0].avatar
@@ -95,11 +94,7 @@ const EmailLi = ({ item }) => {
       <div className={styles.information} >
         <span className={styles.time}>{item?.chat?.lastDate ? getDescriptionOrTime(item.chat.lastDate) : "00:00"}</span>
         {!isRead ? <FaEnvelope className={styles.envelope} /> : <BiSolidStar className={item.isFavorite ? styles.isFavorite : styles.notFavorite} />}
-
-
       </div>
-
-
     </div>
   )
 }

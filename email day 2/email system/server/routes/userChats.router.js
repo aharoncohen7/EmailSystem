@@ -17,11 +17,25 @@ userChatsRouter.get('/not-read', async (req, res) => {
     }
 })
 
-// קבלת צאט לפי מזהה פנימי
+// קבלת צאט לפי מזהה כללי -  פנימי
 userChatsRouter.get('/by-id/:chatId', async (req, res) => {
     console.log(req.user._id);
     try {
         let result = await userServices.getUserChat({_id: req.user._id}, req.params.chatId)
+        res.send(result)
+    }
+    catch (err) {
+        console.log(err);
+        res.status(400).send(err.message)
+    }
+})
+
+
+// קבלת צאט לפי מזהה אישי
+userChatsRouter.get('/by-chat-id/:chatId', async (req, res) => {
+    console.log(req.user._id);
+    try {
+        let result = await userServices.getUserChatById({_id: req.user._id}, req.params.chatId)
         res.send(result)
     }
     catch (err) {

@@ -24,16 +24,16 @@ const EmailPage = React.memo(({ change, thisUser }) => {
   const [data, setData] = useState({});
 
  useEffect(() => {
-  
   const getChat = async () => {
     try {
-      const url = `http://localhost:4004/api/chats/${chatId}`;
+      const url = `http://localhost:4004/api/user-chats/by-chat-id/${chatId}`;
       const response = await axios.get(url, {
         headers: {
           'Content-Type': 'application/json',
           // 'authorization': localStorage.getItem('Authorization') || ''
         }
       });
+      // console.log(response);
       if (!response.data) {
         console.log();
         if (response.status === 401) {
@@ -41,8 +41,8 @@ const EmailPage = React.memo(({ change, thisUser }) => {
         }
         throw new Error(`Network response was not ok! status: ${response.status}`);
       }
-      console.log("this chat 😊🐱‍💻", response.data);
-      setData(response.data);
+      // console.log("this chat 😊🐱‍💻", response.data);
+      setData(response.data.chat);
     } catch (error) {
       console.error("Error fetching :", error);
     }

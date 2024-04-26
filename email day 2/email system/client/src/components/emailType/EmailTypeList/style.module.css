@@ -89,9 +89,9 @@
   
   .more:hover{
     color: var(--primary-color);
-    svg{
+    /* svg{ */
         /* color: var(--primary-color) */
-    }
+    /* } */
     
     
 }
@@ -129,8 +129,7 @@
   } */
 
 
-  .loading
-   {
+  .loading{
     opacity: 0;
     /* animation: fadeIn 2s ease-in-out; */
   }

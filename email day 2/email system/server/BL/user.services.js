@@ -33,10 +33,23 @@ async function deleteById(id) {
   return deletedUser
 }
 
+// לפי מזהה צאט כללי
 async function getUserChat(filter, chatId) {
   // console.log(filter, chatId, field);
   let user = await userController.readOne(filter)
   const foundChat = user.chats.find(chat => chat.chat == chatId);
+  if(!foundChat){
+    return null;
+  }
+    console.log(foundChat);
+  return foundChat
+}
+
+// לפי מזהה צאט אישי
+async function getUserChatById(filter, chatId) {
+  // console.log(filter, chatId, field);
+  let user = await userController.readOne(filter, {"chats": true, "users": true})
+  const foundChat = user.chats.find(chat => chat.id == chatId && !chat.isDeleted);
   if(!foundChat){
     return null;
   }
@@ -85,6 +98,7 @@ module.exports = {
   deleteById,
   updateChat,
   getEmailsByFilter,
-  getUserChat
+  getUserChat,
+  getUserChatById
   // getAllEmailMsg
 }

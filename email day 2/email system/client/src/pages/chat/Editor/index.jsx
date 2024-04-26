@@ -160,6 +160,9 @@ const Editor = ({ setChange, setResetKey, moreDetails, newMessage = false }) => 
     const body = { content: `<span dir='${textDirection}' style=${cssStyle}> ${content} </span>` }
     //שליחת הודעה
     const send = async () => {
+        if(newMessage&&(moreDetails.members.length==0||moreDetails.subject=="")){
+            return;
+        }
         if (content.trim() !== '') {
             try {
                 const result = await axiosReq({
