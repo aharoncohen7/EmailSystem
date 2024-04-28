@@ -71,14 +71,7 @@ async function getChatList(userId, flags, input) {
 
   return chats
 }
-
-
-
-
-
-
-
-
+// אמור לעבור מכאן
 // עדכון למצב קראתי אצל יוזר מסויים
 async function updateReadChat(userId, chatId) {
   let user = await userController.readOne(userId);
@@ -87,7 +80,7 @@ async function updateReadChat(userId, chatId) {
   // let chatIndex = chats.findIndex(c => c._id == chatId)
   // userController.update({ _id: userId }, { $set: { [`chats.${chatIndex}.isRead`]: true } })
 }
-
+// כנ"ל
 // עדכון למצב לא קראתי אצל יוזר מסויים
 async function updateNotReadChat(userId, chatId) {
   let user = await userController.readOne(userId);
@@ -162,18 +155,23 @@ async function sendNewChat(req) {
 
 // שליחת הודעה לשיחה קיימת
 async function addMessageToChat(body) {
+  // console.log(body);
+
   //הבאת צאט שורש
-  let chatToUpdate = await chatController.readOne({ _id: body.chatId })
+  const chat = await userServices.getUserChatById({_id: body.from}, body.chatId);
+  // console.log("🚀 ~ addMessageToChat ~ chatToUpdate:", chat)
+  const chatToUpdate = await chatController.readOne({_id: chat.chat._id})
   //הוספת הודעה לצ'אט
   chatToUpdate.msg.push({ from: body.from, content: body.content })
   //עדכון זמן אחרון
   chatToUpdate.lastDate = Date.now()
   chatToUpdate.save()
+  console.log("🚀 ~ addMessageToChat ~ chatToUpdate:", chatToUpdate)
   // קבלת כל חברי צ'אט
   let members = await userServices.getAll({ _id: { $in: chatToUpdate.members } }, { chats: true, users: true })
   // עדכון קבלה אצל שאר החברים
   members.map((member) => {
-    const member_chat = member.chats.find(item => item.chat == body.chatId)
+    const member_chat = member.chats.find(item => item.chat == chatToUpdate.id)
     if (member._id == body.from) {
       // console.log(member._id, "sender");
       member_chat.isSent = true;
@@ -186,7 +184,8 @@ async function addMessageToChat(body) {
     }
     member.save()
   })
-  return await chatController.readOne({ _id: body.chatId }, true)
+ return true;
+  // return await chatController.readOne({ _id: body.chatId }, true)
 }
 
 

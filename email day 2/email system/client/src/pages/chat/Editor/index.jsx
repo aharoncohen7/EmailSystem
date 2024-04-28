@@ -17,6 +17,7 @@ import { FaFile } from "react-icons/fa";
 import { PiSelectionAll } from "react-icons/pi";
 import { MdFormatTextdirectionRToL } from "react-icons/md";
 import { MdFormatTextdirectionLToR } from "react-icons/md";
+import { VscTextSize } from "react-icons/vsc";
 
 
 import Colors from '../Colors';
@@ -68,6 +69,8 @@ const Editor = ({ setChange, setResetKey, moreDetails, newMessage = false }) => 
     const [showColors, setShowColors] = React.useState(false);
     // צבע טקסט
     const [selectedColor, setSelectedColor] = React.useState("black");
+    // גודל טקסט
+    const [fontSize, setFontSize] = React.useState("small");
     //כיוון טקסט
     const [textDirection, setTextDirection] = React.useState("");
     //  עיצןב מטקסט - יישור שורות
@@ -85,20 +88,23 @@ const Editor = ({ setChange, setResetKey, moreDetails, newMessage = false }) => 
     // בעת בחירת צבע- הטקסט המודגש יקבל את הצבע
     useEffect(() => {
         handleSelect()
-    }, [selectedColor, formatting]);
+    }, [selectedColor, formatting, fontSize]);
     // עיצוב עבור תצוגת השולח
     const jsxStyle = {
         textDecoration: formatting.underline ? 'underline' : 'none',
         fontStyle: formatting.italic ? 'italic' : 'none',
         fontWeight: formatting.bold ? 'bold' : 'normal',
         color: selectedColor,
+        fontSize: fontSize
     }
     // עיצוב עבור התוכן הנשלח
-    const cssStyle = `"text-decoration: ${formatting.underline ? 'underline' : 'none'};
+    const cssStyle =
+        `"text-decoration: ${formatting.underline ? 'underline' : 'none'};
          font-style: ${formatting.italic ? 'italic' : 'normal'};
          font-weight: ${formatting.bold ? 'bold' : 'normal'};
          text-align: ${textFormatting}";
          color: ${selectedColor};
+         font-size: ${fontSize};
          `;
     //החלת סגנון בעת בחירת טקסט
     function handleSelect() {
@@ -160,7 +166,7 @@ const Editor = ({ setChange, setResetKey, moreDetails, newMessage = false }) => 
     const body = { content: `<span dir='${textDirection}' style=${cssStyle}> ${content} </span>` }
     //שליחת הודעה
     const send = async () => {
-        if(newMessage&&(moreDetails.members.length==0||moreDetails.subject=="")){
+        if (newMessage && (moreDetails.members.length == 0 || moreDetails.subject == "")) {
             return;
         }
         if (content.trim() !== '') {
@@ -172,6 +178,8 @@ const Editor = ({ setChange, setResetKey, moreDetails, newMessage = false }) => 
                         ? { ...body, subject: moreDetails.subject, members: moreDetails.members }
                         : body
                 })
+                
+                
                 if (result) {
                     if (newMessage) {
                         navTo(`/chats/sent emails/${result}`)
@@ -187,6 +195,7 @@ const Editor = ({ setChange, setResetKey, moreDetails, newMessage = false }) => 
                 }
 
             } catch (e) {
+                alert("Failed to send message")
                 console.error(e)
             }
         }
@@ -213,7 +222,7 @@ const Editor = ({ setChange, setResetKey, moreDetails, newMessage = false }) => 
                     //     // color: content ? 'inherit' : 'gray', // הוספת צבע אפור לטקסט הדיפולטי
                     // }}
                     // value={content.length>100 || 'Write your message...'}
-                    style={{ textAlign: textFormatting }}
+                    style={{ textAlign: textFormatting, fontSize: fontSize }}
                     onInput={
                         (e) => {
                             console.log(e.target.innerHTML);
@@ -274,6 +283,13 @@ const Editor = ({ setChange, setResetKey, moreDetails, newMessage = false }) => 
 
                         <MdFormatTextdirectionLToR className={textDirection === "ltr" ? styles.svg : ''} onClick={() => { setTextDirection('ltr'); setTextFormatting("left") }} />
                         <MdFormatTextdirectionRToL className={textDirection === "rtl" ? styles.svg : ''} onClick={() => { setTextDirection('rtl'); setTextFormatting("right") }} />
+                        <VscTextSize size={fontSize=="small" ? "15px" : "17px"}  className={styles.svg} onClick={
+                            () => {
+                                setFontSize(prev => {
+                                    if (prev == "small") { return "medium" }
+                                    else return "small"
+                                })
+                            }} />
 
                     </div>
                 </div>

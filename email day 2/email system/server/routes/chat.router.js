@@ -63,10 +63,8 @@ chatRouter.put("/:chatId", async (req, res) => {
     console.log("start add new message to old chat");
     try {
         req.body.from = req.user._id;
-        req.body.chatId = req.params.chatId;
-        // console.log(req.user._id);       
+        req.body.chatId = req.params.chatId;      
         const updatedChat = await chatServices.addMessageToChat(req.body)
-        // console.log(newEmail);
         res.send(updatedChat)
        
     }

@@ -34,7 +34,6 @@
     padding: 20px;
     border: none;
     outline: none;
-    font-size: small;
     border-radius: 10px;
     width: 98%;
     height: 10vh;
@@ -163,6 +162,8 @@
 
 
 }
+
+
 
 .svg{
     color: var(--primary-color);

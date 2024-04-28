@@ -58,7 +58,7 @@ async function getUserChatById(filter, chatId) {
 }
 
 
-
+// עדכון דגלים בצ'אט משתמש
 async function updateChat(filter, chatId, field) {
   console.log(filter, chatId, field);
   let user = await userController.readOne(filter)
