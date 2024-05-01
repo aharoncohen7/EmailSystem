@@ -60,7 +60,7 @@
 //     try {
 //         const userId = req.user._id;
 //         console.log(userId);                   
-//         const allReceived = await userServices.getById({_id:userId, emails:{$elemMatch:{isReceived:true}}}, true)
+//         const allReceived = await userServices.getUserById({_id:userId, emails:{$elemMatch:{isReceived:true}}}, true)
 //         console.log(allReceived);
 //         res.send(allReceived)
 

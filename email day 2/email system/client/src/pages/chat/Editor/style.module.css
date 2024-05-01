@@ -42,7 +42,11 @@
     z-index: 0;
 }
 
-
+[contenteditable]:empty:before {
+    content: attr(data-placeholder);
+    color: grey;
+    display: inline-block;
+}
 
   /* עיצוב פס הגלילה */
   .input::-webkit-scrollbar {

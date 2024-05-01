@@ -20,11 +20,10 @@ async function generate(user) {
             res.status(401).json({ error: 'Token expired' });
     }
     }
-
     async function auth(req, res, next) {
         try{
             // let token = req.headers.autherization?.split('Bearer ')[1]
-            let user = { _id: "662ad1cb71375af1dc73fb45", email: "user1@example.com" }//jwt.verify(token,secret)
+            let user = { _id: "663241fc39820b49bb2e9112"}//jwt.verify(token,secret)
             req.user = user
             next()
         }

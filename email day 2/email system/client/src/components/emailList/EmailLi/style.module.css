@@ -32,11 +32,9 @@ h3{
 }
 
 
-.avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-}
+/* .avatar {
+    
+} */
 
 
 .middle {
@@ -47,6 +45,8 @@ h3{
     color: var(--textGrey);
     font-size: small;
     font-weight: 400;
+    
+  
 }
 
 .information {
@@ -95,3 +95,24 @@ h3{
     font-size: 15px;
 
 }
+
+
+.avatarContainer {
+    position: relative;
+    width: 50px;
+    height: 32px;
+    
+  }
+  
+  .avatar {
+    position: absolute;
+    width: 33px;
+    height: auto;
+    top: -5px;
+    /* border-radius: 100%; */
+  }
+  
+  /* .avatar + .avatar {
+    left: 10px; 
+  }
+   */

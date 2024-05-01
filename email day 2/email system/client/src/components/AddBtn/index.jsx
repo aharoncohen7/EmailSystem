@@ -6,7 +6,6 @@ export default function AddBtn({}) {
       <p className={styles.main}>
         <IoMdAdd />
         <span className={styles.text}>Add</span> 
-        
       </p>
    )
 }

@@ -6,6 +6,7 @@
     /* align-items: center; */
     position: relative;
     background-color: rgb(252, 252, 252);
+    
 
     svg {
         color: var(--gray-bg-color);
@@ -30,16 +31,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-   
-
-
 }
-.li:hover{
-   
-        background-color: var(--lightGreen-bg-color);
-   
-}
-
 
 .box {
     width: 100%;
@@ -53,8 +45,17 @@
     svg{
         color: var(--primary-color)
     }
+    :nth-child(1){
+        background-color: var(--lightGray-bg-color);
+    }
 
 
+}
+
+
+.avatar{
+   
+    margin: 5px;
 }
 
 
@@ -63,10 +64,12 @@
 
 .active {
     border-right-color: var(--primary-color);
-
     svg {
         color: var(--primary-color);
         
+    }
+    :nth-child(1){
+        background-color: var(--lightGreen-bg-color);
     }
 
 }

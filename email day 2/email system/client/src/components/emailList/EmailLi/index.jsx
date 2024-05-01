@@ -12,9 +12,9 @@ const EmailLi = ({ item }) => {
   // const { loading, data, error, fetchData } = useAxiosReq({ defaultVal: {}, method: 'PUT', url: `user-chats/${item._id}/isRead` })
   // const [isFavorite, setIsFavorite] = useState(item.isFavorite)
 
-  const updateIsRead = ()=>{
-    if(!item.isRead){
-      axiosReq({  method: 'PUT', url: `user-chats/${item._id}/isRead` })
+  const updateIsRead = () => {
+    if (!item.isRead) {
+      axiosReq({ method: 'PUT', url: `user-chats/${item._id}/isRead` })
       setIsRead(true)
     }
   }
@@ -37,7 +37,7 @@ const EmailLi = ({ item }) => {
   //         throw new Error(`Network response was not ok! status: ${response.status}`);
   //       }
   //       // console.log(response.data);
-  
+
   //       // if (field === "isFavorite") {
   //       //   setIsFavorite(prev => { return !prev })
   //       // }
@@ -61,10 +61,10 @@ const EmailLi = ({ item }) => {
   // }
 
   // function updateIsRead(event) {
-    // if (!item.isRead) {
-      // setIsRead(prev => { return !prev })
-      // fetchData()
-    // }
+  // if (!item.isRead) {
+  // setIsRead(prev => { return !prev })
+  // fetchData()
+  // }
   // }
 
 
@@ -82,14 +82,27 @@ const EmailLi = ({ item }) => {
 
   return (
     <div id="chatLi" className={styles.main} onClick={updateIsRead}>
-      <img className={styles.avatar}
-        src=
-        {item?.chat?.members?.[0]?.avatar ? item.chat.members[0].avatar
-          : "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"}
-        alt="" />
+      <span className={styles.avatarContainer}>
+
+        {item?.chat?.members && item.chat.members.map((member, index) => (
+          <img
+            key={index}
+            className={styles.avatar}
+            src={member.avatar ? member.avatar : "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"}
+            alt=""
+            style={{zIndex:-index, left: (index*8)+"px" }}
+          />
+        ))}
+      </span>
       <div className={styles.middle} >
-        <h3>{item?.chat?.members?.[0]?.fullName ? item.chat.members[0].fullName.split(" ")[0] + "," : "Shlomo Levi"} + {item?.chat?.members.length -1 }</h3>
-        <span className={styles.subject}>{item?.chat?.subject ? item?.chat?.subject : "hello jon.."}</span>
+        <h3>{item?.chat?.members?.[0]?.fullName ? item.chat.members[0].fullName.split(" ")[0] + "," : "Shlomo Levi"} + {item?.chat?.members.length - 1}</h3>
+        <span className={styles.subject}>
+          {item?.chat?.subject ?
+            (item.chat.subject.length > 15 ?
+              item.chat.subject.substring(0, 15) + "..." :
+              item.chat.subject) :
+            "hello jon.."}
+        </span>
       </div>
       <div className={styles.information} >
         <span className={styles.time}>{item?.chat?.lastDate ? getDescriptionOrTime(item.chat.lastDate) : "00:00"}</span>

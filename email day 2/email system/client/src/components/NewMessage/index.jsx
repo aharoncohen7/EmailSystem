@@ -1,23 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Editor from '../../pages/chat/Editor'
 import styles from './style.module.css'
 import AddBtn from '../AddBtn';
 import { TbFunction } from 'react-icons/tb';
 import { axiosReq } from '../../helpers';
+import { PopupContext } from '../../App';
 
-// יוזר לדוגמה
-const thisUser =
-{
-  email: "user1@example.com",
-  _id: "662ad1cb71375af1dc73fb45",
-  fullName: "Moshe Cohen",
-  password: "123qwe",
-  avatar: "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairTheCaesar&accessoriesType=Sunglasses&hairColor=Auburn&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Side&eyebrowType=RaisedExcitedNatural&mouthType=Smile&skinColor=Yellow",
-}
+
 
 
 const NewMessage = () => {
-
+  const {thisUser} = useContext(PopupContext)
   const [resetKey, setResetKey] = useState(0);
   const [subject, setSubject] = useState("");
   const [member, setMember] = useState("");
@@ -25,6 +18,7 @@ const NewMessage = () => {
   const [members, setMembers] = useState([]);
 
   function addMember() {
+    if(member){
     setMembers(prevState => {
         // יצירת סט עם הערכים הקיימים במערך הקודם
         const uniqueSet = new Set(prevState);
@@ -34,12 +28,11 @@ const NewMessage = () => {
         return [...uniqueSet];
       });
   
-    
     // const newArray = [...members, member];
     // setMembers(newArray);
     console.log('ערך האינפוט:', members);
     setMember('');
-    setMemberList([])
+    setMemberList([])}
   };
 
   const moreDetails = {
@@ -48,7 +41,6 @@ const NewMessage = () => {
   }
 
   async function getMemberList(e) {
-
     const searchString = e.target.value;
     setMember(searchString)
     if (searchString.trim() !== '') {

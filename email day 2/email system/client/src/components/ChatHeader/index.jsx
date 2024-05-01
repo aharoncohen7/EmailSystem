@@ -12,7 +12,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { axiosReq } from '../../helpers';
 
 
-const ChatHeader = ({setChange}) => {
+const ChatHeader = ({}) => {
   const { setPopUpContent } = useContext(PopupContext)
   const { chatId } = useParams();
   const navTo = useNavigate()
@@ -20,15 +20,14 @@ const ChatHeader = ({setChange}) => {
   const deleteMessage =  async () => {
     const results = await axiosReq({ method: 'PUT', url: `user-chats/${chatId}/isDeleted` })
     if (results._id){
-           setPopUpContent(<h2>נמחק בהצלחה</h2>)
+           setPopUpContent(<div style={{height: "100%", display:"flex", justifyContent: "center", alignItems: "center"}}><h2 >נמחק בהצלחה</h2></div>)
            navTo("/chats/inbox")
-           
     }
   }
 
     const updateIsFavorite =  () => {
      axiosReq({ method: 'PUT', url: `user-chats/${chatId}/isFavorite` })
-     setChange(prev=>{return !prev})
+    //  setChange(prev=>{return !prev})
   }
 
   return (

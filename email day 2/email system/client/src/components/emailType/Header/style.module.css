@@ -4,7 +4,7 @@
     gap: 10px;
     Width: 100%;
     Height:70px;
-    border-bottom: 1px solid var(--lightGray-bg-color);
+    border-bottom: 1px solid rgba(184, 184, 184, 0.486);
     font-weight: 600;
     font-size: 26px;
     letter-spacing: 0.5px;

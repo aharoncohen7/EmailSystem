@@ -4,7 +4,7 @@ import styles from './style.module.css'
 import MsgLi from '../MsgLi';
 import EmailTitle from '../EmailTitle';
 import { formatDateTime } from './../../helpers/index.js'
-import useAxiosReq from '../../hooks/useAxiosReq.js';
+
 import axios from 'axios';
 
 const EmailPage = React.memo(({ change, thisUser }) => {
@@ -26,7 +26,7 @@ const EmailPage = React.memo(({ change, thisUser }) => {
  useEffect(() => {
   const getChat = async () => {
     try {
-      const url = `http://localhost:4004/api/user-chats/by-chat-id/${chatId}`;
+      const url = `http://localhost:4004/api/user-chats/${chatId}`;
       const response = await axios.get(url, {
         headers: {
           'Content-Type': 'application/json',
@@ -52,8 +52,8 @@ const EmailPage = React.memo(({ change, thisUser }) => {
 
   return (
     <div className={styles.main}>
-      <>
-        <EmailTitle date={data?.lastDate ? formatDateTime(data.lastDate) : "00:00"} subject={data.subject} />
+  
+        <EmailTitle chat={data} />
         <div className={styles.list}>
           {data.msg && data.msg.map((msg) => (
             <div key={msg._id} className={styles.msgLi}>
@@ -61,7 +61,7 @@ const EmailPage = React.memo(({ change, thisUser }) => {
             </div>
           ))}
         </div>
-      </>
+  
     </div>
   )
 });
@@ -87,14 +87,7 @@ export default EmailPage;
 
 
 
-//   // יוזר לדוגמה
-//   const thisUser = {
-//     email: "user1@example.com",
-//     _id: "6617d4a80c4b7ac054155405",
-//     fullName: "Moshe Cohen",
-//     password: "123qwe",
-//     avatar: "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairTheCaesar&accessoriesType=Sunglasses&hairColor=Auburn&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Side&eyebrowType=RaisedExcitedNatural&mouthType=Smile&skinColor=Yellow",
-//   }
+
 
 //   const { loading, data, error , fetchData} = useAxiosReq({ defaultVal: {}, method: 'GET', url: `chats/${chatId}` })
 

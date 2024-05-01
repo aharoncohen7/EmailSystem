@@ -32,12 +32,15 @@ const EmailTypeList = () => {
 
     const [isHovering, setIsHovering] = useState(false);
     const { loading, data, error, fetchData } = useAxiosReq({ defaultVal: {}, method: 'GET', url: 'user-chats/not-read' })
-    // console.log( loading);
+    
+   async function getNotRead(){
+    await fetchData()
+    console.log(data);
+   }
 
-
-    // useEffect(() => {
-    //     setInterval(() => { fetchData() }, 3000 * 60);
-    // }, []);
+    useEffect(() => {
+        setInterval(getNotRead, 1000 * 60);
+    }, []);
 
 
 
@@ -105,12 +108,33 @@ export default EmailTypeList
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // בקשה ישנה לפני הHOOK
-
 // const [numNotRead, setNumNotRead] = useState([]);
-
-
-
 // const getNotRead = async () => {
 //     try {
 //       const url = "http://localhost:4004/api/user-chats/not-read";

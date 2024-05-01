@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 
 import { IoMdContacts } from "react-icons/io";
@@ -9,6 +9,7 @@ import { BsClipboardCheck } from "react-icons/bs";
 import { FaRegEye } from "react-icons/fa";
 import { NavLink } from 'react-router-dom';
 import styles from './style.module.css'
+import { PopupContext } from '../../../App'
 
 const mainNavIcons = [
     { icon: MdAvTimer, name: "Timer" },
@@ -20,6 +21,7 @@ const mainNavIcons = [
 ]
 
 const MainNav = () => {
+    const {thisUser} = useContext(PopupContext)
     return (
         <div className={styles.main}>
             <img src="./vite.svg" alt="img" />
@@ -40,7 +42,8 @@ const MainNav = () => {
                     </NavLink>
                 ))}
             </ul>
-            <img src="./vite.svg" alt="img" />
+            
+            <img className={styles.avatar} src={thisUser.avatar} alt="img" />
         </div>
     )
 }

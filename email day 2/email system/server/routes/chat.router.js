@@ -2,38 +2,6 @@ const express = require('express'),
 chatRouter = express.Router();
 let chatServices = require('../BL/chat.services')
 
-//כללי
-//קבלת צ'אט מסויים 
-// chatRouter.get("/:chatId", async (req, res) => {
-//     try {
-//         // const userId = req.user._id; 
-//         const chatId = req.params.chatId;                
-//         const allmsg = await chatServices.getAllChatMsg(chatId)
-//         console.log(allmsg );
-//         res.send(allmsg)
-//     }
-//     catch (err) {
-//         res.status(400).send(err.msg || err.message || "wrong")
-//     }
-// })
-
-
-//כללי
-// קבלת צ'אט מסויים להצגה כשרשור באתר
-chatRouter.get('/:chatId', async (req, res) => {
-    const userId = req.user._id;
-    const chatId = req.params.chatId;
-    try {
-        let result = await chatServices.getChatById(chatId, userId)
-        res.send(result)
-    }
-    catch (err) {
-        console.log(err);
-        res.status(400).send(err.message)
-    }
-})
-
-// כללי
 // פתיחת צ'אט חדש
 chatRouter.post("/", async (req, res) => {
     // גוף הבקשה לדוגמה
@@ -72,5 +40,6 @@ chatRouter.put("/:chatId", async (req, res) => {
         res.status(400).send(err.msg || err.message || "wrong")
     }
 })
+
 
 module.exports = {chatRouter};

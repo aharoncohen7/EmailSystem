@@ -6,31 +6,22 @@ import Chat from './pages/chat/Chat'
 import { useState, createContext} from "react";
 import PopUp from "./components/PopUp";
 import NewMessage from "./components/NewMessage";
+import useAxiosReq from "./hooks/useAxiosReq";
 export const PopupContext = createContext(true)
 
 
-
-// יוזר לדוגמה
-const thisUser =
-{
-  email: "user1@example.com",
-  _id: "662ad1cb71375af1dc73fb45",
-  fullName: "Moshe Cohen",
-  password: "123qwe",
-  avatar: "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairTheCaesar&accessoriesType=Sunglasses&hairColor=Auburn&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Side&eyebrowType=RaisedExcitedNatural&mouthType=Smile&skinColor=Yellow",
-}
-
-
+const userId = "663241fc39820b49bb2e9112"
 
 export default function App() {
   const [popUpContent, setPopUpContent] = useState("")
+  const { loading, data, error } = useAxiosReq({ defaultVal: {}, method: 'GET', url: `users/${userId}` })
 
 
 
   
 
   return (
-    <PopupContext.Provider value={{ popUpContent, setPopUpContent }}>
+    <PopupContext.Provider value={{ popUpContent, setPopUpContent, thisUser:data }}>
       <div>
         <Routes>
           {/* <Route path="login" element={<h1>login</h1>} /> */}

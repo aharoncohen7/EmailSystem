@@ -7,7 +7,7 @@ const userServices = require("../BL/user.services")
 userRouter.get("/", async (req, res) => {
     console.log("start get all");
     try {
-        const users = await userServices.getAll()
+        const users = await userServices.getAllUsers()
         console.log(users);
         res.send(users)
     }
@@ -15,30 +15,30 @@ userRouter.get("/", async (req, res) => {
         res.status(400).send(err.msg || err.message || "wrong")
     }
 });
+
+// קבלת חברי צ'אט לפי כתובת אימייל
+userRouter.get("/by-email/:email", async (req, res) => {
+    // console.log("in get members by-email");
+    const searchString = req.params.email;
+    try {
+        const users = await userServices.getMembersByEmail(searchString)
+        // console.log(users);
+        res.send(users)
+    }
+    catch (err) {
+        res.status(400).send(err.msg || err.message || "wrong")
+    }
+});
+
 
 // קבלת יוזר לפי מזהה
 userRouter.get("/:userId", async (req, res) => {
     console.log("start get user by id");
     const userId = req.params.userId;
     try {
-        const user = await userServices.getById({_id: userId})
-        console.log(user);
+        const user = await userServices.getUserById({_id: userId})
+        // console.log(user);
         res.send(user)
-    }
-    catch (err) {
-        res.status(400).send(err.msg || err.message || "wrong")
-    }
-});
-
-
-// קבלת יוזרים לפי כתובת אימייל
-userRouter.get("/by-email/:email", async (req, res) => {
-    console.log("start get user by email");
-    const searchString = req.params.email;
-    try {
-        const users = await userServices.getMembersByEmail(searchString)
-        console.log(users);
-        res.send(users)
     }
     catch (err) {
         res.status(400).send(err.msg || err.message || "wrong")
@@ -50,10 +50,10 @@ userRouter.get("/by-email/:email", async (req, res) => {
 userRouter.post("/", async (req, res) => {
     console.log("start create new user");
     const userToCreate = req.body;
-    console.log(userToCreate);
+    // console.log(userToCreate);
     try {
         const newUser = await userServices.create(userToCreate)
-        console.log(newUser);
+        // console.log(newUser);
         res.send(newUser)
     }
     catch (err) {
@@ -62,13 +62,13 @@ userRouter.post("/", async (req, res) => {
 });
 
 
-// מחיקת יוזר עדכון
+// (מחיקת יוזר - (עדכון
 userRouter.put("/:userId", async (req, res) => {
     console.log("start delete user");
     const userId = req.params.userId;
     try {
         const updatedUser = await userServices.deleteById(userId)
-        console.log(updatedUser);
+        // console.log(updatedUser);
         res.send(updatedUser)
     }
     catch (err) {
@@ -169,7 +169,7 @@ module.exports = { userRouter }
 //         const userId = req.user._id;
 //         const emailId = req.params.emailId;  
 //         console.log(field, userId, emailId)              
-//         const updatedEmail = await userServices.updateChat({_id:userId, emails:{$elemMatch:{email:{_id: emailId}}}}, field)
+//         const updatedEmail = await userServices.updateUserChat({_id:userId, emails:{$elemMatch:{email:{_id: emailId}}}}, field)
 //         console.log(updatedEmail);
 //        res.send(updatedEmail)
 //     }

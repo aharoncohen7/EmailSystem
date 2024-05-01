@@ -17,7 +17,7 @@
     Width: 100%;
     height: 100px;
     padding: 40px;
-    border-bottom: 3px solid var(--lightGray-bg-color);
+    border-bottom: 1px solid rgba(184, 184, 184, 0.486);
 }
 
 .editorBox {
@@ -149,14 +149,16 @@
 .member{
     padding: 0px 8px;
     border-radius: 5px;
-    background-color: var(--lightGray-bg-color);
+    background-color:  var(--lightGreen-bg-color);
+    color: var(--primary-color);
     
 }
 
 .deleteMember{
-    color: red;
+    color: var(--primary-color);
     padding: 5px;
     cursor: pointer;
     font-size: 10px;
+    background-color:  var(--lightGreen-bg-color);
 }
 

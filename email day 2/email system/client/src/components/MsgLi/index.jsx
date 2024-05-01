@@ -26,7 +26,7 @@ export const MsgLi = ({ msg, chatToShow, thisUser, setIsExpand, isExpand }) => {
   }
   // מוצא את המשתמש המתאים בעזרת המזהה של השולח
   function getSender() {
-    console.log(chatToShow.members);
+    // console.log(chatToShow.members);
     return chatToShow.members.find(member => member._id == msg.from);
   };
   // ניטור הודעה

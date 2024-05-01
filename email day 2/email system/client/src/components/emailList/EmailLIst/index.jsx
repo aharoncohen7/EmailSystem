@@ -1,9 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import EmailLi from '../EmailLi'
 import InputSearch from '../InputSearch'
 import styles from './style.module.css'
 import { NavLink, useParams } from 'react-router-dom'
 import useAxiosReq from '../../../hooks/useAxiosReq';
+import { FaCaretDown } from "react-icons/fa";
+import { FaCaretUp } from "react-icons/fa";
+
 
 
 const flags = {
@@ -17,48 +20,76 @@ const flags = {
 const EmailLIst = () => {
     const [input, setInput] = useState('')
     const [change, setChange] = useState(false)
+    const [page, setPage] = useState(1);
     const {chatType } = useParams()
     const filter = flags[chatType]
     // console.log(filter);
    
 
-    const { loading, data, error , fetchData} = useAxiosReq({ defaultVal: {}, method: 'POST', url: `user-chats/chat-list`, body: { flags: [ `${filter}`], input: input }})
+    const { loading, data, error , fetchData} = useAxiosReq({ defaultVal: {}, method: 'POST', url: `user-chats/chat-list`, body: { flags: [ `${filter}`],pageNumber: page , input: input }})
 
 
     useEffect(() => {
-         fetchData() 
-  }, [chatType, input, change]);
+        // console.log(page);
+        setPage(1)
+        fetchData() 
+    }, [chatType, input, change]);
+
+
+    useEffect(() => {
+        // console.log(page);
+         fetchData()
+  }, [page]);
+
+
+
+  const scrollableRef = useRef(null);
+
+  const handleScroll = () => {
+    const { current } = scrollableRef;
+    if (current.scrollTop === 0 && page>1) {
+        setPage(prevPage => prevPage -1);}
+    if (current.scrollTop + current.clientHeight === current.scrollHeight) {
+      setPage(prevPage => prevPage + 1);
+    }
+  };
 
 
 
     return (
         <div className={styles.mainContainer}>
-
             <div className={styles.main}>
                 <div className={styles.header}>
                     <InputSearch sendInput={setInput} loading={loading} />
-
                 </div>
 
-               <span className={styles.emailList}>
-               {data.length ?
-                    data.map((item, index) => {
-                        return (
-                            <NavLink
-                                key={item._id}
-                                to={`${item._id}`}
-                                className={({ isActive }) =>
-                                    `${isActive ? styles.active : ""} ${styles.box}`
-                                }
-                                style={({ isActive }) => isActive ? { boxShadow: "0px 3px 6px rgb(212, 210, 210)" } : {}}
-                            >
-                                <EmailLi item={item} setChange={setChange}/>
-                            </NavLink>
+                <span className={styles.emailList} ref={scrollableRef} 
+                // onScroll={handleScroll}
+                >
+{(page>1) ? <span className={styles.noResults}><FaCaretUp onClick={()=>setPage(prevPage => prevPage -1)}/></span>: null}
+  {data.length ?
+    data.map((item, index) => {
+      return (
+        <NavLink
+          key={item._id}
+          to={`${item._id}`}
+          className={({ isActive }) =>
+            `${isActive ? styles.active : ""} ${styles.box}`
+          }
+          style={({ isActive }) =>
+            isActive ? { boxShadow: "0px 3px 6px rgb(212, 210, 210)" } : {}
+          }
+        >
+          <EmailLi item={item} setChange={setChange} />
+        </NavLink>
+      );
+    }) : null}
+  
+  {(data.length && data.length ==7) ? <span   className={styles.noResults}><FaCaretDown onClick={()=>setPage(prevPage => prevPage +1)}/></span>: null}
+  {(!data.length && !loading && page==1) ? (<span  className={styles.noResults}>אין תוצאות</span>) :  null}
+  {loading && <span className={styles.noResults}>loading...</span>}
+</span>
 
-                        )
-                    })
-                : <span className={styles.noResults}>אין תוצאות</span>} 
-               </span>
 
             </div>
 

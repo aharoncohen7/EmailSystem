@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
         isReceived: { type: Boolean, default: false },
         isFavorite: { type: Boolean, default: false },
         isDeleted: { type: Boolean, default: false },
-        isDraft: { type: Boolean, default: true },
+        isDraft: { type: Boolean, default: false },
         isRead: { type: Boolean, default: false },
         labels: [String]
     }],

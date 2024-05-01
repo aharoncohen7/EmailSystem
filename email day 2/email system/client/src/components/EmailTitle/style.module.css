@@ -3,9 +3,17 @@
     height: 80px;
     background-color: rgb(255, 255, 255);
     display: flex;
+    justify-content: space-between;
+    /* padding: 10px;
+   
+    gap: 10px; */
+
+}
+
+.title{
+    display: flex;
     flex-direction: column;
     padding: 10px;
-   
     gap: 10px;
 
 }
@@ -14,3 +22,21 @@
     color: rgb(168, 167, 167);
     font-size: small;
 }
+
+
+.avatarContainer {
+    /* position: relative; */
+    display: flex;
+    gap: 10px;
+    padding-right: 20px;
+    
+  }
+  
+  .avatar {
+    width: 42px;
+    height: auto;
+    border-radius: 100%;
+    
+   
+  }
+  

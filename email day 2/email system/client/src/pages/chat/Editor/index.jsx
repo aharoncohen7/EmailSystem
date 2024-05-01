@@ -39,6 +39,11 @@ const formattingOptions = [
     // { icon: MdFormatTextdirectionLToR, value: 'ltr' }
 ];
 
+const placeholder = {
+    rtl: "כתוב משהו...",
+    ltr: "Type something..."
+}
+
 
 
 
@@ -72,7 +77,8 @@ const Editor = ({ setChange, setResetKey, moreDetails, newMessage = false }) => 
     // גודל טקסט
     const [fontSize, setFontSize] = React.useState("small");
     //כיוון טקסט
-    const [textDirection, setTextDirection] = React.useState("");
+    const [textDirection, setTextDirection] = React.useState("rtl");
+
     //  עיצןב מטקסט - יישור שורות
     const [textFormatting, setTextFormatting] = React.useState("");
     // עיצוב טקסט - הדגשות
@@ -85,10 +91,12 @@ const Editor = ({ setChange, setResetKey, moreDetails, newMessage = false }) => 
     const toggleFontFormatting = (mode) => {
         setFormatting({ ...formatting, [mode]: !formatting[mode] });
     };
+    
     // בעת בחירת צבע- הטקסט המודגש יקבל את הצבע
     useEffect(() => {
         handleSelect()
     }, [selectedColor, formatting, fontSize]);
+    
     // עיצוב עבור תצוגת השולח
     const jsxStyle = {
         textDecoration: formatting.underline ? 'underline' : 'none',
@@ -178,8 +186,8 @@ const Editor = ({ setChange, setResetKey, moreDetails, newMessage = false }) => 
                         ? { ...body, subject: moreDetails.subject, members: moreDetails.members }
                         : body
                 })
-                
-                
+
+
                 if (result) {
                     if (newMessage) {
                         navTo(`/chats/sent emails/${result}`)
@@ -208,25 +216,24 @@ const Editor = ({ setChange, setResetKey, moreDetails, newMessage = false }) => 
 
 
 
+
+
     return (
         <div className={styles.main} >
             <div className={styles.editorBox}>
                 {/* אלמנט תוכן */}
+
+
                 <div
                     ref={divRef}
                     dir={textDirection}
                     contentEditable={true}
+                    data-placeholder={placeholder[textDirection]}
                     onMouseUp={handleMouseDown}
-                    // style={{
-                    //     ...jsxStyle,
-                    //     // color: content ? 'inherit' : 'gray', // הוספת צבע אפור לטקסט הדיפולטי
-                    // }}
-                    // value={content.length>100 || 'Write your message...'}
                     style={{ textAlign: textFormatting, fontSize: fontSize }}
                     onInput={
                         (e) => {
                             console.log(e.target.innerHTML);
-                            // setContent(e.target.innerHTML);
                             setContent(divRef.current.innerHTML);
                         }
                     }
@@ -259,13 +266,6 @@ const Editor = ({ setChange, setResetKey, moreDetails, newMessage = false }) => 
                                 toggleFontFormatting('underline')
                             }}
                         />
-                        {/* <PiSelectionAll
-                            value='selectAll'
-                            className={styles.selectAll}
-                            onClick={handleSelectAll}
-                        /> */}
-
-
 
                         <TbBucketDroplet style={{ color: selectedColor }} size={20} onClick={() => setShowColors(true)} />
                         {showColors && <Colors setColor={setSelectedColor} setShowColors={setShowColors} />}
@@ -283,7 +283,7 @@ const Editor = ({ setChange, setResetKey, moreDetails, newMessage = false }) => 
 
                         <MdFormatTextdirectionLToR className={textDirection === "ltr" ? styles.svg : ''} onClick={() => { setTextDirection('ltr'); setTextFormatting("left") }} />
                         <MdFormatTextdirectionRToL className={textDirection === "rtl" ? styles.svg : ''} onClick={() => { setTextDirection('rtl'); setTextFormatting("right") }} />
-                        <VscTextSize size={fontSize=="small" ? "15px" : "17px"}  className={styles.svg} onClick={
+                        <VscTextSize size={fontSize == "small" ? "15px" : "17px"} className={styles.svg} onClick={
                             () => {
                                 setFontSize(prev => {
                                     if (prev == "small") { return "medium" }

@@ -15,42 +15,42 @@ async function go() {
 
     const users = [
         {
-            email: "user1@example.com",
+            email: "user1@mailbox.com",
             fullName: "Moshe Cohen",
             password: "123qwe",
             avatar: "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairTheCaesar&accessoriesType=Sunglasses&hairColor=Auburn&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Side&eyebrowType=RaisedExcitedNatural&mouthType=Smile&skinColor=Yellow",
             chats: [],
         },
         {
-            email: "user2@example.com",
+            email: "user2@mailbox.com",
             fullName: "Haim Levi",
             password: "123456",
             avatar: "https://avataaars.io/?avatarStyle=Circle&topType=LongHairFro&accessoriesType=Kurt&hairColor=SilverGray&facialHairType=BeardMedium&facialHairColor=BrownDark&clotheType=BlazerShirt&eyeType=Wink&eyebrowType=RaisedExcitedNatural&mouthType=Sad&skinColor=Light",
             chats: [],
         },
         {
-            email: "user3@example.com",
+            email: "user3@mailbox.com",
             fullName: "Mor Noam",
             password: "123qwe",
             avatar: "https://avataaars.io/?avatarStyle=Circle&topType=WinterHat2&accessoriesType=Prescription01&hatColor=PastelGreen&facialHairType=MoustacheFancy&facialHairColor=BrownDark&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light",
             chats: [],
         },
         {
-            email: "user4@example.com",
+            email: "user4@mailbox.com",
             fullName: "Sivan Tov",
             password: "123qwe21s",
             avatar: "https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light",
             chats: [],
         },
         {
-            email: "user5@example.com",
+            email: "user5@mailbox.com",
             fullName: "Roni Malkan",
             password: "23w32q",
             avatar: "https://avataaars.io/?avatarStyle=Circle&topType=Eyepatch&facialHairType=BeardMajestic&facialHairColor=Platinum&clotheType=ShirtScoopNeck&clotheColor=PastelGreen&eyeType=Dizzy&eyebrowType=RaisedExcitedNatural&mouthType=Smile&skinColor=Tanned",
             chats: [],
         },
         {
-            email: "user6@example.com",
+            email: "user6@mailbox.com",
             fullName: "Smadar Omer",
             password: "123qwe",
             avatar: "https://avataaars.io/?avatarStyle=Circle&topType=LongHairNotTooLong&accessoriesType=Blank&hairColor=Blonde&facialHairType=Blank&clotheType=ShirtScoopNeck&clotheColor=PastelGreen&eyeType=Wink&eyebrowType=RaisedExcitedNatural&mouthType=Smile&skinColor=Tanned",
