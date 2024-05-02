@@ -13,13 +13,20 @@ async function read(filter, populate={}) {
     return data
 }
 
-async function readOne(filter, populate={}) {
-    // console.log(filter);
-    let data = await userModel.findOne({ ...filter, isActive: true })
-    if(populate.chats) data=await data.populate('chats.chat')
-    if(populate.users) data=await data.populate('chats.chat.members')
-    // console.log(data);
-    return data//.toObject()
+async function readOne(filter, populate={}, getPassword) {
+    console.log(filter);
+    if(getPassword) {
+    let data = await userModel.findOne({ ...filter, isActive: true }, "+password")
+    return data
+    }
+    console.log("fgggggggggggggggggggggggggggggg");
+    let data2 = await userModel.findOne({ ...filter, isActive: true })
+    if(populate.chats) {
+        console.log("000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+        data2=await data2.populate('chats.chat')}
+    if(populate.users) data2=await data2.populate('chats.chat.members')
+    console.log(data2);
+    return data2//.toObject()
 }
 
 async function update(id, data) {
@@ -37,7 +44,7 @@ async function save(user) {
 
 async function readByFlags(id, flags = [], populate = {}) {
     let data = await userModel.findOne({ _id: id, isActive: true })
-    // console.log("🚀 ~ readByFlags ~ data:", data)
+    console.log("🚀 ~ readByFlags ~ data:", data)
     
     data.chats = data.chats.filter(c => flags.every(flag => {
         if (typeof flag === 'object') {

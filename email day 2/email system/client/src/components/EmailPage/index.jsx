@@ -1,18 +1,16 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styles from './style.module.css'
 import MsgLi from '../MsgLi';
 import EmailTitle from '../EmailTitle';
-import { formatDateTime } from './../../helpers/index.js'
-
 import axios from 'axios';
+import { axiosReq } from '../../helpers';
 
-const EmailPage = React.memo(({ change, thisUser }) => {
+const EmailPage = ({ change}) => {
   const { chatId } = useParams()
   const [isExpand, setIsExpand] = useState(false);
-
- 
-
+  //  קבלת צ'אט
+  const [data, setData] = useState({});
   // const { loading, data, error , fetchData} = useAxiosReq({ defaultVal: {}, method: 'GET', url: `chats/${chatId}` })
 
   // useEffect(() => {
@@ -20,51 +18,31 @@ const EmailPage = React.memo(({ change, thisUser }) => {
   // }, [change]);
 
 
-  //  קבלת צ'אט
-  const [data, setData] = useState({});
+
+
 
  useEffect(() => {
   const getChat = async () => {
-    try {
-      const url = `http://localhost:4004/api/user-chats/${chatId}`;
-      const response = await axios.get(url, {
-        headers: {
-          'Content-Type': 'application/json',
-          // 'authorization': localStorage.getItem('Authorization') || ''
-        }
-      });
-      // console.log(response);
-      if (!response.data) {
-        console.log();
-        if (response.status === 401) {
-          // Handle unauthorized access
-        }
-        throw new Error(`Network response was not ok! status: ${response.status}`);
-      }
-      // console.log("this chat 😊🐱‍💻", response.data);
-      setData(response.data.chat);
-    } catch (error) {
-      console.error("Error fetching :", error);
-    }
+    const {chat} = await axiosReq({ method: 'GET', url: `user-chats/${chatId}` })
+    setData(chat)
   };
   getChat()
 }, [chatId, change]);
 
   return (
     <div className={styles.main}>
-  
         <EmailTitle chat={data} />
         <div className={styles.list}>
           {data.msg && data.msg.map((msg) => (
             <div key={msg._id} className={styles.msgLi}>
-              <MsgLi msg={msg} chatToShow={data} thisUser={thisUser} isExpand={isExpand} setIsExpand={setIsExpand} />
+              <MsgLi msg={msg} chatToShow={data} isExpand={isExpand} setIsExpand={setIsExpand} />
             </div>
           ))}
         </div>
   
     </div>
   )
-});
+};
 
 export default EmailPage;
 
@@ -105,7 +83,7 @@ export default EmailPage;
 //         <div className={styles.list}>
 //           {data.msg && data.msg.map((msg) => (
 //             <div key={msg._id} className={styles.msgLi}>
-//               <MsgLi msg={msg} chatToShow={data} thisUser={thisUser} isExpand={isExpand} setIsExpand={setIsExpand} />
+//               <MsgLi msg={msg} chatToShow={data}  isExpand={isExpand} setIsExpand={setIsExpand} />
 //             </div>
 //           ))}
 //         </div>

@@ -5,12 +5,13 @@ import AddBtn from '../AddBtn';
 import { TbFunction } from 'react-icons/tb';
 import { axiosReq } from '../../helpers';
 import { PopupContext } from '../../App';
+import { UserContext } from '../../App';
 
 
 
 
 const NewMessage = () => {
-  const {thisUser} = useContext(PopupContext)
+  const {user} = useContext(UserContext)
   const [resetKey, setResetKey] = useState(0);
   const [subject, setSubject] = useState("");
   const [member, setMember] = useState("");
@@ -46,7 +47,7 @@ const NewMessage = () => {
     if (searchString.trim() !== '') {
       try {
         const result = await axiosReq({ method: 'GET', url: `users/by-email/${searchString}` })
-        const result2 = result.filter(member =>  member.email !== thisUser.email)
+        const result2 = result.filter(member =>  member.email !== user.email)
         setMemberList(result2);
       } catch (e) {
         console.error(e)

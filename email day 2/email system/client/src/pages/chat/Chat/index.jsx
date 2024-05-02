@@ -4,12 +4,12 @@ import styles from './style.module.css'
 import Editor from '../Editor'
 import ChatHeader from '../../../components/ChatHeader'
 import EmailPage from '../../../components/EmailPage'
-import { PopupContext } from '../../../App'
+import { UserContext } from '../../../App'
 
 const Chat = () => {
   const [change, setChange] = useState(false)
   const [resetKey, setResetKey] = useState(0);
-  const {thisUser} = useContext(PopupContext)
+  const {user} = useContext(UserContext)
 
 
 
@@ -17,7 +17,7 @@ const Chat = () => {
     <div className={styles.main}>
       <ChatHeader />
       <span className={styles.chat} >
-        <EmailPage thisUser={thisUser} change={change} /></span>
+        <EmailPage user={user} change={change} /></span>
       <span className={styles.editorBox}>
         <Editor setChange={setChange} key={resetKey} setResetKey={setResetKey} />
       </span>

@@ -3,30 +3,51 @@ import MainLayout from "./layouts/MainLayout";
 import EmailsTypeLayout from "./layouts/EmailsTypeLayout";
 import EmailsListLayout from "./layouts/EmailsListLayout";
 import Chat from './pages/chat/Chat'
-import { useState, createContext} from "react";
+import { useState, createContext, useEffect} from "react";
 import PopUp from "./components/PopUp";
 import NewMessage from "./components/NewMessage";
 import useAxiosReq from "./hooks/useAxiosReq";
+import RegisterPage from "./components/RegisterPage";
+import LoginPage from "./components/loginPage/Login";
 export const PopupContext = createContext(true)
+export const UserContext = createContext(true)
+import { axiosReq } from './helpers'
 
 
-const userId = "663241fc39820b49bb2e9112"
+
+// const userId = "6632641d945c32b01242c75b"
 
 export default function App() {
-  const [popUpContent, setPopUpContent] = useState("")
-  const { loading, data, error } = useAxiosReq({ defaultVal: {}, method: 'GET', url: `users/${userId}` })
+  const [popUpContent, setPopUpContent] = useState("");
+  const [user, setUser] = useState()
+    // const { loading, data, error } = useAxiosReq({ defaultVal: {}, method: 'GET', url: `users/${userId}` })
+
+  const getUserByToken = async () => {
+    try {
+      if (!localStorage.token) return;
+      const res = await axiosReq({ url: 'auth/refresh-token', method: 'GET' })
+      console.log(res);
+      setUser(res)
+    } catch (error) {
+      localStorage.clear()
+      console.log(error);
+    }
+  }
+  useEffect(() => { getUserByToken() }, [])
 
 
 
   
 
   return (
-    <PopupContext.Provider value={{ popUpContent, setPopUpContent, thisUser:data }}>
+    <PopupContext.Provider value={{ popUpContent, setPopUpContent}}>
+      <UserContext.Provider value={{ user, setUser}}>
       <div>
         <Routes>
-          {/* <Route path="login" element={<h1>login</h1>} /> */}
+          <Route path="register" element={<RegisterPage/>} />
+          <Route path="login" element={<LoginPage/>} />
           <Route path="" element={<MainLayout />}>
-            <Route path=":chats" element={<EmailsTypeLayout />} >
+            <Route path="chats" element={<EmailsTypeLayout />} >
               <Route path="new-message" element={<NewMessage/>} />
 
               <Route path=":chatType" element={<EmailsListLayout />} >
@@ -42,6 +63,7 @@ export default function App() {
         </Routes>
         {popUpContent && <PopUp/>}
       </div>
+      </UserContext.Provider>
       </PopupContext.Provider>
   )
 }

@@ -9,7 +9,8 @@ import { BsClipboardCheck } from "react-icons/bs";
 import { FaRegEye } from "react-icons/fa";
 import { NavLink } from 'react-router-dom';
 import styles from './style.module.css'
-import { PopupContext } from '../../../App'
+import {  UserContext } from '../../../App'
+
 
 const mainNavIcons = [
     { icon: MdAvTimer, name: "Timer" },
@@ -21,7 +22,7 @@ const mainNavIcons = [
 ]
 
 const MainNav = () => {
-    const {thisUser} = useContext(PopupContext)
+    const {user} = useContext(UserContext)
     return (
         <div className={styles.main}>
             <img src="./vite.svg" alt="img" />
@@ -43,7 +44,7 @@ const MainNav = () => {
                 ))}
             </ul>
             
-            <img className={styles.avatar} src={thisUser.avatar} alt="img" />
+            <img className={styles.avatar} src={user.avatar} alt="img" />
         </div>
     )
 }

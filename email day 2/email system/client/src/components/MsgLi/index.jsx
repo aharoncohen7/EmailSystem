@@ -5,12 +5,16 @@ import MsgContent from '../MsgContent/index.jsx';
 import { IoIosShareAlt } from "react-icons/io";
 import { formatDateTime } from "./../../helpers/index.js"
 import { FaHandHoldingHeart } from "react-icons/fa";
+import { useContext } from 'react';
+import { UserContext } from '../../App.jsx';
+
 
 
 
 // יחידה הודעה בצ'אט
-export const MsgLi = ({ msg, chatToShow, thisUser, setIsExpand, isExpand }) => {
-  const youSent = msg.from == thisUser._id;
+export const MsgLi = ({ msg, chatToShow, setIsExpand, isExpand }) => {
+  const {user} = useContext(UserContext)
+  const youSent = msg.from == user._id;
   const isThisExpand = isExpand == msg._id;
   const dirMatch = msg.content?.match(/<[^>]+dir\s*=\s*["'](\w+)["'][^>]*>/);
   const dir = dirMatch ? dirMatch[1] : "rtl";

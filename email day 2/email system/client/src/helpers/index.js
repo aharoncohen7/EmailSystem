@@ -10,7 +10,7 @@ export const axiosReq = async ({ method = 'POST', body, url }) => {
        const { data: result } = await axios({
           baseURL: 'http://localhost:4004/api/',
           method,
-          data: body,
+          data: body || {},
           url,
           headers: {
              Authorization: localStorage.token || ''
@@ -90,6 +90,23 @@ export function getDescriptionOrTime(timeString) {
     } else {
         return getRelativeDate(timeString);
     }
+}
+
+
+export function changeColorLinks(htmlString){
+
+    // const text = "זהו טקסט עם קישור: https://example.com אני מקווה שהקישור הזה יוצג בצבע כחול.";
+// הגדרת ה־Regex לזיהוי של קישור
+// const linkRegex = /https?:\/\/[-\w.]+(?:\/[-\w]+)*(?:\/?|\/\w+\.[a-z]{3})(?:\?\S*)?/gi;
+const linkRegex = /https?:\/\/[^\s]+/gi;
+;
+
+// מציאת כל הקישורים בתוך הטקסט
+const links = htmlString.match(linkRegex);
+
+// החלת סגנון CSS על כל קישור בתוך הטקסט
+const coloredText = htmlString.replace(linkRegex, '<a href="$&" style="color: #00A389;" target="_blank">$&</a>');
+return coloredText 
 }
 
 

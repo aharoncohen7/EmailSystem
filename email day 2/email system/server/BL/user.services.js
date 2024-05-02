@@ -1,6 +1,5 @@
-const userController =
-  require('../DL/controllers/user.controller')
-  const { Flags } = require('../utility')
+const userController = require('../DL/controllers/user.controller')
+const { Flags } = require('../utility')
 
   let funcs = {
     inbox: [Flags.Inbox],
@@ -13,6 +12,7 @@ const userController =
 
 // יצירת יוזר
 async function createUser(data) {
+  console.log("in create user");
   let newUser = await userController.create(data)
   return newUser
 }
@@ -35,6 +35,15 @@ async function getUserById(filter) {
   // console.log(user);
   return user
 }
+// קבלת משתמש עם סיסמה עבור לוגין
+async function getUserWithPassword(filter) {
+  // console.log("getUserWithPassword", filter);
+  let user = await userController.readOne(filter, {}, true);
+  // console.log(user);
+  return user
+}
+
+
 //  קבלת חברי שיחה
 async function getMembersByEmail(searchString) {
   console.log("in getMembersByEmail");
@@ -46,10 +55,11 @@ async function getMembersByEmail(searchString) {
 
 // שייך לצאטים של משתמש-------------------------------------
 
-// קבלת יוזר-צאט - לפי מזהה יוזר-צאט אישי
+// קבלת יוזר-צאט - לפי מזהה יוזר-צאט אישיuuuuuuuuuuuuuuuuu
 async function getUserChatById(filter, chatId) {
   // console.log(filter, chatId, field);
-  let user = await userController.readOne(filter, {"chats": true, "users": true})
+  let user = await userController.readOne(filter, {"chats": true, "users": true}, false)
+  console.log(user);
   const foundChat = user.chats.find(chat => chat.id == chatId && !chat.isDeleted);
   if(!foundChat){
     return null;
@@ -104,8 +114,7 @@ async function getChatList({ userId, flags, input, pageNumber }) {
   // console.log(arrayFlags);
   // קבלת צאטים לפי קטגוריה
   let { chats } = await userController.readByFlags(userId, arrayFlags, { chats: true, users: true });
-  console.log(chats);
- 
+  // console.log(chats);
   // אם יש חיפוש - לסנן שוב
   if (input) {
     chats = filterArrayByString(chats, input.toLowerCase())
@@ -180,7 +189,9 @@ module.exports = {
   deleteUserById,
   getAllUsers,
   getUserById,
+  getUserWithPassword,
   getMembersByEmail,
+
 
   // שייך לצ'אטים
   updateUserChat,

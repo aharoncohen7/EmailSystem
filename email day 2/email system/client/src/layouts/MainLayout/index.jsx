@@ -2,17 +2,21 @@ import React from 'react'
 import styles from './style.module.css'
 import { Outlet } from 'react-router-dom'
 import MainNav from '../../components/main/MainNav';
+import LoginPage from '../../components/loginPage/Login';
+import { useContext } from 'react';
+import { UserContext } from '../../App';
+
 
 const MainLayout = () => {
-  const isConnected = true;
-  if (!isConnected) return (<h1>login</h1>)
+  const {user} = useContext(UserContext);
+  if (user) return (
+      <main className={styles.layout}>
+        <MainNav />
+        <Outlet />
+      </main>
+  )
   else return (
-    <main className={styles.layout}>
-       
-      <MainNav />
-      <Outlet />
-     
-    </main>
+      <LoginPage />
   )
 }
 

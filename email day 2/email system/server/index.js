@@ -11,10 +11,11 @@ app.use(require("cors")())//מטפל בהרשאות לבקשות,כעת פתוח
 app.use(express.json())//ממיר את הבקשה לJSON בצורה אוטומטית
 
 // אנד-פוינטס
-app.use("/api/users",auth, mainRouter.userRouter)
-app.use("/api/chats",auth, mainRouter.chatRouter)
-app.use("/api/user-chats",auth, mainRouter.userChatsRouter)
-// app.use("/api/email",auth, mainRouter.emailRouter)
+app.use("/api/auth", mainRouter.authRouter)
+app.use(auth)
+app.use("/api/users", mainRouter.userRouter)
+app.use("/api/chats", mainRouter.chatRouter)
+app.use("/api/user-chats", mainRouter.userChatsRouter)
 // require('./DL/test_data')
 
 

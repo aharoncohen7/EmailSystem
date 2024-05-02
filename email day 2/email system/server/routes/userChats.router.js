@@ -41,6 +41,7 @@ userChatsRouter.get('/:chatId', async (req, res) => {
     console.log(req.user._id);
     try {
         let result = await userServices.getUserChatById({ _id: req.user._id }, req.params.chatId)
+        
         res.send(result)
     }
     catch (err) {
