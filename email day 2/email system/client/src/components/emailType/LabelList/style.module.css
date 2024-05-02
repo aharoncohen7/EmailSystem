@@ -31,25 +31,28 @@ h3{
     display: flex;
     align-items: center;
     justify-content: center;
-
-
+    padding: 8px;
     background-color: var(--lightGreen-bg-color);
+    color: var(--primary-color);
+    font-size: 30px;
 }
 
 
-.sss{
-    display: flex;
-    /* align-items: center; */
-    justify-content: center;
-
+.icons{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--gray-bg-color);
 }
+
+
+
 
 
 .name{
     color: var(--gray-bg-color);
     font-weight: 600;
     font-size: 15px;
-    
 }
 
 .name:hover{

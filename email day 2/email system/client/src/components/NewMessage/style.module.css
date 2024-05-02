@@ -134,8 +134,11 @@
 
 .memberList{
     position: absolute;
+    top: -10px;
     z-index: 0;
     display: flex;
+    flex-wrap: wrap;
+    
     gap: 10px;
     /* flex-direction: column; */
     
