@@ -98,7 +98,7 @@ export function changeColorLinks(htmlString){
     // const text = "זהו טקסט עם קישור: https://example.com אני מקווה שהקישור הזה יוצג בצבע כחול.";
 // הגדרת ה־Regex לזיהוי של קישור
 // const linkRegex = /https?:\/\/[-\w.]+(?:\/[-\w]+)*(?:\/?|\/\w+\.[a-z]{3})(?:\?\S*)?/gi;
-const linkRegex = /https?:\/\/[^\s]+/gi;
+const linkRegex = /https?:\/\/[^<\s]+/gi;
 ;
 
 // מציאת כל הקישורים בתוך הטקסט

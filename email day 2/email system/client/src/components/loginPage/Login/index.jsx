@@ -45,7 +45,7 @@ const LoginPage = () => {
             navTo("/")
            
         } catch (e) {
-            console.error("Failed to register: " + e.message);
+            console.error("Failed to login: " + e.message);
         }
     }
 
