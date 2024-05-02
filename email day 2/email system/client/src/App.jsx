@@ -12,6 +12,7 @@ import LoginPage from "./components/loginPage/Login";
 export const PopupContext = createContext(true)
 export const UserContext = createContext(true)
 import { axiosReq } from './helpers'
+import ForgotPassword from "./components/loginPage/ForgotPassword";
 
 
 
@@ -46,6 +47,7 @@ export default function App() {
         <Routes>
           <Route path="register" element={<RegisterPage/>} />
           <Route path="login" element={<LoginPage/>} />
+          <Route path="forgot" element={<ForgotPassword/>} />
           <Route path="" element={<MainLayout />}>
             <Route path="chats" element={<EmailsTypeLayout />} >
               <Route path="new-message" element={<NewMessage/>} />

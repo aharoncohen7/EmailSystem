@@ -5,7 +5,7 @@ export default function SendBtn({sendMessage}) {
    return (
       <p className={styles.main}>
          <IoIosSend size={"20px"}/>
-        <span onClick={sendMessage} className={styles.text}>Send</span> 
+        <span onClick={sendMessage}>Send</span> 
        
       </p>
    )

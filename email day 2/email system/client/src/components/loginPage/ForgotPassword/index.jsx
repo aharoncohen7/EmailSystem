@@ -13,14 +13,13 @@ const initialFormData = {
     password: '',
 };
 
-const LoginPage = () => {
+const ForgotPassword = () => {
     const [formData, setFormData] = useState(initialFormData);
     const { setPopUpContent } = useContext(PopupContext)
     const { setUser } = useContext(UserContext)
     const navTo = useNavigate()
     const formFields = [
         { label: '@ Email Address', name: 'email', type: 'email', required: true },
-        { label: '🔒 Password', name: 'password', type: 'password', required: true },
     ];
 
     const handleChange = (e) => {
@@ -62,7 +61,10 @@ const LoginPage = () => {
         <div className={styles.main}>
             <div className={styles.form}>
                 <div className={styles.top}><h3>Mailbox - communicate full-world</h3></div>
-                <h2>Welcome to Mailbox</h2>
+                <h2>Forgot Password</h2>
+                <p className={styles.instructions}>
+                    Enter your email address and we'll send you a link to reset your password.
+                </p>
                 <form onSubmit={handleSubmit} className={styles.inputs}>
                     {formFields.map(field => (
                         <input
@@ -78,18 +80,18 @@ const LoginPage = () => {
                             placeholder={field.label}
                         />
                     ))}
-                     <span className={styles.forgotPassword}><a href="">Forgot password ?</a></span>
+    
                     <p className={styles.button}>
-                       
-                        <button className={styles.text} type='submit'>Sign in</button>
+
+                        <button className={styles.text} type='submit'>Send reset link</button>
                     </p>
                 </form>
                 {/* <p>Already have an account? <a href="/login">Login Here</a></p> */}
-                <p>Don't have an account? <a href="/register">Register Here</a></p>
+                <p>Don't have an account? <a href="/login">Back to Login</a></p>
             </div>
             <div className={styles.background}><img className={styles.backgroundImg} src='./src/assets/send-mail.svg' alt="" /></div>
         </div>
     );
 };
 
-export default LoginPage;
+export default ForgotPassword;

@@ -35,9 +35,13 @@ authRouter.post("/login", async (req, res) => {
         const userFromDB = await userServices.getUserWithPassword({email: body.email})
         console.log("🚀 ~ userRouter.post ~ userFromDB:", userFromDB)
         if(!userFromDB) throw "User not found"
+        console.log("11111111111111111111111r");
         if(!bcrypt.compareSync(body.password, userFromDB.password)) throw "Not the same password"
+        console.log("g22222222222222222222222");
         const token = await auth.generate({_id: userFromDB._id})
-        console.log(token);
+        if(!token) throw "Token not found"
+        console.log("g3333333333333333333332");
+        // console.log("🚀 ~ authRouter.post ~ token:", token)
         const response = {token, _id: userFromDB._id, fullName: userFromDB.fullName,  email: userFromDB.email, avatar: userFromDB.avatar}
         res.send(response)
     }

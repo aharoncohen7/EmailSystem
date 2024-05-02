@@ -20,7 +20,8 @@ a, input, select, button {
 
 a{
   text-decoration: none;
-  color: inherit;
+  /* color: inherit; */
+  color: var(--primary-color);
 }
 
 ul, li{
