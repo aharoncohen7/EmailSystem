@@ -19,13 +19,13 @@ async function readOne(filter, populate={}, getPassword) {
     let data = await userModel.findOne({ ...filter, isActive: true }, "+password")
     return data
     }
-    console.log("fgggggggggggggggggggggggggggggg");
+
     let data2 = await userModel.findOne({ ...filter, isActive: true })
     if(populate.chats) {
-        console.log("000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+       
         data2=await data2.populate('chats.chat')}
     if(populate.users) data2=await data2.populate('chats.chat.members')
-    console.log(data2);
+    // console.log(data2);
     return data2//.toObject()
 }
 

@@ -7,14 +7,14 @@
     height: 100%;
     backdrop-filter: blur(10px);
     background-color: rgba(79, 78, 78, 0.5);
-    z-index: 2;
+    z-index: 12;
     top: 0;
     left: 0;
 }
 
 .popup {
     position: relative;
-    z-index: 5;
+    z-index: 15;
     min-width: 400px;
     min-height: 200px;
     background-color: #ffffff;

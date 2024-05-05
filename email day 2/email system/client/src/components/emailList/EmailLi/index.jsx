@@ -6,7 +6,7 @@ import { FaEnvelope } from "react-icons/fa";
 import { axiosReq, getDescriptionOrTime } from '../../../helpers';
 
 
-const EmailLi = ({ item }) => {
+const EmailLi = ({ item, setChange }) => {
   // console.log(item.chat.members[0].avatar ?? item.chat.members[0].avatar);
   const [isRead, setIsRead] = useState(item.isRead)
   // const { loading, data, error, fetchData } = useAxiosReq({ defaultVal: {}, method: 'PUT', url: `user-chats/${item._id}/isRead` })

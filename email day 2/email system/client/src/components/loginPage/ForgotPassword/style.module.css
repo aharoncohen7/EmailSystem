@@ -1,6 +1,5 @@
 .main{
     display: flex;
-
 }
 
 
@@ -104,28 +103,17 @@
     filter: brightness(90%);
 }
 
-/* .forgotPassword{
-    position: relative;
-    display: flex;
-    width: 140px;
-    align-items: end;
-    justify-content: end;
-    a{
-        position: absolute;
-        right: 5px;
-    }
-    text-align: end;
-
-} */
+.text{
+    color: var(--textGrey);
 
 
+}
 
 
 .backgroundImg{
+    transform: scaleX(-1);
 
-    /* border: solid 2px black; */
 }
-
 
 .button{
 

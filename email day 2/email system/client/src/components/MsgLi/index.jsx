@@ -6,21 +6,19 @@ import { IoIosShareAlt } from "react-icons/io";
 import { formatDateTime } from "./../../helpers/index.js"
 import { FaHandHoldingHeart } from "react-icons/fa";
 import { useContext } from 'react';
-import { UserContext } from '../../App.jsx';
+import { ChatContext, UserContext } from '../../App.jsx';
 
 
 
 
 // יחידה הודעה בצ'אט
-export const MsgLi = ({ msg, chatToShow, setIsExpand, isExpand }) => {
+export const MsgLi = ({ msg, setIsExpand, isExpand }) => {
   const {user} = useContext(UserContext)
+  const { chat } = useContext(ChatContext)
   const youSent = msg.from == user._id;
   const isThisExpand = isExpand == msg._id;
   const dirMatch = msg.content?.match(/<[^>]+dir\s*=\s*["'](\w+)["'][^>]*>/);
   const dir = dirMatch ? dirMatch[1] : "rtl";
-  // console.log(dir);
-
-
 
   // בוחר הודעה מורחבת
   const handelExpand = () => {
@@ -30,8 +28,7 @@ export const MsgLi = ({ msg, chatToShow, setIsExpand, isExpand }) => {
   }
   // מוצא את המשתמש המתאים בעזרת המזהה של השולח
   function getSender() {
-    // console.log(chatToShow.members);
-    return chatToShow.members.find(member => member._id == msg.from);
+    return chat.members.find(member => member._id == msg.from);
   };
   // ניטור הודעה
   const sanitizedHTML = DomPurify.sanitize(msg.content);

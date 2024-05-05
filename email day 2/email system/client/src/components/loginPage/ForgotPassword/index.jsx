@@ -87,7 +87,7 @@ const ForgotPassword = () => {
                     </p>
                 </form>
                 {/* <p>Already have an account? <a href="/login">Login Here</a></p> */}
-                <p>Don't have an account? <a href="/login">Back to Login</a></p>
+                <p className={styles.text}>Don't have an account? <a href="/login">Back to Login</a></p>
             </div>
             <div className={styles.background}><img className={styles.backgroundImg} src='./src/assets/send-mail.svg' alt="" /></div>
         </div>

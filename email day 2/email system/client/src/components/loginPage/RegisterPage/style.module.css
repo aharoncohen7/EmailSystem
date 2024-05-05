@@ -1,5 +1,10 @@
 .main{
     display: flex;
+    background-image: url('../../../assets/Rectangle.svg');
+    padding: 60px 0px 60px 120px;
+    height: 100vh;
+    overflow: hidden;
+
 
 }
 
@@ -8,11 +13,13 @@
 .form{
     
     flex-grow:1;
-    height: 100vh;
+    /* height: 86vh; */
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 30px;
+    background-color: #fff;
+    box-shadow: 3px 3px 1px rgb(196, 196, 196) ;
 
     h2{
         padding: 40px;
@@ -24,8 +31,8 @@
 }
 
 .top{
-    width: 100%;
-    height: 50px;
+    width: 90%;
+    /* height: 50px; */
     border-bottom: 2px solid var(--lightGray-bg-color);
     padding: 2px;
     position: relative;
@@ -41,9 +48,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
-    width: 100%;
-    padding: 20px;
+    gap: 25px;
+    width: 90%;
+    padding-top: 20px;
+    padding-bottom: 20px;
     border-radius: 10px;
     /* background-color: var(--lightGray-bg-color); */
 
@@ -58,18 +66,20 @@
 }
 
 .background{
-    background-image: url('../../../assets/Rectangle.svg');
-    height: 100vh;
+    /* background-image: url('../../../assets/send-mail.svg'); */
+    /* height: 100vh; */
     /* background-size:cover; 
     background-position: center;  */
-    flex-grow: 2;
+    flex-grow: 5;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    
 }
+.text{
+    color: var(--textGrey);
 
+
+}
 .button {
     letter-spacing: 1px;
     font-size: small;
@@ -77,7 +87,7 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    Width: 120px;
+    width: 120px;
     Height: 41px;
     border-radius: 40px;
     padding: 20px;
@@ -111,19 +121,12 @@
 
 } */
 
-.text{
-    color: var(--textGrey);
 
 
-}
+
+
 
 
 .backgroundImg{
-
-    /* border: solid 2px black; */
-}
-
-
-.button{
 
 }

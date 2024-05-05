@@ -7,10 +7,11 @@ import { useState, createContext, useEffect} from "react";
 import PopUp from "./components/PopUp";
 import NewMessage from "./components/NewMessage";
 import useAxiosReq from "./hooks/useAxiosReq";
-import RegisterPage from "./components/RegisterPage";
+import RegisterPage from "./components/loginPage/RegisterPage";
 import LoginPage from "./components/loginPage/Login";
 export const PopupContext = createContext(true)
 export const UserContext = createContext(true)
+export const ChatContext = createContext(true)
 import { axiosReq } from './helpers'
 import ForgotPassword from "./components/loginPage/ForgotPassword";
 

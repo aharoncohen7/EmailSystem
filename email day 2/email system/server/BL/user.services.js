@@ -59,12 +59,12 @@ async function getMembersByEmail(searchString) {
 async function getUserChatById(filter, chatId) {
   // console.log(filter, chatId, field);
   let user = await userController.readOne(filter, {"chats": true, "users": true}, false)
-  console.log(user);
+  // console.log(user);
   const foundChat = user.chats.find(chat => chat.id == chatId && !chat.isDeleted);
   if(!foundChat){
     return null;
   }
-    console.log(foundChat);
+    console.log(foundChat.isFavorite, "foundChat");
   return foundChat
 }
 
@@ -124,9 +124,9 @@ async function getChatList({ userId, flags, input, pageNumber }) {
   // console.log(chats);
   // עימוד
   const startIndex = (pageNumber - 1) * 7;
-  const endIndex = pageNumber * 7;
+  const endIndex = pageNumber * 12;
   return chats
-  .slice(startIndex, endIndex)
+  .slice(0, endIndex)
 }
 
 // מיותרים---------------------------------------

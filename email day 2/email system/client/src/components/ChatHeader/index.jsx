@@ -6,37 +6,42 @@ import { FaStar } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { FaPrint } from "react-icons/fa";
 import { MdMoreVert } from "react-icons/md";
-import { PopupContext } from '../../App';
+import { ChatContext, PopupContext } from '../../App';
 import DeleteMsg from '../DeleteMsg';
 import { useNavigate, useParams } from 'react-router-dom';
 import { axiosReq } from '../../helpers';
 
 
-const ChatHeader = ({}) => {
+const ChatHeader = ({isFavorite}) => {
   const { setPopUpContent } = useContext(PopupContext)
+  const { chat,  setChangeList } = useContext(ChatContext)
   const { chatId } = useParams();
+  console.log(isFavorite);
   const navTo = useNavigate()
+
+  
 
   const deleteMessage =  async () => {
     const results = await axiosReq({ method: 'PUT', url: `user-chats/${chatId}/isDeleted` })
     if (results._id){
            setPopUpContent(<div style={{height: "100%", display:"flex", justifyContent: "center", alignItems: "center"}}><h2 >נמחק בהצלחה</h2></div>)
+           setChangeList(prev=>{return !prev})
            navTo("/chats/inbox")
     }
   }
 
     const updateIsFavorite =  () => {
      axiosReq({ method: 'PUT', url: `user-chats/${chatId}/isFavorite` })
-    //  setChange(prev=>{return !prev})
+     setChangeList(prev=>{return !prev})
   }
 
   return (
     <div className={styles.main}>
-      <span className={styles.libels} href="">
+      <span className={styles.libels} >
         <LabelBadge />
       </span>
       <span className={styles.icons}>
-        <FaStar onClick={updateIsFavorite}/>
+        <FaStar color={isFavorite ? "green" : "red"} onClick={updateIsFavorite}/>
         <FaPrint />
         <MdDelete onClick={() => setPopUpContent(<DeleteMsg setConfirm={deleteMessage}/>)} />
         <MdMoreVert />

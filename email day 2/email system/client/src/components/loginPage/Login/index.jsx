@@ -78,14 +78,13 @@ const LoginPage = () => {
                             placeholder={field.label}
                         />
                     ))}
-                     <span className={styles.forgotPassword}><a href="">Forgot password ?</a></span>
+                     <span className={styles.text}><a href="/forgot">Forgot password ?</a></span>
                     <p className={styles.button}>
-                       
-                        <button className={styles.text} type='submit'>Sign in</button>
+                        <button  type='submit'>Sign in</button>
                     </p>
                 </form>
                 {/* <p>Already have an account? <a href="/login">Login Here</a></p> */}
-                <p>Don't have an account? <a href="/register">Register Here</a></p>
+                <p className={styles.text}>Don't have an account? <a href="/register">Register Here</a></p>
             </div>
             <div className={styles.background}><img className={styles.backgroundImg} src='./src/assets/send-mail.svg' alt="" /></div>
         </div>

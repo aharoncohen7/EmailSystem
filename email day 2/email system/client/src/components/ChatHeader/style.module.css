@@ -30,3 +30,8 @@
         color: var(--primary-color);
     }
 }
+
+
+.isFavorite{
+    color: var(--primary-color)
+}

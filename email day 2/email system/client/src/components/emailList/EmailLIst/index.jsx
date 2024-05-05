@@ -17,7 +17,7 @@ const flags = {
     "draft": "draft"
 }
 
-const EmailLIst = () => {
+const EmailLIst = ({changeList}) => {
     const [input, setInput] = useState('')
     const [change, setChange] = useState(false)
     const [page, setPage] = useState(1);
@@ -33,7 +33,7 @@ const EmailLIst = () => {
         // console.log(page);
         setPage(1)
         fetchData() 
-    }, [chatType, input, change]);
+    }, [chatType, input, change, changeList ]);
 
 
     useEffect(() => {
@@ -48,9 +48,15 @@ const EmailLIst = () => {
   const handleScroll = () => {
     const { current } = scrollableRef;
     if (current.scrollTop === 0 && page>1) {
-        setPage(prevPage => prevPage -1);}
-    if (current.scrollTop + current.clientHeight === current.scrollHeight) {
-      setPage(prevPage => prevPage + 1);
+        setPage(prevPage => prevPage -1);} 
+        console.log();(page)
+        
+        if (current.scrollTop + current.clientHeight === current.scrollHeight) {
+          
+          setPage(prevPage => prevPage + 1);
+          console.log();(page)
+     
+
     }
   };
 
@@ -63,8 +69,9 @@ const EmailLIst = () => {
                     <InputSearch sendInput={setInput} loading={loading} />
                 </div>
 
-                <span className={styles.emailList} ref={scrollableRef} 
-                // onScroll={handleScroll}
+                <span className={styles.emailList}
+                ref={scrollableRef} 
+                onScroll={handleScroll}
                 >
 {(page>1) ? <span className={styles.noResults}><FaCaretUp onClick={()=>setPage(prevPage => prevPage -1)}/></span>: null}
   {data.length ?

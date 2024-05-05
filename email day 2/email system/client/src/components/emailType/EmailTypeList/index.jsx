@@ -38,9 +38,9 @@ const EmailTypeList = () => {
     console.log(data);
    }
 
-    useEffect(() => {
-        setInterval(getNotRead, 1000 * 60);
-    }, []);
+    // useEffect(() => {
+    //     setInterval(getNotRead, 1000 * 60);
+    // }, []);
 
 
 

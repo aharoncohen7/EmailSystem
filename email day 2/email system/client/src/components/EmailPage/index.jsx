@@ -1,41 +1,55 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styles from './style.module.css'
 import MsgLi from '../MsgLi';
 import EmailTitle from '../EmailTitle';
 import axios from 'axios';
 import { axiosReq } from '../../helpers';
+import { ChatContext, UserContext } from '../../App';
 
-const EmailPage = ({ change}) => {
-  const { chatId } = useParams()
+
+
+
+
+const EmailPage = ({ }) => {
   const [isExpand, setIsExpand] = useState(false);
+  const {  chat } = useContext(ChatContext)
+//   const { chatId } = useParams()
+//   const [data, setData] = useState({});
+//  useEffect(() => {
+//   const getChat = async () => {
+//     const {chat} = await axiosReq({ method: 'GET', url: `user-chats/${chatId}` })
+//     setData(chat)
+//   };
+//   getChat()
+// }, [chatId, change]);
+
+
   //  קבלת צ'אט
-  const [data, setData] = useState({});
+  // const [data, setData] = useState({});
   // const { loading, data, error , fetchData} = useAxiosReq({ defaultVal: {}, method: 'GET', url: `chats/${chatId}` })
 
   // useEffect(() => {
   //   fetchData()
   // }, [change]);
 
+  // useEffect(() => {
+  //   const getChat = async () => {
+  //     const {chat} = await axiosReq({ method: 'GET', url: `user-chats/${chatId}` })
+  //     setData(chat)
+  //   };
+  //   getChat()
+  // }, [chatId, change]);
+  
 
-
-
-
- useEffect(() => {
-  const getChat = async () => {
-    const {chat} = await axiosReq({ method: 'GET', url: `user-chats/${chatId}` })
-    setData(chat)
-  };
-  getChat()
-}, [chatId, change]);
 
   return (
     <div className={styles.main}>
-        <EmailTitle chat={data} />
+        <EmailTitle />
         <div className={styles.list}>
-          {data.msg && data.msg.map((msg) => (
+          {chat.msg && chat.msg.map((msg) => (
             <div key={msg._id} className={styles.msgLi}>
-              <MsgLi msg={msg} chatToShow={data} isExpand={isExpand} setIsExpand={setIsExpand} />
+              <MsgLi msg={msg} isExpand={isExpand} setIsExpand={setIsExpand} />
             </div>
           ))}
         </div>
