@@ -25,7 +25,7 @@ const MainNav = () => {
     const {user} = useContext(UserContext)
     return (
         <div className={styles.main}>
-            <img src="./vite.svg" alt="img" />
+            <img src="./src/assets/logo-mail-box.png" alt="logo" />
 
             <ul className={styles.ul}>
                 {mainNavIcons.map((obj) => (

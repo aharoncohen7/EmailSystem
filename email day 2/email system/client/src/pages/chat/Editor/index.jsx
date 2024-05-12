@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import styles from './style.module.css'
 import { FiAlignRight } from "react-icons/fi";
 import { FiAlignLeft } from "react-icons/fi";
@@ -18,40 +18,14 @@ import { PiSelectionAll } from "react-icons/pi";
 import { MdFormatTextdirectionRToL } from "react-icons/md";
 import { MdFormatTextdirectionLToR } from "react-icons/md";
 import { VscTextSize } from "react-icons/vsc";
-
-
 import Colors from '../Colors';
 import SendBtn from '../SendBtn';
-// import axios from 'axios';
-// import useAxiosReq from '../../../hooks/useAxiosReq';
-import { axiosReq } from '../../../helpers';
-
-
-// אייקוני עיצוב עמוד
-const formattingOptions = [
-    { icon: BsListUl, value: 'listUl' },
-    { icon: BsListOl, value: 'listOl' },
-    { icon: FiAlignLeft, value: 'left' },
-    { icon: FiAlignCenter, value: 'center' },
-    { icon: FiAlignRight, value: 'right' },
-    { icon: FiAlignJustify, value: 'justify' },
-    // { icon: MdFormatTextdirectionRToL, value: 'rtl' },
-    // { icon: MdFormatTextdirectionLToR, value: 'ltr' }
-];
-
-const placeholder = {
-    rtl: "כתוב משהו...",
-    ltr: "Type something..."
-}
-
-
-
 
 
 
 // עורך טקסט
-const Editor = ({ setChange, setResetKey, moreDetails, newMessage = false }) => {
-    const navTo = useNavigate()
+const Editor = ({ setResetKey, onSend}) => {
+   
     // קבלת ברירת מחדל של כיוון טקסט לפי שפה ראשית
     useEffect(() => {
         function getSystemDirection() {
@@ -66,23 +40,22 @@ const Editor = ({ setChange, setResetKey, moreDetails, newMessage = false }) => 
         }
         getSystemDirection()
     }, []);
-    // console.log("🚀 ~ Editor ~ moreDetails:", moreDetails)
+    // console.log("🚀 ~ Editor ~ newChatDetails:", newChatDetails)
     const { chatId } = useParams();
     //תוכן הודעה
-    const [content, setContent] = React.useState("");
+    const [content, setContent] = useState("");
     // הצגת סרגל צבעים
-    const [showColors, setShowColors] = React.useState(false);
+    const [showColors, setShowColors] = useState(false);
     // צבע טקסט
-    const [selectedColor, setSelectedColor] = React.useState("black");
+    const [selectedColor, setSelectedColor] = useState("black");
     // גודל טקסט
-    const [fontSize, setFontSize] = React.useState("small");
+    const [fontSize, setFontSize] = useState("small");
     //כיוון טקסט
-    const [textDirection, setTextDirection] = React.useState("rtl");
-
+    const [textDirection, setTextDirection] = useState("rtl");
     //  עיצןב מטקסט - יישור שורות
-    const [textFormatting, setTextFormatting] = React.useState("");
+    const [textFormatting, setTextFormatting] = useState("");
     // עיצוב טקסט - הדגשות
-    const [formatting, setFormatting] = React.useState({
+    const [formatting, setFormatting] = useState({
         bold: false,
         italic: false,
         underline: false,
@@ -91,12 +64,10 @@ const Editor = ({ setChange, setResetKey, moreDetails, newMessage = false }) => 
     const toggleFontFormatting = (mode) => {
         setFormatting({ ...formatting, [mode]: !formatting[mode] });
     };
-    
     // בעת בחירת צבע- הטקסט המודגש יקבל את הצבע
     useEffect(() => {
         handleSelect()
     }, [selectedColor, formatting, fontSize]);
-    
     // עיצוב עבור תצוגת השולח
     const jsxStyle = {
         textDecoration: formatting.underline ? 'underline' : 'none',
@@ -106,14 +77,12 @@ const Editor = ({ setChange, setResetKey, moreDetails, newMessage = false }) => 
         fontSize: fontSize
     }
     // עיצוב עבור התוכן הנשלח
-    const cssStyle =
-        `"text-decoration: ${formatting.underline ? 'underline' : 'none'};
+    const cssStyle =`"text-decoration: ${formatting.underline ? 'underline' : 'none'};
          font-style: ${formatting.italic ? 'italic' : 'normal'};
          font-weight: ${formatting.bold ? 'bold' : 'normal'};
          text-align: ${textFormatting}";
          color: ${selectedColor};
-         font-size: ${fontSize};
-         `;
+         font-size: ${fontSize};`;
     //החלת סגנון בעת בחירת טקסט
     function handleSelect() {
         //בחירת טקסט
@@ -172,58 +141,25 @@ const Editor = ({ setChange, setResetKey, moreDetails, newMessage = false }) => 
     const divRef = useRef(null);
     //  עטיפת תוכן 
     const body = { content: `<span dir='${textDirection}' style=${cssStyle}> ${content} </span>` }
-    //שליחת הודעה
-    const send = async () => {
-        if (newMessage && (moreDetails.members.length == 0 || moreDetails.subject == "")) {
-            return;
-        }
-        if (content.trim() !== '') {
-            try {
-                const result = await axiosReq({
-                    method: newMessage ? 'POST' : 'PUT',
-                    url: newMessage ? 'chats/' : `chats/${chatId}`,
-                    body: newMessage
-                        ? { ...body, subject: moreDetails.subject, members: moreDetails.members }
-                        : body
-                })
-
-
-                if (result) {
-                    if (newMessage) {
-                        navTo(`/chats/sent emails/${result}`)
-                    }
-                    else {
-                        handleReset()
-                        setChange(prev => !prev);
-                    }
-                }
-                else {
-                    alert('הטקסט לא נשלח')
-                    handleReset()
-                }
-
-            } catch (e) {
-                alert("Failed to send message")
-                console.error(e)
-            }
-        }
-        else {
+    //  שליחת תוכן החוצה
+    const handleSendContent = () => {
+        if (content.trim() === '') {
             alert("you cannot send messages without content");
+            return;
+          }
+        else{
+            onSend(body)
         }
+
+
+
     }
-
-
-
-
-
 
 
     return (
         <div className={styles.main} >
             <div className={styles.editorBox}>
                 {/* אלמנט תוכן */}
-
-
                 <div
                     ref={divRef}
                     dir={textDirection}
@@ -299,7 +235,7 @@ const Editor = ({ setChange, setResetKey, moreDetails, newMessage = false }) => 
                 <span className={styles.sendButton}>< FaFile /> < FaImage /></span>
                 <span className={styles.sendButton}  >
                     <MdDelete size={"22px"} onClick={handleReset} />
-                    <span onClick={send}>
+                    <span onClick={handleSendContent}>
                         <SendBtn /></span>
                 </span>
             </div>
@@ -310,3 +246,61 @@ const Editor = ({ setChange, setResetKey, moreDetails, newMessage = false }) => 
 export default Editor
 
 
+// אייקוני עיצוב עמוד
+const formattingOptions = [
+    { icon: BsListUl, value: 'listUl' },
+    { icon: BsListOl, value: 'listOl' },
+    { icon: FiAlignLeft, value: 'left' },
+    { icon: FiAlignCenter, value: 'center' },
+    { icon: FiAlignRight, value: 'right' },
+    { icon: FiAlignJustify, value: 'justify' },
+    // { icon: MdFormatTextdirectionRToL, value: 'rtl' },
+    // { icon: MdFormatTextdirectionLToR, value: 'ltr' }
+];
+
+const placeholder = {
+    rtl: "כתוב משהו...",
+    ltr: "Type something..."
+}
+
+//שליחת הודעה
+// import axios from 'axios';
+// import useAxiosReq from '../../../hooks/useAxiosReq';
+// import { axiosReq } from '../../../helpers';
+    // const send = async () => {
+    //     if (newChat && (!newChatDetails || !newChatDetails.subject || newChatDetails.subject == "" || !newChatDetails.members || newChatDetails.members.length === 0)) {
+    //         alert("please fill all the fields")
+    //         return;
+    //     }
+    //     if (content.trim() !== '') {
+    //         try {
+    //             const result = await axiosReq({
+    //                 method: newChat ? 'POST' : 'PUT',
+    //                 url: newChat ? 'chats/' : `chats/${chatId}`,
+    //                 body: newChat
+    //                     ? { ...body, subject: newChatDetails.subject, members: newChatDetails.members }
+    //                     : body
+    //             })
+    //             if (result) {
+    //                 if (newChat) {
+    //                     navTo(`/chats/sent emails/${result}`)
+    //                 }
+    //                 else {
+    //                     handleReset()
+    //                     setChange(prev => !prev);
+    //                 }
+    //             }
+    //             else {
+    //                 alert('הטקסט לא נשלח')
+    //                 handleReset()
+    //             }
+
+    //         } catch (e) {
+    //             alert("Failed to send message")
+    //             console.error(e)
+    //         }
+    //     }
+    //     else {
+    //         alert("you cannot send messages without content");
+    //     }
+    // }

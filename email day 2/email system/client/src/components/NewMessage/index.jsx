@@ -6,48 +6,28 @@ import { TbFunction } from 'react-icons/tb';
 import { axiosReq } from '../../helpers';
 import { PopupContext } from '../../App';
 import { UserContext } from '../../App';
+import { useNavigate } from 'react-router-dom';
 
 
 
 
 const NewMessage = () => {
-  const {user} = useContext(UserContext)
+  const navTo = useNavigate()
+  const { user } = useContext(UserContext)
   const [resetKey, setResetKey] = useState(0);
   const [subject, setSubject] = useState("");
   const [member, setMember] = useState("");
   const [memberList, setMemberList] = useState([]);
   const [members, setMembers] = useState([]);
 
-  function addMember() {
-    if(member){
-    setMembers(prevState => {
-        // יצירת סט עם הערכים הקיימים במערך הקודם
-        const uniqueSet = new Set(prevState);
-        // הוספת הערך החדש לסט
-        uniqueSet.add(member);
-        // המרת הסט למערך חדש והחזרתו
-        return [...uniqueSet];
-      });
-  
-    // const newArray = [...members, member];
-    // setMembers(newArray);
-    console.log('ערך האינפוט:', members);
-    setMember('');
-    setMemberList([])}
-  };
-
-  const moreDetails = {
-    subject: subject,
-    members: members,
-  }
-
+  // קבלת רשימת נמענים אופצונלית לפי אינפוט
   async function getMemberList(e) {
     const searchString = e.target.value;
     setMember(searchString)
     if (searchString.trim() !== '') {
       try {
         const result = await axiosReq({ method: 'GET', url: `users/by-email/${searchString}` })
-        const result2 = result.filter(member =>  member.email !== user.email)
+        const result2 = result.filter(member => member.email !== user.email)
         setMemberList(result2);
       } catch (e) {
         console.error(e)
@@ -57,22 +37,53 @@ const NewMessage = () => {
     }
   }
 
+  //  הוספת נמען מתוך הרשימה
+  function addMember() {
+    if (member) {
+      setMembers(prevState => {
+        // יצירת סט עם הערכים הקיימים במערך הקודם
+        const uniqueSet = new Set(prevState);
+        // הוספת הערך החדש לסט
+        uniqueSet.add(member);
+        // המרת הסט למערך חדש והחזרתו
+        return [...uniqueSet];
+      });
+      setMember('');
+      setMemberList([])
+    }
+  };
 
-
+  //ביטול הוספת נמען
   const removeMember = (memberToRemove) => {
     setMembers(prev => prev.filter(item => item !== memberToRemove));
   };
 
+//  יצירת צ'אט חדש
+  const createNewChat = async (body) => {
+    if (subject.trim() == "" ||members.length === 0) {
+      alert("please fill all the fields")
+      return;
+    }
+    
+    try {
+        const result = await axiosReq({
+          method:'POST' ,
+          url: 'chats/',
+          body: { ...body, subject, members }
+        })
+        if (result) {
+            navTo(`/chats/sent emails/${result}`)}
+        else {
+          alert('הטקסט לא נשלח')
+        }
 
-
-
-
-
-
-
-
-
-
+      } catch (e) {
+        alert("Failed to send message")
+        console.error(e)
+      }
+    }
+    
+  
 
   return (
     <div className={styles.main}>
@@ -113,12 +124,9 @@ const NewMessage = () => {
         </span>
         <div className={styles.editorBox} style={{ width: "100%" }}>
           <h2 >Message</h2>
-          <Editor key={resetKey} setResetKey={setResetKey} moreDetails={moreDetails} newMessage={true} />
+          <Editor key={resetKey} setResetKey={setResetKey}  onSend={createNewChat} />
         </div>
-
       </span>
-      {/* </div> */}
-
     </div>
   )
 }

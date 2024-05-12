@@ -6,6 +6,7 @@ import { NavLink, useParams } from 'react-router-dom'
 import useAxiosReq from '../../../hooks/useAxiosReq';
 import { FaCaretDown } from "react-icons/fa";
 import { FaCaretUp } from "react-icons/fa";
+import { ChatContext } from '../../../App'
 
 
 
@@ -17,46 +18,37 @@ const flags = {
     "draft": "draft"
 }
 
-const EmailLIst = ({changeList}) => {
+const EmailList = ({changeList, setChangeList}) => {
+    //  const {changeList} = useContext(ChatContext)
     const [input, setInput] = useState('')
-    const [change, setChange] = useState(false)
     const [page, setPage] = useState(1);
     const {chatType } = useParams()
     const filter = flags[chatType]
-    // console.log(filter);
-   
-
+    const scrollableRef = useRef(null);
     const { loading, data, error , fetchData} = useAxiosReq({ defaultVal: {}, method: 'POST', url: `user-chats/chat-list`, body: { flags: [ `${filter}`],pageNumber: page , input: input }})
 
-
+    
     useEffect(() => {
-        // console.log(page);
         setPage(1)
         fetchData() 
-    }, [chatType, input, change, changeList ]);
+        console.log("qwertyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+    }, [chatType, input, changeList ]);
 
 
     useEffect(() => {
-        // console.log(page);
-         fetchData()
+      if(page!=1){
+         fetchData()}
   }, [page]);
 
-
-
-  const scrollableRef = useRef(null);
 
   const handleScroll = () => {
     const { current } = scrollableRef;
     if (current.scrollTop === 0 && page>1) {
         setPage(prevPage => prevPage -1);} 
-        console.log();(page)
-        
+        // console.log();(page)
         if (current.scrollTop + current.clientHeight === current.scrollHeight) {
-          
           setPage(prevPage => prevPage + 1);
-          console.log();(page)
-     
-
+          // console.log();(page)
     }
   };
 
@@ -87,25 +79,23 @@ const EmailLIst = ({changeList}) => {
             isActive ? { boxShadow: "0px 3px 6px rgb(212, 210, 210)" } : {}
           }
         >
-          <EmailLi item={item} setChange={setChange} />
+          <EmailLi item={item} setChangeList={setChangeList} />
         </NavLink>
       );
     }) : null}
   
-  {(data.length && data.length ==7) ? <span   className={styles.noResults}><FaCaretDown onClick={()=>setPage(prevPage => prevPage +1)}/></span>: null}
-  {(!data.length && !loading && page==1) ? (<span  className={styles.noResults}>אין תוצאות</span>) :  null}
-  {loading && <span className={styles.noResults}>loading...</span>}
-</span>
+                     {(data.length && data.length ==7) ? <span   className={styles.noResults}><FaCaretDown onClick={()                   =>setPage(prevPage => prevPage +1)}/></span>: null}
+                     {(!data.length && !loading && page==1) ? (<span  className={styles.noResults}>אין תוצאות</span>) :  null}
+                   </span>
+                     {loading && <span className={styles.noResults}>loading...</span>}
 
 
             </div>
-
-
         </div>
     )
 }
 
-export default EmailLIst;
+export default EmailList;
 
 
 

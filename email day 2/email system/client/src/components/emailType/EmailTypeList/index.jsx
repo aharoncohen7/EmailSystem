@@ -72,6 +72,7 @@ const EmailTypeList = () => {
                 className={styles.more}
                 onMouseEnter={() => setIsHovering(true)}
                 onMouseLeave={() => setIsHovering(false)}
+                
             >
                 <li className={`${styles.li} ${styles.more}`} title={"more"}>
 
