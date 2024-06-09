@@ -77,6 +77,7 @@ export const MsgLi = ({ msg, setIsExpand, isExpand }) => {
       {/* מורחב - תוכן מלא ומעוצב*/}
       {isThisExpand && <span className={styles.fullContent}  >
         <MsgContent msgContent={msg.content} />
+        {msg.image  && <img src={msg.image}/>}
       </span>}
 
 

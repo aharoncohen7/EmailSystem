@@ -5,15 +5,21 @@ const { Flags } = require('../utility')
     inbox: [Flags.Inbox],
     notread: [Flags.NotRead],
     send: [Flags.Sent],
-    favorite: [Flags.Favorite],
+    favorites: [Flags.Favorites],
     deleted: [Flags.Deleted],
-    draft: [Flags.Draft],
+    drafts: [Flags.Drafts],
   }
 
 // יצירת יוזר
 async function createUser(data) {
   console.log("in create user");
   let newUser = await userController.create(data)
+  return newUser
+}
+//עדכון יוזר
+async function updateUserById(id, data) {
+  console.log("in update user");
+  let newUser = await userController.update(id, data)
   return newUser
 }
 
@@ -96,7 +102,7 @@ async function getNotRead(userId) {
   const nums = {
     inbox: chats.filter(c => c.isRead == false && c.isDeleted == false && c.isReceived == true).length,
     send: chats.filter(c => c.isRead == false && c.isDeleted == false && c.isSent == true).length,
-    favorite: chats.filter(c => c.isRead == false && c.isDeleted == false && c.isFavorite == true).length,
+    favorites: chats.filter(c => c.isRead == false && c.isDeleted == false && c.isFavorite == true).length,
     deleted: chats.filter(c => c.isRead == false && c.isDeleted == false && c.isReceived == true).length,
   }
   // console.log(nums);
@@ -186,6 +192,7 @@ async function getUserChat(filter, chatId) {
 
 module.exports = {
   createUser,
+  updateUserById,
   deleteUserById,
   getAllUsers,
   getUserById,

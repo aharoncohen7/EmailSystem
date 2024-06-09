@@ -18,7 +18,8 @@ async function sendNewChat(req) {
     subject: req.body.subject,
     msg: [{
       from: req.user._id,
-      content: req.body.content
+      content: req.body.content,
+      image: req.body.image || ""
     }],
     members: membersId
   })
@@ -54,7 +55,7 @@ async function addMessageToChat(body) {
   // console.log("🚀 ~ addMessageToChat ~ chatToUpdate:", chat)
   const chatToUpdate = await chatController.readOne({ _id: chat.chat._id })
   //הוספת הודעה לצ'אט
-  chatToUpdate.msg.push({ from: body.from, content: body.content })
+  chatToUpdate.msg.push(body)
   //עדכון זמן אחרון
   chatToUpdate.lastDate = Date.now()
   chatToUpdate.save()

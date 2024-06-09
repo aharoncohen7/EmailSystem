@@ -2,22 +2,34 @@ const express = require("express")//ייבוא ספריה שמסוגלת ליי�
 const authRouter = express.Router()
 const userServices = require("../BL/user.services")
 const bcrypt = require("bcrypt");
-const auth = require("../middlewares/auth")
+const auth = require("../middlewares/auth");
+const cloudinary = require("../cloudnary");
+// const { saveImgToCloud2 } = require("../cloudnary");
 // const jwt = require("jsonwebtoken");
 // const secret = process.env.JWT_SECRET
 
 
+
 // יצירת יוזר
 authRouter.post("/register", async (req, res) => {
-    console.log("start create new user");
-    
+    console.log("start create new user=======================================================================================");
+
     try {
         const { body } = req;
+        // console.log(body.avatar);
+        if (body.avatar) {
+            // saveImgToCloud2(body.avatar, "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+        const result = await cloudinary.uploader.upload(body.avatar,{
+            folder: "avatars"
+        })
+        console.log("🚀 ~ authRouter.post ~ body:", result.secure_url)
+        body.avatar = result.secure_url
+        }
         const userToCreate = {
             fullName: body.firstName + " " + body.lastName,
             email: body.email,
             password: bcrypt.hashSync(body.password, 8),
-            avatar: 'https://www.w3schools.com/howto/img_avatar.png'
+            avatar: body.avatar || 'https://www.w3schools.com/howto/img_avatar.png'
         }
         const newUser = await userServices.createUser(userToCreate)
         console.log(newUser);
@@ -49,8 +61,6 @@ authRouter.post("/login", async (req, res) => {
         res.status(500).send(err.msg || err.message || "wrong")
     }
 });
-
-
 
 authRouter.all("/refresh-token", auth.auth,  async (req, res) => {
     console.log("start refresh-token", req);

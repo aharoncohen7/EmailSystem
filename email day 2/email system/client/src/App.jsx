@@ -17,10 +17,10 @@ import ForgotPassword from "./components/loginPage/ForgotPassword";
 
 
 
-// const userId = "6632641d945c32b01242c75b"
 
 export default function App() {
   const [popUpContent, setPopUpContent] = useState("");
+  const [isChangeList, setIsChangeList] = useState(true)
   const [user, setUser] = useState()
     // const { loading, data, error } = useAxiosReq({ defaultVal: {}, method: 'GET', url: `users/${userId}` })
 
@@ -44,21 +44,20 @@ export default function App() {
   return (
     <PopupContext.Provider value={{ popUpContent, setPopUpContent}}>
       <UserContext.Provider value={{ user, setUser}}>
+      <ChatContext.Provider value={{ isChangeList, setIsChangeList}}>
       <div>
         <Routes>
           <Route path="register" element={<RegisterPage/>} />
           <Route path="login" element={<LoginPage/>} />
           <Route path="forgot" element={<ForgotPassword/>} />
           <Route path="" element={<MainLayout />}>
-            <Route path="chats" element={<EmailsTypeLayout />} >
+            {/* <Route path="chats/:chatType/:chatId" element={<Chat/>} ></Route> */}
+            <Route path=":type" element={<EmailsTypeLayout />} >
               <Route path="new-message" element={<NewMessage/>} />
-
               <Route path=":chatType" element={<EmailsListLayout />} >
-
-                <Route path=":chatId" element={<Chat />} />
-
+                <Route path=":chatId" element={<Chat/>} />
+        
               </Route>
-
             </Route>
 
           </Route>
@@ -66,6 +65,7 @@ export default function App() {
         </Routes>
         {popUpContent && <PopUp/>}
       </div>
+      </ChatContext.Provider>
       </UserContext.Provider>
       </PopupContext.Provider>
   )

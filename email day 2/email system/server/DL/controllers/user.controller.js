@@ -30,6 +30,7 @@ async function readOne(filter, populate={}, getPassword) {
 }
 
 async function update(id, data) {
+    console.log("🚀 ~ update ~ data:", data)
     // return await userModel.findOneAndUpdate({_id:id}, data,{new : true})
     return await userModel.findByIdAndUpdate(id, data, { new: true })
 }

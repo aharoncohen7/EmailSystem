@@ -4,32 +4,39 @@ import Editor from '../Editor'
 import ChatHeader from '../../../pages/chat/ChatHeader'
 import EmailPage from '../../../components/EmailPage'
 import { ChatContext, UserContext } from '../../../App'
-import { useOutletContext, useParams } from 'react-router-dom'
+import {  useOutletContext, useParams } from 'react-router-dom'
 import { axiosReq } from '../../../helpers'
 
 
 const Chat = () => {
   // מזהה צ'אט נוכחי
   const { chatId } = useParams()
+  console.log("🚀 ~ Chat ~ chatId:", chatId);
   // תוכן צ'אט
   const [data, setData] = useState({});
+  const [loading, setLoading] = useState(true);
+  
   // האם הצ'אט הזה מועדף
   const [isFavorite, setIsFavorite] = useState(false);
   //  משתנה בעת החלפה למצב מועדף/מחיקה/הוספה לשרשור
-  const { changeList, setChangeList } = useOutletContext();
+  // const { isChangeList, setIsChangeList } = useOutletContext();
+  const {isChangeList, setIsChangeList} = useContext(ChatContext)
+
   // מאפס קומפוננט editor
   const [resetKey, setResetKey] = useState(0);
 
 // קבלת צ'אט
   useEffect(() => {
     const getChat = async () => {
-      const { chat, isFavorite } = await axiosReq({ method: 'GET', url: `user-chats/${chatId}` })
+      setLoading(true);
+      const { chat, isFavorite, loading } = await axiosReq({ method: 'GET', url: `user-chats/${chatId}` })
       setData(chat);
       setIsFavorite(isFavorite);
+      setLoading(loading);
     };
     getChat()
-  }, [chatId, changeList]);
-
+  }, [chatId, isChangeList]);
+  
 
   // הוספת הודעה חדשה לצ'אט
   const addNewMessage = async (body) => {
@@ -41,7 +48,7 @@ const Chat = () => {
       })
       if (result) {
         resetEditor()
-        setChangeList(prev => { return !prev })
+        setIsChangeList(prev => { return !prev })
       }
       else {
         alert("Failed to send message")
@@ -62,15 +69,19 @@ const Chat = () => {
 
 
   return (
-    <ChatContext.Provider value={{ chat: data, setIsFavorite, setChangeList, isFavorite }}>
+    <ChatContext.Provider value={{ chat: data, setIsFavorite, setIsChangeList, isFavorite }}>
       <div className={styles.main}>
+      
+      <>
         <ChatHeader />
+     
         <span className={styles.chat} >
-          <EmailPage />
+          <EmailPage  loading={loading}/>
         </span>
         <span className={styles.editorBox}>
           <Editor key={resetKey} setResetKey={setResetKey} onSend={addNewMessage} />
         </span>
+        </>
       </div>
     </ChatContext.Provider>
   )

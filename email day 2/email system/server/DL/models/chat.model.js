@@ -12,6 +12,7 @@ const messageSchema = new mongoose.Schema({
         default: Date.now
     },
     content: String,
+    image: String
 })
 
 const chatSchema = new mongoose.Schema({

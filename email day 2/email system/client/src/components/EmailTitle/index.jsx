@@ -10,7 +10,7 @@ const EmailTitle = ({ }) => {
         <div className={styles.main} >
             <span className={styles.title}>
                 <span className={styles.time}>{chat?.lastDate ? formatDateTime(chat.lastDate) : "00:00"}</span>
-                <h2 className={styles.subject}>{chat.subject}</h2>
+                <h2 className={styles.subject}>{chat?.subject ? chat.subject : "" }</h2>
             </span>
             <span className={styles.avatarContainer}>
                 {chat?.members && chat.members.map((member, index) => (

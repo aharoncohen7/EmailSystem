@@ -3,9 +3,9 @@ module.exports = {
     Flags : {
         Sent: "isSent",
         Inbox: "isReceived",
-        Favorite: "isFavorite",
+        Favorites: "isFavorite",
         Deleted: {"isDeleted": false},
-        Draft: "isDraft",
+        Drafts: "isDraft",
         Read: "isRead",
         NotRead: {"isRead":false},
     },

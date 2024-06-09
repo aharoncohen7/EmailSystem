@@ -1,4 +1,114 @@
 import axios from "axios"
+// import { v2 as cloudinary } from 'cloudinary'
+
+// cloudinary.config({
+//     cloud_name: "dmenvz22i",
+//     api_key: "553257966128894",
+//     api_secret: "9WlXc0XhU7tIUe5xKxkY5rChoIU"
+// })
+
+
+
+// export const saveImgToCloud = async (img) => {
+//     console.log(img)
+    
+//     const arrayBuffer = await img.arrayBuffer()
+//     const buffer = new Uint8Array(arrayBuffer)
+//     const imgLink = new Promise((res) => {
+//         cloudinary.uploader.upload_stream({ folder: "avatarImage" }, (err, uploadRes) => {
+//             return res(uploadRes)
+//         }).end(buffer)
+//     }).then(uploadedImg => {
+//         return uploadedImg.url
+//     })
+//     return imgLink
+// }
+
+
+// (async function() {
+
+//     // Configuration
+//     cloudinary.config({ 
+//         cloud_name: "dmenvz22i", 
+//         api_key: "553257966128894", 
+//         api_secret: "<your_api_secret>" // Click 'View Credentials' below to copy your API secret
+//     });
+    
+//     // Upload an image
+//     const uploadResult = await cloudinary.uploader.upload("https://res.cloudinary.com/demo/image/upload/getting-started/shoes.jpg", {
+//         public_id: "shoes"
+//     }).catch((error)=>{console.log(error)});
+    
+//     console.log(uploadResult);
+    
+//     // Optimize delivery by resizing and applying auto-format and auto-quality
+//     const optimizeUrl = cloudinary.url("shoes", {
+//         fetch_format: 'auto',
+//         quality: 'auto'
+//     });
+    
+//     console.log(optimizeUrl);
+    
+//     // Transform the image: auto-crop to square aspect_ratio
+//     const autoCropUrl = cloudinary.url("shoes", {
+//         crop: 'auto',
+//         gravity: 'auto',
+//         width: 500,
+//         height: 500,
+//     });
+    
+//     console.log(autoCropUrl);    
+// })();
+
+
+//מחיקת תגיות ריקות 
+function removeEmptyTags(htmlString) {
+    const emptyTagRegex = /<(\w+)([^>]*?)>(?:\s*(<\/\1>))?/g;
+    return htmlString.replace(emptyTagRegex, "");
+}
+
+
+//מחיקת תגיות ריקות ומיותרות
+    function removeSafeEmptyTags(htmlString) {
+        // Use a DOM parser to create a DOM tree from the HTML string.
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlString, "text/html");
+      
+        // Iterate over all nodes in the DOM tree.
+        const nodes = doc.querySelectorAll("*");
+        for (const node of nodes) {
+          // Check if the node is an empty tag.
+          if (node.nodeType === Node.ELEMENT_NODE && node.textContent.trim() === "") {
+            // Determine if removing the node would affect the formatting.
+            const parentNode = node.parentNode;
+            const previousSibling = node.previousSibling;
+            const nextSibling = node.nextSibling;
+      
+            // Check if the parent has other child nodes or is an inline element.
+            const hasOtherChildren = parentNode.childNodes.length > 1;
+            const isInlineElement = ["span", "a", "b", "i", "u"].includes(parentNode.tagName.toLowerCase());
+      
+            // Check if the previous or next sibling is a non-empty text node.
+            const hasNonEmptyPreviousSibling = previousSibling && previousSibling.nodeType === Node.TEXT_NODE && previousSibling.textContent.trim() !== "";
+            const hasNonEmptyNextSibling = nextSibling && nextSibling.nodeType === Node.TEXT_NODE && nextSibling.textContent.trim() !== "";
+      
+            // If the node can be safely removed without affecting formatting, remove it.
+            if (
+              (!hasOtherChildren || isInlineElement) &&
+              (!hasNonEmptyPreviousSibling || !hasNonEmptyNextSibling)
+            ) {
+              parentNode.removeChild(node);
+            }
+          }
+        }
+      
+        // Convert the modified DOM tree back to an HTML string.
+        const serializer = new XMLSerializer();
+        return serializer.serializeToString(doc);
+      }
+
+    
+
 
 
 // בקשת שרת גנרית

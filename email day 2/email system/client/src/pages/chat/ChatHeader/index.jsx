@@ -15,7 +15,7 @@ import { MdMarkAsUnread } from "react-icons/md";
 
 const ChatHeader = ({ }) => {
   const { setPopUpContent } = useContext(PopupContext)
-  const { setChangeList, isFavorite } = useContext(ChatContext)
+  const { setIsChangeList, isFavorite } = useContext(ChatContext)
   const { chatId } = useParams();
   const navTo = useNavigate()
   const location = useLocation();
@@ -26,7 +26,7 @@ const ChatHeader = ({ }) => {
     const results = await axiosReq({ method: 'PUT', url: `user-chats/${chatId}/isDeleted` })
     if (results._id) {
       setPopUpContent(<div style={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}><h2 >נמחק בהצלחה</h2></div>)
-      setChangeList(prev => { return !prev })
+      setIsChangeList(prev => { return !prev })
       navTo(`/chats/${path}`)
     }
   }
@@ -34,7 +34,7 @@ const ChatHeader = ({ }) => {
   const updateIsFavorite = async () => {
     const results = await axiosReq({ method: 'PUT', url: `user-chats/${chatId}/isFavorite` })
     if (results._id) {
-    setChangeList(prev => { return !prev })
+    setIsChangeList(prev => { return !prev })
   }
   }
 
@@ -42,7 +42,7 @@ const ChatHeader = ({ }) => {
   const updateUnread = async () => {
     const results = await axiosReq({ method: 'PUT', url: `user-chats/${chatId}/isRead` })
     if (results._id) {
-      setChangeList(prev => { return !prev })
+      setIsChangeList(prev => { return !prev })
       navTo(`/chats/${path}`)
     }
   }

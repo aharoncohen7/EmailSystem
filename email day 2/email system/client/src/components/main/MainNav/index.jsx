@@ -23,9 +23,18 @@ const mainNavIcons = [
 
 const MainNav = () => {
     const {user} = useContext(UserContext)
+    console.log("🚀 ~ MainNav ~ user:", user)
+    const logOut = ()=>{
+        localStorage.removeItem("token")
+        window.location.reload()
+    }
+
+
+
+
     return (
         <div className={styles.main}>
-            <img src="./src/assets/logo-mail-box.png" alt="logo" />
+            <img src="https://res.cloudinary.com/dmenvz22i/image/upload/v1717927733/avatars/yxbzsgoil2por8mrnp8w.png" alt="logo" />
 
             <ul className={styles.ul}>
                 {mainNavIcons.map((obj) => (
@@ -44,7 +53,11 @@ const MainNav = () => {
                 ))}
             </ul>
             
-            <img className={styles.avatar} src={user.avatar} alt="img" />
+            <img className={styles.avatar} 
+            style={{cursor: "pointer"}}
+            onClick={logOut}
+            src={user.avatar}
+            alt="img" />
         </div>
     )
 }

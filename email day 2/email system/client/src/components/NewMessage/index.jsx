@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Editor from '../../pages/chat/Editor'
 import styles from './style.module.css'
 import AddBtn from '../AddBtn';
@@ -19,6 +19,9 @@ const NewMessage = () => {
   const [member, setMember] = useState("");
   const [memberList, setMemberList] = useState([]);
   const [members, setMembers] = useState([]);
+
+
+
 
   // קבלת רשימת נמענים אופצונלית לפי אינפוט
   async function getMemberList(e) {
@@ -58,14 +61,15 @@ const NewMessage = () => {
     setMembers(prev => prev.filter(item => item !== memberToRemove));
   };
 
+
 //  יצירת צ'אט חדש
   const createNewChat = async (body) => {
     if (subject.trim() == "" ||members.length === 0) {
       alert("please fill all the fields")
       return;
     }
-    
     try {
+        console.log(body.image);
         const result = await axiosReq({
           method:'POST' ,
           url: 'chats/',

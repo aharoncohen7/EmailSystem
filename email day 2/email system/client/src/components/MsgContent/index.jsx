@@ -5,7 +5,7 @@ import React from 'react'
 import { changeColorLinks } from '../../helpers';
 
 
-   // הודעה לדוגמה- למחוק
+   // הודעה לדוגמה
    const htmlString = `<span  
    dir="rtl"
     style=
@@ -30,7 +30,7 @@ const MsgContent = ({ msgContent }) => {
                 dir: TextDirectionMatch[1]
             };
         } else {
-            console.log(content);
+            // console.log(content);
             const hebrewCharacters = content.replace(/[^א-ת]/g, '');
             const isHebrew = hebrewCharacters.length / content.length > 0.5;
 
@@ -56,14 +56,9 @@ const MsgContent = ({ msgContent }) => {
 
 
     return (
-        <>
-          
                 <div className={styles.content}
                 style={getTextStyles(sanitizedHTML)}
                 dangerouslySetInnerHTML={{ __html: changeColorLinks(sanitizedHTML) }} />
-
-
-        </>
     )
 }
 

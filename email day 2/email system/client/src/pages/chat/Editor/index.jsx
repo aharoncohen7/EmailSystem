@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
 import styles from './style.module.css'
 import { FiAlignRight } from "react-icons/fi";
 import { FiAlignLeft } from "react-icons/fi";
@@ -18,14 +17,10 @@ import { PiSelectionAll } from "react-icons/pi";
 import { MdFormatTextdirectionRToL } from "react-icons/md";
 import { MdFormatTextdirectionLToR } from "react-icons/md";
 import { VscTextSize } from "react-icons/vsc";
-import Colors from '../Colors';
-import SendBtn from '../SendBtn';
-
-
+import { IoIosSend } from 'react-icons/io';
 
 // עורך טקסט
-const Editor = ({ setResetKey, onSend}) => {
-   
+const Editor = ({ setResetKey, onSend }) => {
     // קבלת ברירת מחדל של כיוון טקסט לפי שפה ראשית
     useEffect(() => {
         function getSystemDirection() {
@@ -40,10 +35,12 @@ const Editor = ({ setResetKey, onSend}) => {
         }
         getSystemDirection()
     }, []);
-    // console.log("🚀 ~ Editor ~ newChatDetails:", newChatDetails)
-    const { chatId } = useParams();
     //תוכן הודעה
     const [content, setContent] = useState("");
+    // קובץ מצורף
+    const [img, setImg] = useState("");
+    //הצגת כפתור צירוף קובץ
+    const [inputFile, setInputFile] = useState(false);
     // הצגת סרגל צבעים
     const [showColors, setShowColors] = useState(false);
     // צבע טקסט
@@ -76,8 +73,8 @@ const Editor = ({ setResetKey, onSend}) => {
         color: selectedColor,
         fontSize: fontSize
     }
-    // עיצוב עבור התוכן הנשלח
-    const cssStyle =`"text-decoration: ${formatting.underline ? 'underline' : 'none'};
+    // מחרוזת עיצוב עבור התוכן הנשלח
+    const cssStyle = `"text-decoration: ${formatting.underline ? 'underline' : 'none'};
          font-style: ${formatting.italic ? 'italic' : 'normal'};
          font-weight: ${formatting.bold ? 'bold' : 'normal'};
          text-align: ${textFormatting}";
@@ -139,21 +136,37 @@ const Editor = ({ setResetKey, onSend}) => {
     };
     // אלמנט התוכן
     const divRef = useRef(null);
-    //  עטיפת תוכן 
-    const body = { content: `<span dir='${textDirection}' style=${cssStyle}> ${content} </span>` }
     //  שליחת תוכן החוצה
     const handleSendContent = () => {
         if (content.trim() === '') {
             alert("you cannot send messages without content");
             return;
-          }
-        else{
-            onSend(body)
         }
-
-
-
+        console.log(content);
+        console.log(content);
+        //  עטיפת תוכן 
+        const body = { content: `<span dir='${textDirection}' style=${cssStyle}> ${content} <br/>  </span>` }
+            if (img) {
+                body.image = img;
+            }
+            onSend(body)
     }
+    // הוספת תמונה
+    const handleAddImg = (e) => {
+        const file = e.target.files[0];
+        console.log("🚀 ~ handleChange ~ file:", file)
+        const reader = new FileReader()
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            console.log(reader.result);
+            setImg(reader.result);
+            setInputFile(false);
+        }
+    }
+    
+
+
+
 
 
     return (
@@ -203,8 +216,13 @@ const Editor = ({ setResetKey, onSend}) => {
                             }}
                         />
 
-                        <TbBucketDroplet style={{ color: selectedColor }} size={20} onClick={() => setShowColors(true)} />
-                        {showColors && <Colors setColor={setSelectedColor} setShowColors={setShowColors} />}
+
+                        {/* {showColors && <Colors setColor={setSelectedColor} setShowColors={setShowColors} />} */}
+                        {showColors ? <div onBlur={() => setShowColors(false)} className={styles.colors}>
+                            <input type="color" value={selectedColor} onChange={(e) => { e.stopPropagation(); setSelectedColor(e.target.value); }} />
+                        </div> :
+                            <TbBucketDroplet style={{ color: selectedColor }} size={20} onClick={() => setShowColors(true)} />
+                        }
                     </div>
 
                     <div className={styles.textFormats}>
@@ -232,11 +250,20 @@ const Editor = ({ setResetKey, onSend}) => {
 
             </div>
             <div className={styles.buttons}>
-                <span className={styles.sendButton}>< FaFile /> < FaImage /></span>
+                <span className={styles.sendButton}>
+                    < FaFile />
+                    {inputFile ? <input type='file' onChange={handleAddImg} /> :
+                        < FaImage className={img ?? styles.img} onClick={() => setInputFile(true)} />}
+                </span>
+
                 <span className={styles.sendButton}  >
                     <MdDelete size={"22px"} onClick={handleReset} />
                     <span onClick={handleSendContent}>
-                        <SendBtn /></span>
+                        <p className={styles.send}>
+                            <IoIosSend size={"20px"} />
+                            <span>Send</span>
+                        </p>
+                    </span>
                 </span>
             </div>
         </div>
@@ -267,40 +294,40 @@ const placeholder = {
 // import axios from 'axios';
 // import useAxiosReq from '../../../hooks/useAxiosReq';
 // import { axiosReq } from '../../../helpers';
-    // const send = async () => {
-    //     if (newChat && (!newChatDetails || !newChatDetails.subject || newChatDetails.subject == "" || !newChatDetails.members || newChatDetails.members.length === 0)) {
-    //         alert("please fill all the fields")
-    //         return;
-    //     }
-    //     if (content.trim() !== '') {
-    //         try {
-    //             const result = await axiosReq({
-    //                 method: newChat ? 'POST' : 'PUT',
-    //                 url: newChat ? 'chats/' : `chats/${chatId}`,
-    //                 body: newChat
-    //                     ? { ...body, subject: newChatDetails.subject, members: newChatDetails.members }
-    //                     : body
-    //             })
-    //             if (result) {
-    //                 if (newChat) {
-    //                     navTo(`/chats/sent emails/${result}`)
-    //                 }
-    //                 else {
-    //                     handleReset()
-    //                     setChange(prev => !prev);
-    //                 }
-    //             }
-    //             else {
-    //                 alert('הטקסט לא נשלח')
-    //                 handleReset()
-    //             }
+// const send = async () => {
+//     if (newChat && (!newChatDetails || !newChatDetails.subject || newChatDetails.subject == "" || !newChatDetails.members || newChatDetails.members.length === 0)) {
+//         alert("please fill all the fields")
+//         return;
+//     }
+//     if (content.trim() !== '') {
+//         try {
+//             const result = await axiosReq({
+//                 method: newChat ? 'POST' : 'PUT',
+//                 url: newChat ? 'chats/' : `chats/${chatId}`,
+//                 body: newChat
+//                     ? { ...body, subject: newChatDetails.subject, members: newChatDetails.members }
+//                     : body
+//             })
+//             if (result) {
+//                 if (newChat) {
+//                     navTo(`/chats/sent emails/${result}`)
+//                 }
+//                 else {
+//                     handleReset()
+//                     setChange(prev => !prev);
+//                 }
+//             }
+//             else {
+//                 alert('הטקסט לא נשלח')
+//                 handleReset()
+//             }
 
-    //         } catch (e) {
-    //             alert("Failed to send message")
-    //             console.error(e)
-    //         }
-    //     }
-    //     else {
-    //         alert("you cannot send messages without content");
-    //     }
-    // }
+//         } catch (e) {
+//             alert("Failed to send message")
+//             console.error(e)
+//         }
+//     }
+//     else {
+//         alert("you cannot send messages without content");
+//     }
+// }

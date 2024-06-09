@@ -1,11 +1,13 @@
 import styles from './style.module.css'
 import { IoIosSend } from "react-icons/io";
 
-export default function SendBtn({sendMessage}) {
+export default function SendBtn() {
    return (
       <p className={styles.main}>
          <IoIosSend size={"20px"}/>
-        <span onClick={sendMessage}>Send</span> 
+        <span 
+    
+        >Send</span> 
        
       </p>
    )

@@ -7,12 +7,12 @@ import { axiosReq, getDescriptionOrTime } from '../../../helpers';
 import { ChatContext } from '../../../App';
 
 
-const EmailLi = ({ item , setChangeList}) => {
+const EmailLi = ({ item , setIsChangeList}) => {
   const updateIsRead = async () => {
     if (!item.isRead) {
       const results =  await axiosReq({ method: 'PUT', url: `user-chats/${item._id}/isRead` })
       if (results._id) {
-      setChangeList(prev=>{return !prev})
+      setIsChangeList(prev=>{return !prev})
     }
     }
   }

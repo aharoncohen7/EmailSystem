@@ -2,13 +2,18 @@ import React, { useContext, useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 import styles from "./style.module.css"
 import { useNavigate } from 'react-router-dom';
-import { axiosReq } from '../../../helpers'
+import { axiosReq, 
+    // saveImgToCloud
+ } from '../../../helpers'
 import { PopupContext } from '../../../App'
+
+
 
 const initialFormData = {
     firstName: '',
     lastName: '',
     email: '',
+    avatar: '',
     password: '',
     confirmPassword: ''
 };
@@ -23,6 +28,7 @@ const RegisterPage = () => {
         { label: 'Last Name', name: 'lastName', type: 'text', required: true, minLength: 2 },
         { label: 'Password', name: 'password', type: 'password', required: true },
         // { label: 'Confirm Password', name: 'confirmPassword', type: 'password', required: true },
+        // { label: 'Select an image', name: 'avatar', type: 'file' },
     ];
 
     // const body = {
@@ -32,22 +38,97 @@ const RegisterPage = () => {
     //     avatar: 'https://www.w3schools.com/howto/img_avatar.png'
     // }
 
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setFormData(prevState => ({
+    //         ...prevState,
+    //         [name]: value
+    //     }));
+    //     console.log(formData);
+    // };
+
+
+
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-        // console.log(formData);
+        console.log("🚀 ~ handleChange ~ value:", value)
+        
+        if (name === 'avatar') {
+            const file = e.target.files[0];
+            console.log("🚀 ~ handleChange ~ file:", file)
+            const reader = new FileReader();
+
+            // reader.onload = (event) => {
+            //     const base64Data = event.target.result; // Convert file to base64
+            //     setFormData(prevState => ({
+            //         ...prevState,
+            //         avatar: base64Data, // Update formData with base64Data
+            //     }));
+            // };
+    
+            reader.readAsDataURL(file); 
+
+            reader.onloadend = () => {
+                console.log(reader.result);
+                setFormData(prevState => ({
+                            ...prevState,
+                            avatar: reader.result, 
+                        }));
+            }
+        } else {
+          
+            setFormData(prevState => ({
+                ...prevState,
+                [name]: value,
+            }));
+        }
+
+        console.log(formData);
     };
+
+
+    // const handleGetURL = async (e) => {
+
+    // }
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        const body = formData;
+        // if(formData.avatar){
+        //     let img
+        //     img = await saveImgToCloud(formData.avatar);
+        //     console.log("🚀 ~ handleSubmit ~ img :", img )
+        //     body.avatar = img;
+        // }
+        // if(formData.avatar){
+        //     let img
+        //     img = await saveImgToCloud(formData.avatar);
+        //     console.log("🚀 ~ handleSubmit ~ img :", img )
+        //     body.avatar = img;
+        // }
+        // if(formData.avatar){
+        //     let img
+        //     img = await saveImgToCloud(formData.avatar);
+        //     console.log("🚀 ~ handleSubmit ~ img :", img )
+        //     body.avatar = img;
+        // }
+
+
+
+
+
+        console.log("🚀 ~ handleSubmit ~ body :", body )
+
+        // if(formData.password!=formData.confirmPassword){
+        //     setPopUpContent(<div style={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}><h2 >הסיסמאות אינן תואמות</h2></div>)
+        //     return
+        // }
         try {
             const { _id } = await axiosReq({
                 method: 'POST',
                 url: 'auth/register',
-                body: formData
+                body
             })
             // alert(_id);
             setPopUpContent(<div style={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}><h2 >{_id ? "נרשמת בהצלחה" : "הרישום נכשל "}</h2></div>)
@@ -57,6 +138,13 @@ const RegisterPage = () => {
             console.error("Failed to register: " + e.message);
         }
     }
+
+
+    const handleClearImage = () => {
+        const imageInput = document.getElementById('imageFile');
+        imageInput.value = ''; // Clear selection
+      };
+      
 
 
 
@@ -82,9 +170,11 @@ const RegisterPage = () => {
                                 required={field.required}
                                 minLength={field.minLength}
                                 placeholder={field.label}
-                            /><span style={{color: "red"}}> *</span>
+                            />
+                            <span style={{color: "red"}}> *</span>
                         </div>
                     ))}
+                     <input type="file" id='imageFile' name="avatar" accept="image/*" placeholder="Select an image"  onChange={handleChange}/>
                     <p className={styles.button}>
                         <button type='submit'>Register</button>
                     </p>

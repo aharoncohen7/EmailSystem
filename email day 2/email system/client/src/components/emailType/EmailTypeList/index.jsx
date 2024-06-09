@@ -1,36 +1,31 @@
-import React, { useState, useEffect } from 'react'
-import styles from './style.module.css'
+import React, { useState, useEffect, useContext } from 'react'
 import { NavLink } from 'react-router-dom';
-import { HiInboxArrowDown } from "react-icons/hi2";
 import { FiSend } from "react-icons/fi";
-import { TiStarFullOutline } from "react-icons/ti";
-import { BsFillPencilFill } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 import { MdExpandMore } from "react-icons/md";
 import { TbAlertHexagon } from "react-icons/tb";
-import Badge from '../../emailList/Badge';
+import { BsFillPencilFill } from "react-icons/bs";
+import { HiInboxArrowDown } from "react-icons/hi2";
+import { TiStarFullOutline } from "react-icons/ti";
 
-
-// import { axiosReq } from '../../../helpers/'
+import { ChatContext } from '../../../App';
+import styles from './style.module.css'
 import useAxiosReq from '../../../hooks/useAxiosReq';
+import Badge from '../../emailList/Badge';
 
 
 const emailTypeIcons = [
     { icon: HiInboxArrowDown, name: "Inbox", name2: "inbox" },
     { icon: FiSend, name: "Sent Emails", name2: "send" },
-    { icon: TiStarFullOutline, name: "Favorite", name2: "favorite" },
-    { icon: BsFillPencilFill, name: "Draft", name2: "draft" },
+    { icon: TiStarFullOutline, name: "Favorites", name2: "favorites" },
+    { icon: BsFillPencilFill, name: "Drafts", name2: "drafts" },
     { icon: MdDelete, name: "Deleted", name2: "deleted" },
 ]
 
 
-
-
-
 const EmailTypeList = () => {
-
-
     const [isHovering, setIsHovering] = useState(false);
+    const { isChangeList} = useContext(ChatContext)
     const { loading, data, error, fetchData } = useAxiosReq({ defaultVal: {}, method: 'GET', url: 'user-chats/not-read' })
     
    async function getNotRead(){
@@ -38,17 +33,17 @@ const EmailTypeList = () => {
     console.log(data);
    }
 
-    // useEffect(() => {
-    //     setInterval(getNotRead, 1000 * 60);
-    // }, []);
+    useEffect(() => {
+        // setInterval( 1000 * 60);
+        fetchData()
+    }, [isChangeList]);
 
 
-
+  
     return (
         <ul className={styles.main}>
-            <span className={loading ? 'loading' : ''}>
-
-                {loading && <h2>loading...</h2>}
+            {/* <span className={loading ? 'loading' : ''}> */}
+            {loading &&<div className="loading" > <div  className="spinner"></div></div>}
                 {emailTypeIcons.map((obj) => (
                     <NavLink
                         key={obj.name}
@@ -61,12 +56,12 @@ const EmailTypeList = () => {
                         <li className={styles.li} title={obj.name}>
                             <obj.icon className={styles.icon} />
                             <span className={styles.name}>{obj.name}</span>
-                            {(data[obj.name2] > 0 && (obj.name == "Favorite" || obj.name == "Inbox")) ? <Badge number={data[obj.name2]} /> : null}
+                            {(data[obj.name2] > 0 && (obj.name == "Favorites" || obj.name == "Inbox")) ? <Badge number={data[obj.name2]} /> : null}
                         </li>
 
                     </NavLink>
                 ))}
-            </span>
+            {/* </span> */}
             <span
 
                 className={styles.more}

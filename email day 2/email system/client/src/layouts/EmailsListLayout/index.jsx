@@ -1,18 +1,18 @@
 
 import styles from './style.module.css'
-import { Outlet , useOutletContext} from 'react-router-dom'
+import { Outlet} from 'react-router-dom'
 import InputSearch from '../../components/emailList/InputSearch'
 import EmailList from './../../components/emailList/EmailList'
 import { useState } from 'react'
 
 const EmailsListLayout = () => {
-  const [changeList, setChangeList] = useState(false)
+  const [isChangeList, setIsChangeList] = useState(true)
   return (
     <>
       <div className={styles.main}>
-        <EmailList changeList={changeList} setChangeList={setChangeList}/>
+        <EmailList isChangeList={isChangeList} setIsChangeList={setIsChangeList}/>
       </div>
-      < Outlet context={{changeList, setChangeList}}/>
+      < Outlet context={{isChangeList, setIsChangeList}}/>
     </>
   )
 }
