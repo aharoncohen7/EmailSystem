@@ -16,6 +16,7 @@ app.use(auth)
 app.use("/api/users", mainRouter.userRouter)
 app.use("/api/chats", mainRouter.chatRouter)
 app.use("/api/user-chats", mainRouter.userChatsRouter)
+app.use("/api/cloudinary", mainRouter.imgRouter)
 // require('./DL/test_data')
 
 

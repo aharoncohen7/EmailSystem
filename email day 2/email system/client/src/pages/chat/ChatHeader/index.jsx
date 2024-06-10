@@ -13,7 +13,7 @@ import { axiosReq } from '../../../helpers';
 import { MdMarkAsUnread } from "react-icons/md";
 
 
-const ChatHeader = ({ }) => {
+const ChatHeader = ({printPDF }) => {
   const { setPopUpContent } = useContext(PopupContext)
   const { setIsChangeList, isFavorite } = useContext(ChatContext)
   const { chatId } = useParams();
@@ -54,7 +54,7 @@ const ChatHeader = ({ }) => {
       </span>
       <span className={styles.icons}>
         <FaStar onClick={updateIsFavorite} color={isFavorite ? "#00A389" : "#9b9b9b"} />
-        <FaPrint />
+        <FaPrint onClick={printPDF}/>
         <MdDelete onClick={() => setPopUpContent(<DeleteMsg setConfirm={deleteMessage} />)} />
         < MdMarkAsUnread onClick={updateUnread} />
         <MdMoreVert />

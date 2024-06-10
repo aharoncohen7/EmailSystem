@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
+import  jsPDF  from "jspdf";
 import styles from './style.module.css'
 import Editor from '../Editor'
 import ChatHeader from '../../../pages/chat/ChatHeader'
 import EmailPage from '../../../components/EmailPage'
 import { ChatContext, UserContext } from '../../../App'
-import {  useOutletContext, useParams } from 'react-router-dom'
+import { useOutletContext, useParams } from 'react-router-dom'
 import { axiosReq } from '../../../helpers'
 
 
@@ -15,17 +16,17 @@ const Chat = () => {
   // תוכן צ'אט
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
-  
+
   // האם הצ'אט הזה מועדף
   const [isFavorite, setIsFavorite] = useState(false);
   //  משתנה בעת החלפה למצב מועדף/מחיקה/הוספה לשרשור
   // const { isChangeList, setIsChangeList } = useOutletContext();
-  const {isChangeList, setIsChangeList} = useContext(ChatContext)
+  const { isChangeList, setIsChangeList } = useContext(ChatContext)
 
   // מאפס קומפוננט editor
   const [resetKey, setResetKey] = useState(0);
 
-// קבלת צ'אט
+  // קבלת צ'אט
   useEffect(() => {
     const getChat = async () => {
       setLoading(true);
@@ -36,7 +37,7 @@ const Chat = () => {
     };
     getChat()
   }, [chatId, isChangeList]);
-  
+
 
   // הוספת הודעה חדשה לצ'אט
   const addNewMessage = async (body) => {
@@ -59,11 +60,30 @@ const Chat = () => {
       console.error(e)
     }
   }
-  
-   // Increment the key to force component remount
-   const resetEditor = () => {
+
+  // Increment the key to force component remount
+  const resetEditor = () => {
     setResetKey(prevKey => prevKey + 1);
   };
+
+
+
+  const printPDF = () => {
+    const doc = new jsPDF();
+  
+    // doc.save(`m${chatId}.pdf`);
+    // const doc = new jsPDF({
+    //   orientation: "landscape",
+    //   unit: "in",
+    //   format: [4, 2]
+    // });
+    
+    doc.text("Hello world!", 1, 1);
+    doc.save("two-by-four.pdf");
+    doc.text("Hello world!", 10, 10);
+     // שמירת המסמך
+     doc.save(`message${chatId}.pdf`);
+  }
 
 
 
@@ -71,16 +91,16 @@ const Chat = () => {
   return (
     <ChatContext.Provider value={{ chat: data, setIsFavorite, setIsChangeList, isFavorite }}>
       <div className={styles.main}>
-      
-      <>
-        <ChatHeader />
-     
-        <span className={styles.chat} >
-          <EmailPage  loading={loading}/>
-        </span>
-        <span className={styles.editorBox}>
-          <Editor key={resetKey} setResetKey={setResetKey} onSend={addNewMessage} />
-        </span>
+
+        <>
+          <ChatHeader printPDF={printPDF} />
+
+          <span className={styles.chat} >
+            <EmailPage loading={loading} />
+          </span>
+          <span className={styles.editorBox}>
+            <Editor key={resetKey} setResetKey={setResetKey} onSend={addNewMessage} />
+          </span>
         </>
       </div>
     </ChatContext.Provider>

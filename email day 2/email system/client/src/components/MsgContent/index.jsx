@@ -17,6 +17,12 @@ import { changeColorLinks } from '../../helpers';
      </span>`;
 
 const MsgContent = ({ msgContent }) => {
+
+      console.log(msgContent)
+
+
+
+
     // קבלת כיוון הטקסט מהתוכן כדי להחילו על האלמנט העוטף
     function getTextStyles(content) {
         const textAlignMatch = content.match(/text-align:\s*(\w+)/);
@@ -58,7 +64,8 @@ const MsgContent = ({ msgContent }) => {
     return (
                 <div className={styles.content}
                 style={getTextStyles(sanitizedHTML)}
-                dangerouslySetInnerHTML={{ __html: changeColorLinks(sanitizedHTML) }} />
+                dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
+                // dangerouslySetInnerHTML={{ __html: changeColorLinks(sanitizedHTML) }} />
     )
 }
 

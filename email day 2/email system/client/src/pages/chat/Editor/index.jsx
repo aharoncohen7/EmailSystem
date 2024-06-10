@@ -18,6 +18,8 @@ import { MdFormatTextdirectionRToL } from "react-icons/md";
 import { MdFormatTextdirectionLToR } from "react-icons/md";
 import { VscTextSize } from "react-icons/vsc";
 import { IoIosSend } from 'react-icons/io';
+import { axiosReq } from '../../../helpers';
+
 
 // עורך טקסט
 const Editor = ({ setResetKey, onSend }) => {
@@ -40,7 +42,7 @@ const Editor = ({ setResetKey, onSend }) => {
     // קובץ מצורף
     const [img, setImg] = useState("");
     //הצגת כפתור צירוף קובץ
-    const [inputFile, setInputFile] = useState(false);
+    // const [inputFile, setInputFile] = useState(false);
     // הצגת סרגל צבעים
     const [showColors, setShowColors] = useState(false);
     // צבע טקסט
@@ -146,11 +148,12 @@ const Editor = ({ setResetKey, onSend }) => {
         console.log(content);
         //  עטיפת תוכן 
         const body = { content: `<span dir='${textDirection}' style=${cssStyle}> ${content} <br/>  </span>` }
-            if (img) {
-                body.image = img;
-            }
-            onSend(body)
+        if (img) {
+            body.image = img;
+        }
+        onSend(body)
     }
+
     // הוספת תמונה
     const handleAddImg = (e) => {
         const file = e.target.files[0];
@@ -160,11 +163,68 @@ const Editor = ({ setResetKey, onSend }) => {
         reader.onloadend = () => {
             console.log(reader.result);
             setImg(reader.result);
-            setInputFile(false);
+            // setInputFile(false);
         }
     }
-    
 
+
+    //קבלת URL
+    const getUrl = async (file) => {
+        const reader = new FileReader()
+        reader.readAsDataURL(file);
+        reader.onloadend = async () => {
+            console.log(reader.result)
+            const url = await axiosReq({
+                method: 'POST',
+                url: 'cloudinary/get-url',
+                body: { img: reader.result }
+            })
+            console.log(url);
+            return url;
+        }
+    }
+
+
+
+    const addImages = async (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader()
+        reader.readAsDataURL(file);
+        reader.onloadend = async () => {
+            console.log(reader.result)
+            const url = await axiosReq({
+                method: 'POST',
+                url: 'cloudinary/get-url',
+                body: { img: reader.result }
+            })
+            console.log(url);
+
+            // קבלת מיקום הסמן מתוך האירוע
+            const selection = window.getSelection();
+            if (!selection.isCollapsed) {
+                return;
+            }
+            // קבלת טווח
+            const range = selection.getRangeAt(0);
+
+            // יצירת אלמנט <span> עם תו בלתי נראה
+            const caretImgae = document.createElement('img');
+            // החלת סגנון נבחר על הספאן החדש
+            //    Object.assign(caretImgae.src, jsxStyle);
+            caretImgae.src = url
+
+            // הוספת האלמנט <span> במיקום הסמן
+            range.insertNode(caretImgae);
+            range.setStartBefore(caretImgae);
+            range.setEndAfter(caretImgae);
+            // ביטול בחירה
+            range.collapse(false);
+
+            // עדכון הסלקציה
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }
+    }
 
 
 
@@ -234,7 +294,6 @@ const Editor = ({ setResetKey, onSend }) => {
                                 className={textFormatting === option.value ? styles.active : ''}
                             />
                         ))}
-
                         <MdFormatTextdirectionLToR className={textDirection === "ltr" ? styles.svg : ''} onClick={() => { setTextDirection('ltr'); setTextFormatting("left") }} />
                         <MdFormatTextdirectionRToL className={textDirection === "rtl" ? styles.svg : ''} onClick={() => { setTextDirection('rtl'); setTextFormatting("right") }} />
                         <VscTextSize size={fontSize == "small" ? "15px" : "17px"} className={styles.svg} onClick={
@@ -251,9 +310,10 @@ const Editor = ({ setResetKey, onSend }) => {
             </div>
             <div className={styles.buttons}>
                 <span className={styles.sendButton}>
-                    < FaFile />
-                    {inputFile ? <input type='file' onChange={handleAddImg} /> :
-                        < FaImage className={img ?? styles.img} onClick={() => setInputFile(true)} />}
+                    <input id='fileInput' type='file' onChange={handleAddImg} hidden />
+                    < FaFile className={img ? styles.svg : styles.svgText} onClick={() => document.getElementById('fileInput').click()} />
+                    <input id='imgInput' type='file'  onChange={addImages}  hidden />
+                    <FaImage className={ styles.svgText} onClick={() => document.getElementById('imgInput').click()} />
                 </span>
 
                 <span className={styles.sendButton}  >
