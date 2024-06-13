@@ -39,9 +39,9 @@ io.on('connection', (socket) => {
   console.log("🚀 ~ io.on ~ userId:", userId)
   // const token = socket.handshake.auth.token;
 
- if(!userId){
-  return;
- }
+  if (!userId) {
+    return;
+  }
 
   // הצטרף לחדר Socket.io של המשתמש
   socket.join(userId);
@@ -55,21 +55,26 @@ io.on('connection', (socket) => {
   console.log(Object.keys(connectedUsers).length);
 
   // טפל באירוע שליחת הודעה
-  socket.on('message', async(messageData) => {
-    console.log("🚀 ~ socket.on ~ messageData:", messageData, "========================================================")
-    const {msg, sender, receivers, ref} = messageData;
+  socket.on('message', async (messageData) => {
+    // console.log("🚀 ~ socket.on ~ messageData:", messageData, "========================================================")
+    console.log("l;😒😒😒😒😒😒");
+    const { msg, sender, receivers, ref } = messageData;
     const receiver = await userServices.getUser({ email: receivers[0] });
-      // // בדוק אם הנמען מחובר
+    // // בדוק אם הנמען מחובר
     if (connectedUsers[receiver._id]) {
       const receiverSocket = connectedUsers[receiver._id].socket;
       console.log(receiverSocket.id);
       io.to(receiverSocket.id).emit('new_message', sender);
     }
-    else{
-      // console.log(receiver);
+    else {
+      const notifications = await userServices.updateNotifications({ _id: receiver._id },
+        { msg: "new_message", from: sender });
+
+      console.log("❤️❤️😍😍😍😍😍😍😍😍😍😍");
+      console.log(notifications);
     }
 
-  
+
 
 
     // עדכן את בסיס הנתונים
@@ -103,7 +108,7 @@ io.on('connection', (socket) => {
 
   // טפל באירוע התנתקות
   socket.on('disconnect', () => {
-    // delete connectedUsers[userId];
+    delete connectedUsers[userId];
   });
 });
 

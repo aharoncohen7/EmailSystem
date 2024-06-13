@@ -23,6 +23,18 @@ async function updateUserById(id, data) {
   return newUser
 }
 
+// עדכון התראות 
+async function updateNotifications(filter, notification) {
+  console.log(filter, notification);
+  let user = await userController.readOne(filter)
+  user.notifications.push(notification)
+  await user.save()
+  return user.notifications
+}
+
+
+
+
 // מחיקת יוזר
 async function deleteUserById(id) {
   let deletedUser = await userController.del(id)
@@ -205,6 +217,7 @@ async function getUserChat(filter, chatId) {
 module.exports = {
   createUser,
   updateUserById,
+  updateNotifications,
   deleteUserById,
   getAllUsers,
   getUser,

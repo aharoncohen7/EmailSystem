@@ -28,10 +28,10 @@ const EmailTypeList = () => {
     const { isChangeList} = useContext(ChatContext)
     const { loading, data, error, fetchData } = useAxiosReq({ defaultVal: {}, method: 'GET', url: 'user-chats/not-read' })
     
-   async function getNotRead(){
-    await fetchData()
-    console.log(data);
-   }
+//    async function getNotRead(){
+//     await fetchData()
+//     console.log(data);
+//    }
 
     useEffect(() => {
         // setInterval( 1000 * 60);

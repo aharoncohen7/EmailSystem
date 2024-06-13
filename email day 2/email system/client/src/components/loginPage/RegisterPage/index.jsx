@@ -88,7 +88,7 @@ const RegisterPage = () => {
                 url: 'auth/register',
                 body: formData
             })
-            alert(_id);
+    
             setPopUpContent(<div style={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}><h2 >{_id ? "נרשמת בהצלחה" : "הרישום נכשל "}</h2></div>)
             navTo("/login")
         } catch (e) {

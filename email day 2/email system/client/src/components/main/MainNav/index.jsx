@@ -7,9 +7,12 @@ import { IoVideocam } from "react-icons/io5";
 import { MdAvTimer } from "react-icons/md";
 import { BsClipboardCheck } from "react-icons/bs";
 import { FaRegEye } from "react-icons/fa";
+import { IoIosNotifications } from "react-icons/io";
 
 import { UserContext } from '../../../layouts/MainLayout';
 import styles from './style.module.css'
+import Badge from '../../emailList/Badge';
+import { PopupContext } from '../../../App';
 
 
 const mainNavIcons = [
@@ -22,16 +25,25 @@ const mainNavIcons = [
 ]
 
 const MainNav = () => {
-    const {user} = useContext(UserContext)
+    const { user } = useContext(UserContext)
+    const { popUpContent, setPopUpContent } = useContext(PopupContext)
     const navTo = useNavigate();
     // console.log("🚀 ~ MainNav ~ user:", user)
-    
-    const logOut = ()=>{
+
+    const logOut = () => {
         localStorage.removeItem("token")
         navTo("/login");
         // window.location.reload()
     }
 
+
+
+    const readNotifications = () => {
+        setPopUpContent(<>{user.notifications.map((notification) => {
+            return <div style={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}><h2 >{notification.msg + " from:  " + notification.from }</h2></div>
+        })}</>)
+
+    }
 
 
 
@@ -54,13 +66,15 @@ const MainNav = () => {
 
                     </NavLink>
                 ))}
+                {/* <IoIosNotifications color={user.notifications? "green" : "gray"}/> */}
+                {user.notifications && <span onClick={readNotifications}><Badge number={user.notifications.length}  /></span>}
             </ul>
-            
-            <img className={styles.avatar} 
-            style={{cursor: "pointer"}}
-            onClick={logOut}
-            src={user.avatar}
-            alt="img" />
+
+            <img className={styles.avatar}
+                style={{ cursor: "pointer" }}
+                onClick={logOut}
+                src={user.avatar}
+                alt="img" />
         </div>
     )
 }
