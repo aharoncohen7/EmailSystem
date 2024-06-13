@@ -9,13 +9,16 @@ export const ChatContext = createContext(true);
 import { axiosReq } from '../../helpers';
 import io from 'socket.io-client';
 const socket = io('http://localhost:4004', { autoConnect: false });
-
+// import audio from('/'); 
+const audio = new Audio('/sounds/new_msg.mp3'); 
+// const audio = new Audio('new_umsg.mp3'); 
 
 
 const MainLayout = () => {
+  
   const [isChangeList, setIsChangeList] = useState(true);
   const [user, setUser] = useState({});
-  console.log("🚀 ~ MainLayout ~ user:", user)
+  // console.log("🚀 ~ MainLayout ~ user:", user)
   const navTo = useNavigate();
 
   const getUserByToken = async () => {
@@ -40,7 +43,7 @@ const MainLayout = () => {
 
   };
 
-  useEffect(() => {
+  useEffect(() => {    
     socket.on('connect', () => {
       console.log('Socket connected:', socket.id);
     });
@@ -48,8 +51,11 @@ const MainLayout = () => {
     socket.on('connect_error', (err) => {
       console.error('Socket connection error:', err);
     });
+
     socket.on('new_message', (emailSender) => {
-      alert('You have a new message from ' + emailSender);
+      setIsChangeList(!isChangeList)
+      audio.play().catch(error => console.log(error));
+      // alert('You have a new message from ' + emailSender);
     });
 
     socket.on('disconnect', (reason) => {
@@ -63,12 +69,15 @@ const MainLayout = () => {
       socket.off('new_message');
     };
   }, []);
+   
 
 
   useEffect(() => {
     getUserByToken();
     return () => socket.disconnect();
   }, []);
+
+
 
 
 

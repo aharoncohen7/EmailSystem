@@ -43,6 +43,26 @@ userRouter.get("/:userId", async (req, res) => {
     }
 });
 
+
+
+// (מחיקת התראות (עדכון
+userRouter.put("/delete-notifications/:userId", async (req, res) => {
+    console.log("start delete-notifications ========================================================");
+    const userId = req.params.userId;
+    try {
+        const updatedUser = await userServices.updateUserById( userId , {notifications: []})
+        // console.log(updatedUser);
+        res.send(updatedUser)
+    }
+    catch (err) {
+        res.status(400).send(err.msg || err.message || "wrong")
+    }
+});
+
+
+
+
+
 // (מחיקת יוזר - (עדכון
 userRouter.put("/:userId", async (req, res) => {
     console.log("start delete user");
@@ -56,7 +76,6 @@ userRouter.put("/:userId", async (req, res) => {
         res.status(400).send(err.msg || err.message || "wrong")
     }
 });
-
 
 module.exports = { userRouter }
 

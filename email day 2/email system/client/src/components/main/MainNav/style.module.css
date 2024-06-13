@@ -6,7 +6,7 @@
     /* align-items: center; */
     position: relative;
     background-color: rgb(252, 252, 252);
-    
+
 
     svg {
         color: var(--gray-bg-color);
@@ -38,14 +38,17 @@
     display: flex;
     border-right: 3px solid transparent;
     justify-content: center;
+    position: relative;
 }
 
 .box:hover {
     border-right-color: var(--primary-color);
-    svg{
+
+    svg {
         color: var(--primary-color)
     }
-    :nth-child(1){
+
+    :nth-child(1) {
         background-color: var(--lightGray-bg-color);
     }
 
@@ -53,26 +56,97 @@
 }
 
 
-.avatar{
-   
+.avatar {
+
     margin: 5px;
     border-radius: 50%;
 }
 
+.notifications {
+    padding: 15px;
+    animation: grow-shrink 3s linear infinite;
+    svg {
+        color: var(--primary-color);
+    }
 
+    /* :nth-child(1) {
+        background-color: var(--lightGreen-bg-color);
+    } */
+
+}
+
+.notifications:hover {
+    /* animation: rotateAndScale 2s 3; */
+    
+}
+
+@keyframes grow-shrink {
+    0% {
+      transform: rotate(0deg) scale(1);
+    }
+    30% {
+      transform: rotate(0deg) scale(1);
+    }
+    40% {
+      transform: rotate(20deg) scale(1.1);
+    }
+    50% {
+      transform: rotate(-20deg) scale(1.07);
+    }
+    60% {
+      transform: rotate(20deg) scale(1.1);
+    }
+    70% {
+      transform: rotate(0deg) scale(1);
+    }
+    90% {
+      transform: rotate(0deg) scale(1);
+    }
+  }
+
+/* @keyframes rotateAndScale {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(30deg) scale(0.8);
+    }
+    100% {
+        transform: rotate(0deg) scale(1);
+    }
+} */
+
+
+
+
+.sumNotifications {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--lightGreen-bg-color);
+    color: var(--primary-color);
+    font-size: 12px;
+    font-weight: 600;
+}
 
 
 
 .active {
     border-right-color: var(--primary-color);
+
     svg {
         color: var(--primary-color);
-        
+
     }
-    :nth-child(1){
+
+    :nth-child(1) {
         background-color: var(--lightGreen-bg-color);
     }
 
 }
-
-

@@ -15,13 +15,13 @@ export default function App() {
   const [popUpContent, setPopUpContent] = useState("");
 
 
-  useEffect(()=>{
-    if (popUpContent) {
-      setTimeout(() => {
-        setPopUpContent("");
-      }, 3000);
-    }
-  }, [popUpContent])
+  // useEffect(()=>{
+  //   if (popUpContent) {
+  //     setTimeout(() => {
+  //       setPopUpContent("");
+  //     }, 3000);
+  //   }
+  // }, [popUpContent])
 
   return (
     <PopupContext.Provider value={{ popUpContent, setPopUpContent }}>

@@ -27,23 +27,23 @@
 
 }
 
-.loading{
-    color: var(--primary-color);
-    animation: rotateAndScale 2s 3;
-    
-}
 
 input::placeholder {
     color: #888888;
-}
-
-/* לתקן */
-/* svg:hover{
-    color: var(--gray-bg-color)
-
-
-} */
-
+    }
+    
+    /* לתקן */
+    /* svg:hover{
+        color: var(--gray-bg-color)
+        
+        
+        } */
+        
+        .loading{
+            color: var(--primary-color);
+            animation: rotateAndScale 2s 3;
+            
+        }
 
 
 @keyframes rotateAndScale {

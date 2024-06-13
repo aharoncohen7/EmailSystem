@@ -65,13 +65,13 @@ const NewMessage = () => {
 
   //  יצירת צ'אט חדש
   const createNewChat = async (body) => {
-    console.log(body);
+    // console.log(body);
     if (subject.trim() == "" || members.length === 0) {
       alert("please fill all the fields")
       return;
     }
     try {
-      console.log(body.image);
+      // console.log(body.image);
       const result = await axiosReq({
         method: 'POST',
         url: 'chats/',

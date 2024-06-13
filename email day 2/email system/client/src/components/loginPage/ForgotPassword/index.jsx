@@ -40,10 +40,7 @@ const ForgotPassword = () => {
                 url: 'auth/login',
                 body: formData
             })
-
-            console.log(user);
-
-            // alert(_id);
+            // console.log(user);
             setPopUpContent(<div style={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}><h2 >{user?.fullName ? "התחברת בהצלחה" : "החיבור נכשל "}</h2></div>)
             setUser(user)
             localStorage.token = user.token

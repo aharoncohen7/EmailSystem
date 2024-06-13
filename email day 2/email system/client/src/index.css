@@ -54,6 +54,11 @@ svg:hover {
  
 } */
 
+.primary-color{
+  color: var(--primary-color);
+  /* background-color: var(--primary-color); */
+}
+
 
 .loading{
   display: flex;
