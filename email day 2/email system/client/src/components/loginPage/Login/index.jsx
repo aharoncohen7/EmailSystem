@@ -4,7 +4,7 @@ import styles from "./style.module.css"
 import { useNavigate } from 'react-router-dom';
 import { axiosReq } from '../../../helpers'
 import { PopupContext } from '../../../App';
-import { UserContext } from '../../../App';
+
 import { CiLock } from "react-icons/ci";
 
 
@@ -16,8 +16,8 @@ const initialFormData = {
 const LoginPage = () => {
     const [formData, setFormData] = useState(initialFormData);
     const { setPopUpContent } = useContext(PopupContext)
-    const { setUser } = useContext(UserContext)
     const navTo = useNavigate()
+
     const formFields = [
         { label: '@ Email Address', name: 'email', type: 'email', required: true },
         { label: '🔒 Password', name: 'password', type: 'password', required: true },
@@ -40,12 +40,8 @@ const LoginPage = () => {
                 url: 'auth/login',
                 body: formData
             })
-
-            console.log(user);
-
-            // alert(_id);
             setPopUpContent(<div style={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}><h2 >{user?.fullName ? "התחברת בהצלחה" : "החיבור נכשל "}</h2></div>)
-            setUser(user)
+            // setUser(user)
             localStorage.token = user.token
             navTo("/chats/inbox")
 

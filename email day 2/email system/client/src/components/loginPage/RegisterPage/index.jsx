@@ -56,33 +56,20 @@ const RegisterPage = () => {
         if (name === 'avatar') {
             const file = e.target.files[0];
             console.log("🚀 ~ handleChange ~ file:", file)
-            const reader = new FileReader();
-
-            // reader.onload = (event) => {
-            //     const base64Data = event.target.result; // Convert file to base64
-            //     setFormData(prevState => ({
-            //         ...prevState,
-            //         avatar: base64Data, // Update formData with base64Data
-            //     }));
-            // };
-    
-            reader.readAsDataURL(file); 
-
+            const reader = new FileReader();    
+            reader.readAsDataURL(file);
             reader.onloadend = () => {
                 console.log(reader.result);
                 setFormData(prevState => ({
                             ...prevState,
-                            avatar: reader.result, 
-                        }));
+                            avatar: reader.result,  }));       
             }
         } else {
-          
             setFormData(prevState => ({
                 ...prevState,
                 [name]: value,
             }));
         }
-
         console.log(formData);
     };
 
@@ -94,46 +81,16 @@ const RegisterPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const body = formData;
-        // if(formData.avatar){
-        //     let img
-        //     img = await saveImgToCloud(formData.avatar);
-        //     console.log("🚀 ~ handleSubmit ~ img :", img )
-        //     body.avatar = img;
-        // }
-        // if(formData.avatar){
-        //     let img
-        //     img = await saveImgToCloud(formData.avatar);
-        //     console.log("🚀 ~ handleSubmit ~ img :", img )
-        //     body.avatar = img;
-        // }
-        // if(formData.avatar){
-        //     let img
-        //     img = await saveImgToCloud(formData.avatar);
-        //     console.log("🚀 ~ handleSubmit ~ img :", img )
-        //     body.avatar = img;
-        // }
-
-
-
-
-
-        console.log("🚀 ~ handleSubmit ~ body :", body )
-
-        // if(formData.password!=formData.confirmPassword){
-        //     setPopUpContent(<div style={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}><h2 >הסיסמאות אינן תואמות</h2></div>)
-        //     return
-        // }
+        console.log("🚀 ~ handleSubmit ~ body :", formData )
         try {
             const { _id } = await axiosReq({
                 method: 'POST',
                 url: 'auth/register',
-                body
+                body: formData
             })
-            // alert(_id);
+            alert(_id);
             setPopUpContent(<div style={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}><h2 >{_id ? "נרשמת בהצלחה" : "הרישום נכשל "}</h2></div>)
             navTo("/login")
-
         } catch (e) {
             console.error("Failed to register: " + e.message);
         }

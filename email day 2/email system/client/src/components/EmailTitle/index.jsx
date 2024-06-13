@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
 import styles from './style.module.css'
 import { formatDateTime } from '../../helpers'
-import { ChatContext } from '../../App'
+import { ChatContext } from '../../layouts/MainLayout'
+
 
 const EmailTitle = ({ }) => {
     const { chat } = useContext(ChatContext)

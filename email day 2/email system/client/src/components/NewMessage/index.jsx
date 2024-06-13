@@ -5,15 +5,16 @@ import AddBtn from '../AddBtn';
 import { TbFunction } from 'react-icons/tb';
 import { axiosReq } from '../../helpers';
 import { PopupContext } from '../../App';
-import { UserContext } from '../../App';
+
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../layouts/MainLayout';
 
 
 
 
 const NewMessage = () => {
   const navTo = useNavigate()
-  const { user } = useContext(UserContext)
+  const { user, socket } = useContext(UserContext)
   const [resetKey, setResetKey] = useState(0);
   const [subject, setSubject] = useState("");
   const [member, setMember] = useState("");
@@ -62,32 +63,40 @@ const NewMessage = () => {
   };
 
 
-//  יצירת צ'אט חדש
+  //  יצירת צ'אט חדש
   const createNewChat = async (body) => {
-    if (subject.trim() == "" ||members.length === 0) {
+    console.log(body);
+    if (subject.trim() == "" || members.length === 0) {
       alert("please fill all the fields")
       return;
     }
     try {
-        console.log(body.image);
-        const result = await axiosReq({
-          method:'POST' ,
-          url: 'chats/',
-          body: { ...body, subject, members }
+      console.log(body.image);
+      const result = await axiosReq({
+        method: 'POST',
+        url: 'chats/',
+        body: { ...body, subject, members }
+      })
+      if (result) {
+        socket.emit('message', {
+          msg: "new message",
+          sender:  user.email,
+          receivers:  members,
+          ref:  result
         })
-        if (result) {
-            navTo(`/chats/sent emails/${result}`)}
-        else {
-          alert('הטקסט לא נשלח')
-        }
-
-      } catch (e) {
-        alert("Failed to send message")
-        console.error(e)
+        navTo(`/chats/sent emails/${result}`)
       }
+      else {
+        alert('הטקסט לא נשלח')
+      }
+
+    } catch (e) {
+      alert("Failed to send message")
+      console.error(e)
     }
-    
-  
+  }
+
+
 
   return (
     <div className={styles.main}>
@@ -128,7 +137,7 @@ const NewMessage = () => {
         </span>
         <div className={styles.editorBox} style={{ width: "100%" }}>
           <h2 >Message</h2>
-          <Editor key={resetKey} setResetKey={setResetKey}  onSend={createNewChat} />
+          <Editor key={resetKey} setResetKey={setResetKey} onSend={createNewChat} />
         </div>
       </span>
     </div>

@@ -4,8 +4,9 @@ import styles from "./style.module.css"
 import { useNavigate } from 'react-router-dom';
 import { axiosReq } from '../../../helpers'
 import { PopupContext } from '../../../App';
-import { UserContext } from '../../../App';
+
 import { CiLock } from "react-icons/ci";
+import { UserContext } from '../../../layouts/MainLayout';
 
 
 const initialFormData = {

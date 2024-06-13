@@ -8,10 +8,10 @@ import { BsFillPencilFill } from "react-icons/bs";
 import { HiInboxArrowDown } from "react-icons/hi2";
 import { TiStarFullOutline } from "react-icons/ti";
 
-import { ChatContext } from '../../../App';
 import styles from './style.module.css'
 import useAxiosReq from '../../../hooks/useAxiosReq';
 import Badge from '../../emailList/Badge';
+import { ChatContext } from '../../../layouts/MainLayout';
 
 
 const emailTypeIcons = [

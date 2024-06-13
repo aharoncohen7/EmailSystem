@@ -2,26 +2,17 @@ const jwt = require('jsonwebtoken');
 const SECRET = process.env.JWT_SECRET
 
 async function generate(user) {
-    let token = jwt.sign(user, SECRET, { expiresIn: "200m" });
+    let token = jwt.sign(user, SECRET, { expiresIn: "300m" });
     return `Bearer ${token}`
 }
 
-async function validate(req, res, next) {
-    try {
-        let token = req.headers.authorization?.split('Bearer ')[1] || "null";
-        // let userFromToken = jwt.verify(token, SECRET)
-        // req.body.from = userFromToken._id;
-        req.body.from = { "id": token };
-        // console.log(req.body)
-        next();
-    } catch (err) {
-        console.error(err);
-        // res.sendStatus(401);
-        res.status(401).json({ error: 'Token expired' });
-    }
-}
+
 async function auth(req, res, next) {
+    if(!req.headers.authorization){
+        return;
+    }
     try {
+     
         let token = req.headers.authorization?.split('Bearer ')[1] || "null";
         if(!token) throw "no token provided"
         let userIdFromToken = jwt.verify(token, SECRET);
@@ -29,10 +20,19 @@ async function auth(req, res, next) {
         req.user = userIdFromToken
         next()
     }
-    catch(e) {
-        console.log(e);
-        res.sendStatus(401)
-    }
+    catch (error) {
+        if (typeof error === 'object' && error.name === 'TokenExpiredError') {
+          // טיפול בטוקן שפג תוקפו
+          console.error('Token expired: ', error.message);
+          res.status(401).json({ error: 'Token expired' });
+          return; 
+        } else {
+          // שגיאת שרת פנימית
+          console.error(error);
+          res.sendStatus(500); 
+          return;
+        }
+      }
 }
 
 
@@ -40,7 +40,6 @@ async function auth(req, res, next) {
 
 
 module.exports = {
-    validate,
     generate,
     auth
 }

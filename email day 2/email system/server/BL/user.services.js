@@ -34,6 +34,18 @@ async function getAllUsers(filter) {
   let users = await userController.read(filter)
   return users
 }
+
+
+
+async function getUser(filter) {
+  console.log("in get user");
+  let user = await userController.readOne(filter)
+  console.log(user);
+  return user
+}
+
+
+
 //  יוזר לפי מזהה
 async function getUserById(filter) {
   console.log("in get user By Id");
@@ -195,6 +207,7 @@ module.exports = {
   updateUserById,
   deleteUserById,
   getAllUsers,
+  getUser,
   getUserById,
   getUserWithPassword,
   getMembersByEmail,

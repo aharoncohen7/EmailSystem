@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import styles from './style.module.css'
 import MsgLi from '../MsgLi';
 import EmailTitle from '../EmailTitle';
-import { ChatContext, } from '../../App';
+import { ChatContext } from '../../layouts/MainLayout';
+
 
 
 const EmailPage = ({loading }) => {

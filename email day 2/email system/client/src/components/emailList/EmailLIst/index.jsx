@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import { FaCaretDown } from "react-icons/fa";
 import { FaCaretUp } from "react-icons/fa";
-import { ChatContext } from '../../../App'
+
 import EmailLi from '../EmailLi'
 import InputSearch from '../InputSearch'
 import styles from './style.module.css'
 import useAxiosReq from '../../../hooks/useAxiosReq';
+import { ChatContext } from '../../../layouts/MainLayout';
 
 const flags = {
   "inbox": "inbox",

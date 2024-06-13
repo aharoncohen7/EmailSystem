@@ -4,9 +4,10 @@ import styles from './style.module.css'
 import Editor from '../Editor'
 import ChatHeader from '../../../pages/chat/ChatHeader'
 import EmailPage from '../../../components/EmailPage'
-import { ChatContext, UserContext } from '../../../App'
+
 import { useOutletContext, useParams } from 'react-router-dom'
 import { axiosReq } from '../../../helpers'
+import { ChatContext } from '../../../layouts/MainLayout';
 
 
 const Chat = () => {

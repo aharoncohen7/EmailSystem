@@ -6,7 +6,7 @@ import { IoIosShareAlt } from "react-icons/io";
 import { formatDateTime } from "./../../helpers/index.js"
 import { FaHandHoldingHeart } from "react-icons/fa";
 import { useContext } from 'react';
-import { ChatContext, UserContext } from '../../App.jsx';
+import { ChatContext, UserContext } from '../../layouts/MainLayout/index.jsx';
 
 
 

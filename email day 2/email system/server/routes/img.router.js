@@ -1,4 +1,4 @@
-const express = require("express")//ייבוא ספריה שמסוגלת לייצר 
+const express = require("express")
 const imgRouter = express.Router()
 const cloudinary = require("../cloudnary");
 

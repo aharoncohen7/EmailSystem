@@ -4,7 +4,6 @@ const userServices = require("../BL/user.services")
 const bcrypt = require("bcrypt");
 const auth = require("../middlewares/auth");
 const cloudinary = require("../cloudnary");
-// const { saveImgToCloud2 } = require("../cloudnary");
 // const jwt = require("jsonwebtoken");
 // const secret = process.env.JWT_SECRET
 
@@ -45,7 +44,7 @@ authRouter.post("/login", async (req, res) => {
     try {
         const { body } = req;
         const userFromDB = await userServices.getUserWithPassword({email: body.email})
-        console.log("🚀 ~ userRouter.post ~ userFromDB:", userFromDB)
+        // console.log("🚀 ~ userRouter.post ~ userFromDB:", userFromDB)
         if(!userFromDB) throw "User not found"
         console.log("11111111111111111111111r");
         if(!bcrypt.compareSync(body.password, userFromDB.password)) throw "Not the same password"
@@ -63,10 +62,10 @@ authRouter.post("/login", async (req, res) => {
 });
 
 authRouter.all("/refresh-token", auth.auth,  async (req, res) => {
-    console.log("start refresh-token", req);
+    // console.log("start refresh-token", req);
     try {
         const user = await userServices.getUserById({ _id: req.user })
-        console.log(user);
+        // console.log(user);
         res.send(user)
        
     }

@@ -6,11 +6,13 @@ import { FaStar } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { FaPrint } from "react-icons/fa";
 import { MdMoreVert } from "react-icons/md";
-import { ChatContext, PopupContext } from '../../../App';
+
 import DeleteMsg from '../../../components/DeleteMsg';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { axiosReq } from '../../../helpers';
 import { MdMarkAsUnread } from "react-icons/md";
+import { ChatContext } from '../../../layouts/MainLayout';
+import { PopupContext } from '../../../App';
 
 
 const ChatHeader = ({printPDF }) => {

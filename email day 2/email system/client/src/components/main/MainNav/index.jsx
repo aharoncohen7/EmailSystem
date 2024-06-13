@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import { IoMdContacts } from "react-icons/io";
 import { IoMdStats } from "react-icons/io";
@@ -7,9 +7,9 @@ import { IoVideocam } from "react-icons/io5";
 import { MdAvTimer } from "react-icons/md";
 import { BsClipboardCheck } from "react-icons/bs";
 import { FaRegEye } from "react-icons/fa";
-import { NavLink } from 'react-router-dom';
+
+import { UserContext } from '../../../layouts/MainLayout';
 import styles from './style.module.css'
-import {  UserContext } from '../../../App'
 
 
 const mainNavIcons = [
@@ -23,10 +23,13 @@ const mainNavIcons = [
 
 const MainNav = () => {
     const {user} = useContext(UserContext)
-    console.log("🚀 ~ MainNav ~ user:", user)
+    const navTo = useNavigate();
+    // console.log("🚀 ~ MainNav ~ user:", user)
+    
     const logOut = ()=>{
         localStorage.removeItem("token")
-        window.location.reload()
+        navTo("/login");
+        // window.location.reload()
     }
 
 
