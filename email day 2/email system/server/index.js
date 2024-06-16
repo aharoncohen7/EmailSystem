@@ -88,16 +88,6 @@ io.on('connection', (socket) => {
     }
 
 
-    // // // בדוק אם הנמען מחובר
-    // if (connectedUsers[receiver._id]) {
-    //   const receiverSocket = connectedUsers[receiver._id].socket;
-    //   console.log(receiverSocket.id);
-    //   io.to(receiverSocket.id).emit('new_message', senderEmail);
-    // }
-
-
-
-
 
     // עדכן את בסיס הנתונים
     // db.collection('messages').insertOne({
@@ -145,7 +135,6 @@ async function getEmailToIdConversion(emailAddresses) {
     const user = await userServices.getUser({ email });
     userIds.push(user._id);
   }
-  // console.log(userIds, "❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️");
   return userIds;
 }
 
@@ -155,6 +144,5 @@ async function getIdMembers(members) {
     // console.log(member._id);
     userIds.push(member._id);
   }
-  // console.log(userIds, "❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️");
   return userIds;
 }

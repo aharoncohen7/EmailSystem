@@ -43,6 +43,11 @@ const Chat = () => {
     getChat()
   }, [chatId, isChangeList]);
 
+  socket.on('new_message', (emailSender) => {
+    setIsChangeList(prev => { return !prev })
+    // alert('You have a new message from ' + emailSender);
+  });
+
 
   // הוספת הודעה חדשה לצ'אט
   const addNewMessage = async (body) => {
