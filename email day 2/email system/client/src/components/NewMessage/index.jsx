@@ -80,9 +80,11 @@ const NewMessage = () => {
       if (result) {
         socket.emit('message', {
           msg: "new message",
-          sender:  user.email,
+          senderId:  user._id,
+          senderEmail:  user.email,
           receivers:  members,
-          ref:  result
+          ref:  result,
+          isNewChat: true
         })
         navTo(`/chats/sent emails/${result}`)
       }

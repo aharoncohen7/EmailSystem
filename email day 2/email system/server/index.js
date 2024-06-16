@@ -52,27 +52,49 @@ io.on('connection', (socket) => {
     lastActivity: Date.now(),
   };
 
-  console.log(Object.keys(connectedUsers).length);
+  console.log("the number of connected users: " + Object.keys(connectedUsers).length);
 
   // טפל באירוע שליחת הודעה
   socket.on('message', async (messageData) => {
-    // console.log("🚀 ~ socket.on ~ messageData:", messageData, "========================================================")
-    console.log("l;😒😒😒😒😒😒");
-    const { msg, sender, receivers, ref } = messageData;
-    const receiver = await userServices.getUser({ email: receivers[0] });
-    // // בדוק אם הנמען מחובר
-    if (connectedUsers[receiver._id]) {
-      const receiverSocket = connectedUsers[receiver._id].socket;
-      console.log(receiverSocket.id);
-      io.to(receiverSocket.id).emit('new_message', sender);
+    console.log(connectedUsers, "▶️▶️▶️▶️▶️▶️");
+    const { msg, senderId, senderEmail, receivers, ref, isNewChat } = messageData;
+
+    let receiversId;
+    if (isNewChat) {
+      receiversId = await getEmailToIdConversion(receivers);
     }
     else {
-      const notifications = await userServices.updateNotifications({ _id: receiver._id },
-        { msg: "new_message", from: sender });
-
-      console.log("❤️❤️😍😍😍😍😍😍😍😍😍😍");
-      console.log(notifications);
+      receiversId = await getIdMembers(receivers)
     }
+
+    for (const receiverId of receiversId) {
+      if (receiverId == senderId) {
+        console.log("👌👌👌👌👌");
+        continue;
+      }
+      else {
+        if (connectedUsers[receiverId]) {
+          const receiverSocket = connectedUsers[receiverId].socket;
+          // console.log(receiverSocket.id);
+          io.to(receiverSocket.id).emit('new_message', senderEmail);
+          console.log("👍👍👍👍👍👍👍👍👍");
+        } else {
+          const allUserNotifications = await userServices.updateNotifications({ _id: receiverId },
+            { msg: "new_message", from: senderEmail });
+          console.log("😫😫😫😫😫😫😫😫😫😫😫");
+          console.log(allUserNotifications);
+        }
+      }
+    }
+
+
+    // // // בדוק אם הנמען מחובר
+    // if (connectedUsers[receiver._id]) {
+    //   const receiverSocket = connectedUsers[receiver._id].socket;
+    //   console.log(receiverSocket.id);
+    //   io.to(receiverSocket.id).emit('new_message', senderEmail);
+    // }
+
 
 
 
@@ -114,3 +136,25 @@ io.on('connection', (socket) => {
 
 //+ יצירת מאזין בפורט שמסופק + פונקציה שמופעלת בעת עליית השרת
 server.listen(port, () => console.log("server is running in port: " + port))
+
+
+
+async function getEmailToIdConversion(emailAddresses) {
+  const userIds = [];
+  for (const email of emailAddresses) {
+    const user = await userServices.getUser({ email });
+    userIds.push(user._id);
+  }
+  // console.log(userIds, "❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️");
+  return userIds;
+}
+
+async function getIdMembers(members) {
+  const userIds = [];
+  for (const member of members) {
+    // console.log(member._id);
+    userIds.push(member._id);
+  }
+  // console.log(userIds, "❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️");
+  return userIds;
+}

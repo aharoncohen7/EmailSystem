@@ -1,12 +1,13 @@
 .main {
-  width: 450px;
-  height: 250px;
+  min-width: 450px;
+  min-height: 250px;
   /* opacity: 0.5; */
 
   padding: 40px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  cursor:auto;
 
 }
 
@@ -28,6 +29,7 @@
   padding-right: 10px;
   color: #fff;
   transition: filter 0.1s;
+  
 
  
 }
@@ -47,6 +49,7 @@
   background-color: var(--primary-color);
   color: #f5f1f1;
   border: none;
+  cursor: pointer;
 }
 
 
@@ -61,6 +64,7 @@
   color: #fffafa;
   border: none;
   background-color: #ff7e7e;
+  cursor: pointer;
 
 }
 

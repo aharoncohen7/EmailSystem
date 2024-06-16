@@ -1,18 +1,14 @@
 .main {
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     /* align-items: center; */
     position: relative;
     background-color: rgb(252, 252, 252);
-
-
     svg {
         color: var(--gray-bg-color);
         font-size: 24px;
     }
-
 }
 
 .ul {
@@ -20,11 +16,9 @@
     flex-direction: column;
     justify-content: space-between;
     gap: 10px;
-    /* padding: 20px; */
 }
 
 .li {
-    /* padding: 5px 25px 5px 25px; */
     width: 40px;
     height: 40px;
     border-radius: 5px;
@@ -38,47 +32,77 @@
     display: flex;
     border-right: 3px solid transparent;
     justify-content: center;
-    position: relative;
+    cursor: pointer;
 }
 
 .box:hover {
     border-right-color: var(--primary-color);
-
     svg {
         color: var(--primary-color)
     }
-
     :nth-child(1) {
         background-color: var(--lightGray-bg-color);
     }
 
-
 }
+
+.active {
+    border-right-color: var(--primary-color);
+    svg {
+        color: var(--primary-color);
+
+    }
+    :nth-child(1) {
+        background-color: var(--lightGreen-bg-color);
+    }
+}
+
 
 
 .avatar {
-
     margin: 5px;
     border-radius: 50%;
+    cursor: pointer;
 }
 
+.bell {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+}
+
+
 .notifications {
-    padding: 15px;
+    padding: 15px 20px 15px 10px ;
     animation: grow-shrink 3s linear infinite;
     svg {
         color: var(--primary-color);
     }
-
-    /* :nth-child(1) {
-        background-color: var(--lightGreen-bg-color);
-    } */
-
 }
 
 .notifications:hover {
-    /* animation: rotateAndScale 2s 3; */
-    
+    /* animation: rotateAndScale 2s 3; */    
 }
+
+.sumNotifications {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--lightGreen-bg-color);
+    color: var(--primary-color);
+    font-size: 12px;
+    font-weight: 600;
+    z-index: 2;
+}
+
 
 @keyframes grow-shrink {
     0% {
@@ -118,35 +142,3 @@
 
 
 
-
-.sumNotifications {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--lightGreen-bg-color);
-    color: var(--primary-color);
-    font-size: 12px;
-    font-weight: 600;
-}
-
-
-
-.active {
-    border-right-color: var(--primary-color);
-
-    svg {
-        color: var(--primary-color);
-
-    }
-
-    :nth-child(1) {
-        background-color: var(--lightGreen-bg-color);
-    }
-
-}

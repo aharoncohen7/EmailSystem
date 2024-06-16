@@ -145,7 +145,6 @@ const Editor = ({ setResetKey, onSend }) => {
             return;
         }
         console.log(content);
-        console.log(content);
         //  עטיפת תוכן 
         const body = { content: `<span dir='${textDirection}' style=${cssStyle}> ${content} <br/>  </span>` }
         if (img) {
@@ -183,7 +182,6 @@ const Editor = ({ setResetKey, onSend }) => {
             return url;
         }
     }
-
 
 
     const addImages = async (e) => {
@@ -243,7 +241,7 @@ const Editor = ({ setResetKey, onSend }) => {
                     onInput={
                         (e) => {
                             console.log(e.target.innerHTML);
-                            setContent(divRef.current.innerHTML);
+                            setContent(e.target.innerHTML);
                         }
                     }
                     className={styles.input}

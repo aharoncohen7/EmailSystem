@@ -26,7 +26,7 @@ const mainNavIcons = [
 ]
 
 const MainNav = () => {
-    const { user } = useContext(UserContext)
+    const { user, setUser } = useContext(UserContext)
     const { setPopUpContent } = useContext(PopupContext)
     const navTo = useNavigate();
     // console.log("🚀 ~ MainNav ~ user:", user)
@@ -41,18 +41,24 @@ const MainNav = () => {
         if (user.notifications?.length) {
 
             setPopUpContent(<>{user.notifications.map((notification) => {
-                if (notification.msg === "new_message"){
-                return <div style={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}><h5 >{
-                    `A new message has been received from ${notification.from}`}</h5>
-                    <span>{}</span>
-                    
+                if (notification.msg === "new_message") {
+                    return <div style={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}><h5 >{
+                        `A new message has been received from ${notification.from}`}</h5>
+                        <span>{ }</span>
+
                     </div>
                 }
-                
+
             })}</>)
-            setTimeout(()=>{
+            setTimeout(() => {
                 axiosReq({ url: `users/delete-notifications/${user._id}`, method: 'PUT' });
-            },3000)
+                setUser(prev=>{
+                    return {
+                       ...prev,
+                        notifications: []
+                    }
+                })
+            }, 3000)
         }
     }
 
@@ -77,19 +83,25 @@ const MainNav = () => {
 
                     </NavLink>
                 ))}
-                {/* <IoIosNotifications color={user.notifications? "green" : "gray"}/> */}
-                {user.notifications &&
-                    <span className={styles.box} onClick={readNotifications}>
-                        {user.notifications.length ? <span className={styles.sumNotifications}>{user.notifications.length}</span> : null}
-                        <span className={user.notifications.length ? styles.notifications : " "}>< IoIosNotifications  size={26}/></span>
-                    </span>}
+                {
+                    user.notifications &&
+                    <span className={styles.bell} onClick={readNotifications}>
+                        {
+                            user.notifications.length ?
+                                <span className={styles.sumNotifications}>{user.notifications.length}</span> : null
+                        }
+                        <span  className={user.notifications.length ? styles.notifications : " "}>
+                            < IoIosNotifications size={26} />
+                        </span>
+                    </span>
+                }
             </ul>
 
             <img className={styles.avatar}
-                style={{ cursor: "pointer" }}
+            title={user.email}
                 onClick={logOut}
                 src={user.avatar}
-                alt="img" />
+                alt="avatar" />
         </div>
     )
 }

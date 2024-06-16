@@ -36,71 +36,71 @@
 
 
 
-const express = require('express');
-const http = require('http');
-const socketIo = require('socket.io');
-const mongoose = require('mongoose');
+// const express = require('express');
+// const http = require('http');
+// const socketIo = require('socket.io');
+// const mongoose = require('mongoose');
 
-const app = express();
-const server = http.createServer(app);
-const io = socketIo(server);
-const db = mongoose.connect(process.env.MONGO_URI);
+// const app = express();
+// const server = http.createServer(app);
+// const io = socketIo(server);
+// const db = mongoose.connect(process.env.MONGO_URI);
 
-const connectedUsers = {};
+// const connectedUsers = {};
 
-io.on('connection', (socket) => {
-  const userId = socket.handshake.query.userId;
+// io.on('connection', (socket) => {
+//   const userId = socket.handshake.query.userId;
 
-  // הצטרף לחדר Socket.io של המשתמש
-  socket.join(userId);
+//   // הצטרף לחדר Socket.io של המשתמש
+//   socket.join(userId);
 
-  // אחסן את מידע החיבור במאגר נתונים
-  connectedUsers[userId] = {
-    socket: socket,
-    lastActivity: Date.now(),
-  };
+//   // אחסן את מידע החיבור במאגר נתונים
+//   connectedUsers[userId] = {
+//     socket: socket,
+//     lastActivity: Date.now(),
+//   };
 
-  // טפל באירוע שליחת הודעה
-  socket.on('message', (messageData) => {
-    const senderId = messageData.sender;
-    const receiverId = messageData.receiver;
-    const content = messageData.content;
+//   // טפל באירוע שליחת הודעה
+//   socket.on('message', (messageData) => {
+//     const senderId = messageData.senderId;
+//     const receiverId = messageData.receiver;
+//     const content = messageData.content;
 
-    // עדכן את בסיס הנתונים
-    db.collection('messages').insertOne({
-      sender: senderId,
-      receiver: receiverId,
-      content: content,
-      timestamp: Date.now(),
-    });
+//     // עדכן את בסיס הנתונים
+//     db.collection('messages').insertOne({
+//       sender: senderId,
+//       receiver: receiverId,
+//       content: content,
+//       timestamp: Date.now(),
+//     });
 
-    // בדוק אם הנמען מחובר
-    if (connectedUsers[receiverId]) {
-      const receiverSocket = connectedUsers[receiverId].socket;
+//     // בדוק אם הנמען מחובר
+//     if (connectedUsers[receiverId]) {
+//       const receiverSocket = connectedUsers[receiverId].socket;
 
-      // שלח התראה לחדר Socket.io של הנמען
-      receiverSocket.to(receiverId).emit('notification', {
-        sender: senderId,
-        content: content,
-      });
-    } else {
-      // אחסן את ההתראה במאגר נתונים
-      db.collection('notifications').insertOne({
-        sender: senderId,
-        receiver: receiverId,
-        content: content,
-        read: false,
-        timestamp: Date.now(),
-      });
-    }
-  });
+//       // שלח התראה לחדר Socket.io של הנמען
+//       receiverSocket.to(receiverId).emit('notification', {
+//         sender: senderId,
+//         content: content,
+//       });
+//     } else {
+//       // אחסן את ההתראה במאגר נתונים
+//       db.collection('notifications').insertOne({
+//         sender: senderId,
+//         receiver: receiverId,
+//         content: content,
+//         read: false,
+//         timestamp: Date.now(),
+//       });
+//     }
+//   });
 
-  // טפל באירוע התנתקות
-  socket.on('disconnect', () => {
-    delete connectedUsers[userId];
-  });
-});
+//   // טפל באירוע התנתקות
+//   socket.on('disconnect', () => {
+//     delete connectedUsers[userId];
+//   });
+// });
 
-server.listen(3000, () => {
-  console.log('Server listening on port 3000');
-});
+// server.listen(3000, () => {
+//   console.log('Server listening on port 3000');
+// });
