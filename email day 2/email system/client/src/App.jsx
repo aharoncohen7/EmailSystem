@@ -6,22 +6,13 @@ import MainLayout from "./layouts/MainLayout";
 import NewMessage from "./components/NewMessage";
 import LoginPage from "./components/loginPage/Login";
 import EmailsTypeLayout from "./layouts/EmailsTypeLayout";
-import EmailsListLayout from "./layouts/EmailsListLayout";
+import EmailsListLayout from "./layouts/EmailsListLayout/index.jsx";
 import RegisterPage from "./components/loginPage/RegisterPage";
 import ForgotPassword from "./components/loginPage/ForgotPassword";
 export const PopupContext = createContext(true);
 
 export default function App() {
   const [popUpContent, setPopUpContent] = useState("");
-
-
-  // useEffect(()=>{
-  //   if (popUpContent) {
-  //     setTimeout(() => {
-  //       setPopUpContent("");
-  //     }, 3000);
-  //   }
-  // }, [popUpContent])
 
   return (
     <PopupContext.Provider value={{ popUpContent, setPopUpContent }}>
